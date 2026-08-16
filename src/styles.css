@@ -19,6 +19,18 @@
  */
 
 @theme inline {
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-dot-red: var(--dot-red);
+  --color-dot-amber: var(--dot-amber);
+  --color-dot-green: var(--dot-green);
+  --color-dot-purple: var(--dot-purple);
+  --color-dot-cyan: var(--dot-cyan);
+  --color-tile-hotels: var(--tile-hotels);
+  --color-tile-flights: var(--tile-flights);
+  --color-tile-fh: var(--tile-fh);
+  --color-tile-activities: var(--tile-activities);
+  --color-tile-homes: var(--tile-homes);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -63,6 +75,18 @@
 
 :root {
   --radius: 0.625rem;
+  --brand: oklch(0.55 0.21 262);
+  --brand-foreground: oklch(1 0 0);
+  --dot-red: oklch(0.62 0.23 22);
+  --dot-amber: oklch(0.82 0.16 82);
+  --dot-green: oklch(0.66 0.18 155);
+  --dot-purple: oklch(0.55 0.24 315);
+  --dot-cyan: oklch(0.73 0.14 233);
+  --tile-hotels: oklch(0.93 0.04 20);
+  --tile-flights: oklch(0.93 0.05 310);
+  --tile-fh: oklch(0.93 0.04 240);
+  --tile-activities: oklch(0.95 0.05 90);
+  --tile-homes: oklch(0.94 0.06 145);
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
