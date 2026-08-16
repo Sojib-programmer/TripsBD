@@ -19,6 +19,7 @@
  */
 
 @theme inline {
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
   --color-dot-red: var(--dot-red);
@@ -76,6 +77,8 @@
 :root {
   --radius: 0.625rem;
   --brand: oklch(0.55 0.21 262);
+  --brand-from: oklch(0.62 0.19 250);
+  --brand-to: oklch(0.48 0.22 285);
   --brand-foreground: oklch(1 0 0);
   --dot-red: oklch(0.62 0.23 22);
   --dot-amber: oklch(0.82 0.16 82);
