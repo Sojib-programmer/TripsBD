@@ -1,11 +1,26 @@
-import type { ReactNode } from "react";
+import { useRouterState } from "@tanstack/react-router";
+import { useRef, type ReactNode } from "react";
 
 import { BottomNav } from "./BottomNav";
+import { tabIndex } from "./nav-tabs";
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const index = tabIndex(pathname);
+  const prev = useRef(index);
+  const forward = index >= prev.current;
+  prev.current = index;
+
   return (
-    <div className="flex min-h-dvh flex-col bg-background pb-28">
-      {children}
+    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-28">
+      <div
+        key={pathname}
+        className={`flex flex-1 flex-col animate-in fade-in duration-300 ease-out motion-reduce:animate-none ${
+          forward ? "slide-in-from-right-6" : "slide-in-from-left-6"
+        }`}
+      >
+        {children}
+      </div>
       <BottomNav />
     </div>
   );
