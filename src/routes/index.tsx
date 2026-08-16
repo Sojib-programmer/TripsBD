@@ -1,24 +1,51 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { SplashScreen } from "@/components/screens/SplashScreen";
+import { TermsScreen } from "@/components/screens/TermsScreen";
+import { NotificationScreen } from "@/components/screens/NotificationScreen";
+import { HomeScreen } from "@/components/screens/HomeScreen";
+
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Trips.bd — Hotels, Flights & Activities" },
+      {
+        name: "description",
+        content:
+          "Book hotels, flights, homes and activities with Trips.bd. Member deals, VIP status and instant booking from your phone.",
+      },
+      { property: "og:title", content: "Trips.bd — Hotels, Flights & Activities" },
+      {
+        property: "og:description",
+        content: "Book hotels, flights, homes and activities with Trips.bd.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+type Step = "splash" | "terms" | "notification" | "home";
+
 function Index() {
+  const [step, setStep] = useState<Step>("splash");
+
+  useEffect(() => {
+    if (step !== "splash") return;
+    const t = setTimeout(() => setStep("terms"), 1600);
+    return () => clearTimeout(t);
+  }, [step]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="mx-auto min-h-dvh max-w-[440px] bg-background">
+      {step === "splash" && <SplashScreen />}
+      {step === "terms" && <TermsScreen onAccept={() => setStep("notification")} />}
+      {step === "notification" && <NotificationScreen onDone={() => setStep("home")} />}
+      {step === "home" && <HomeScreen />}
+    </main>
   );
 }
