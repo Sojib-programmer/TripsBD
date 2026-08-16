@@ -2,11 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { Home, Briefcase, Tag, Heart, User } from "lucide-react";
 
 const tabs = [
-  { to: "/", icon: Home, label: "Home" },
-  { to: "/trips", icon: Briefcase, label: "My Trips" },
-  { to: "/deals", icon: Tag, label: "Deals", badge: true },
-  { to: "/saved", icon: Heart, label: "Saved" },
-  { to: "/more", icon: User, label: "More" },
+  { to: "/", icon: Home, label: "Home", badge: false as boolean },
+  { to: "/trips", icon: Briefcase, label: "My Trips", badge: false as boolean },
+  { to: "/deals", icon: Tag, label: "Deals", badge: true as boolean },
+  { to: "/saved", icon: Heart, label: "Saved", badge: false as boolean },
+  { to: "/more", icon: User, label: "More", badge: false as boolean },
 ] as const;
 
 export function BottomNav() {

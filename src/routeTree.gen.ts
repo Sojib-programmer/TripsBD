@@ -14,6 +14,7 @@ import { Route as DealsRouteImport } from './routes/deals'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as TripsRouteImport } from './routes/trips'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const TripsRoute = TripsRouteImport.update({
   path: '/trips',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
   '/trips': typeof TripsRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
   '/trips': typeof TripsRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,14 @@ export interface FileRoutesById {
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
   '/trips': typeof TripsRoute
+  '/welcome': typeof WelcomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/deals' | '/more' | '/saved' | '/trips'
+  fullPaths: '/' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/deals' | '/more' | '/saved' | '/trips'
-  id: '__root__' | '/' | '/deals' | '/more' | '/saved' | '/trips'
+  to: '/' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
+  id: '__root__' | '/' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +86,7 @@ export interface RootRouteChildren {
   MoreRoute: typeof MoreRoute
   SavedRoute: typeof SavedRoute
   TripsRoute: typeof TripsRoute
+  WelcomeRoute: typeof WelcomeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TripsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +142,7 @@ const rootRouteChildren: RootRouteChildren = {
   MoreRoute: MoreRoute,
   SavedRoute: SavedRoute,
   TripsRoute: TripsRoute,
+  WelcomeRoute: WelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
