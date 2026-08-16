@@ -1,9 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import {
-  Home,
-  Briefcase,
-  Tag,
-  Heart,
-  User,
   Tent,
   CarTaxiFront,
   Car,
@@ -12,6 +8,7 @@ import {
   Gift,
   Ticket,
   Star,
+  Search,
 } from "lucide-react";
 
 import tileHotels from "@/assets/tile-hotels.png";
@@ -19,8 +16,7 @@ import tileFlights from "@/assets/tile-flights.png";
 import tileFlightHotel from "@/assets/tile-flighthotel.png";
 import tileActivities from "@/assets/tile-activities.png";
 import tileHomes from "@/assets/tile-homes.png";
-import { BrandMark } from "../BrandMark";
-import { StatusBar } from "../StatusBar";
+import { Logo } from "../Logo";
 
 const services = [
   { icon: Tent, label: "Attractions" },
@@ -28,14 +24,6 @@ const services = [
   { icon: Car, label: "Car Rentals" },
   { icon: Smartphone, label: "eSIM" },
   { icon: TrainFront, label: "Trains", muted: true },
-];
-
-const tabs = [
-  { icon: Home, label: "Home", active: true },
-  { icon: Briefcase, label: "My Trips" },
-  { icon: Tag, label: "Deals", badge: true },
-  { icon: Heart, label: "Saved" },
-  { icon: User, label: "More" },
 ];
 
 function Tile({
@@ -72,10 +60,15 @@ function Tile({
 
 export function HomeScreen() {
   return (
-    <div className="flex min-h-dvh flex-col bg-background pb-24">
-      <StatusBar />
-      <div className="px-5 pt-3">
-        <BrandMark size="sm" />
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between px-5 pt-6">
+        <Logo size="sm" />
+        <button
+          aria-label="Search"
+          className="rounded-full border border-border p-2 text-muted-foreground"
+        >
+          <Search size={20} />
+        </button>
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-3 px-5">
@@ -133,9 +126,12 @@ export function HomeScreen() {
             </p>
           </div>
           <div className="mt-3 flex justify-end">
-            <button className="rounded-full bg-brand px-6 py-3 text-[17px] font-semibold text-brand-foreground">
+            <Link
+              to="/more"
+              className="rounded-full bg-brand px-6 py-3 text-[17px] font-semibold text-brand-foreground"
+            >
               Login/Sign up
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -148,7 +144,9 @@ export function HomeScreen() {
             <div>
               <p className="text-[17px] font-semibold text-foreground">Up to 8% off</p>
               <p className="text-[15px] text-muted-foreground">First hotel booking</p>
-              <p className="mt-1 text-right text-[15px] font-medium text-brand">Claim</p>
+              <Link to="/deals" className="mt-1 block text-right text-[15px] font-medium text-brand">
+                Claim
+              </Link>
             </div>
           </div>
           <div className="flex min-w-[280px] items-center gap-3 rounded-xl border border-border p-4">
@@ -156,34 +154,13 @@ export function HomeScreen() {
             <div>
               <p className="text-[17px] font-semibold text-foreground">VIP Gold trial</p>
               <p className="text-[15px] text-muted-foreground">Up to 18% off</p>
-              <p className="mt-1 text-right text-[15px] font-medium text-brand">Claim</p>
+              <Link to="/deals" className="mt-1 block text-right text-[15px] font-medium text-brand">
+                Claim
+              </Link>
             </div>
           </div>
         </div>
       </div>
-
-      <nav className="fixed inset-x-0 bottom-0 mx-auto grid max-w-[440px] grid-cols-5 border-t border-border bg-background pb-5 pt-2">
-        {tabs.map(({ icon: Icon, label, active, badge }) => (
-          <button key={label} className="relative flex flex-col items-center gap-1">
-            <span className="relative">
-              <Icon
-                size={24}
-                className={active ? "text-brand" : "text-muted-foreground"}
-                fill="currentColor"
-                fillOpacity={active ? 0.15 : 0.12}
-              />
-              {badge ? (
-                <span className="absolute -right-1 -top-0.5 h-2 w-2 rounded-full bg-dot-red" />
-              ) : null}
-            </span>
-            <span
-              className={`text-[12px] ${active ? "font-medium text-brand" : "text-muted-foreground"}`}
-            >
-              {label}
-            </span>
-          </button>
-        ))}
-      </nav>
     </div>
   );
 }
