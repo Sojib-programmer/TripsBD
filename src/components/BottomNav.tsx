@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Home, Briefcase, Tag, Heart, User } from "lucide-react";
 
-const tabs = [
+const tabs: { to: string; icon: typeof Home; label: string; badge?: boolean }[] = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/trips", icon: Briefcase, label: "My Trips" },
   { to: "/deals", icon: Tag, label: "Deals", badge: true },
   { to: "/saved", icon: Heart, label: "Saved" },
   { to: "/more", icon: User, label: "More" },
-] as const;
+];
 
 export function BottomNav() {
   return (
@@ -18,7 +18,7 @@ export function BottomNav() {
       {tabs.map(({ to, icon: Icon, label, badge }) => (
         <Link
           key={to}
-          to={to}
+          to={to as never}
           activeOptions={{ exact: to === "/" }}
           className="flex flex-col items-center gap-1 text-muted-foreground"
           activeProps={{ className: "!text-brand" }}
