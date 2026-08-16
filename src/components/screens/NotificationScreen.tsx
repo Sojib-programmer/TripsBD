@@ -1,7 +1,6 @@
 import { X, BriefcaseBusiness, Siren, HandCoins } from "lucide-react";
 
 import mascot from "@/assets/mascot-notify.png";
-import { StatusBar } from "../StatusBar";
 
 const perks = [
   { icon: BriefcaseBusiness, label: "Get booking reminders" },
@@ -12,7 +11,6 @@ const perks = [
 export function NotificationScreen({ onDone }: { onDone: () => void }) {
   return (
     <div className="flex min-h-dvh flex-col bg-background">
-      <StatusBar />
       <header className="relative flex items-center justify-center border-b border-border px-5 pb-4 pt-3">
         <button onClick={onDone} aria-label="Close" className="absolute left-4 text-foreground">
           <X size={30} strokeWidth={2.2} />

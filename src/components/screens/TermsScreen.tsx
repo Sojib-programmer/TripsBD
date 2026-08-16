@@ -1,6 +1,5 @@
 import duskCoast from "@/assets/dusk-coast.jpg";
-import { BrandMark } from "../BrandMark";
-import { StatusBar } from "../StatusBar";
+import { Logo } from "../Logo";
 
 export function TermsScreen({ onAccept }: { onAccept: () => void }) {
   return (
@@ -14,9 +13,8 @@ export function TermsScreen({ onAccept }: { onAccept: () => void }) {
       />
       <div className="absolute inset-0 bg-[oklch(0.15_0.04_265/0.35)]" />
       <div className="relative flex min-h-dvh flex-col">
-        <StatusBar dark />
-        <div className="px-6 pt-8">
-          <BrandMark size="md" onDark />
+        <div className="px-6 pt-14">
+          <Logo size="md" onDark />
           <p className="mt-7 text-[19px] leading-snug text-primary-foreground/90">
             By using our app, you acknowledge our{" "}
             <a href="/terms" className="font-semibold underline underline-offset-2">

@@ -1,10 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
-import { SplashScreen } from "@/components/screens/SplashScreen";
-import { TermsScreen } from "@/components/screens/TermsScreen";
-import { NotificationScreen } from "@/components/screens/NotificationScreen";
+import { AppShell } from "@/components/AppShell";
 import { HomeScreen } from "@/components/screens/HomeScreen";
+import { hasOnboarded } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -22,30 +21,23 @@ export const Route = createFileRoute("/")({
         content: "Book hotels, flights, homes and activities with Trips.bd.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
   }),
 });
 
-type Step = "splash" | "terms" | "notification" | "home";
-
 function Index() {
-  const [step, setStep] = useState<Step>("splash");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (step !== "splash") return;
-    const t = setTimeout(() => setStep("terms"), 1600);
-    return () => clearTimeout(t);
-  }, [step]);
+    if (!hasOnboarded()) void navigate({ to: "/welcome" });
+  }, [navigate]);
 
   return (
-    <main className="mx-auto min-h-dvh max-w-[440px] bg-background">
-      {step === "splash" && <SplashScreen />}
-      {step === "terms" && <TermsScreen onAccept={() => setStep("notification")} />}
-      {step === "notification" && <NotificationScreen onDone={() => setStep("home")} />}
-      {step === "home" && <HomeScreen />}
-    </main>
+    <div className="mx-auto max-w-[440px]">
+      <AppShell>
+        <HomeScreen />
+      </AppShell>
+    </div>
   );
 }
