@@ -7,7 +7,7 @@ import {
   Tent,
   CarTaxiFront,
   Car,
-  Signal,
+  Smartphone,
   TrainFront,
   Gift,
   Ticket,
@@ -26,7 +26,7 @@ const services = [
   { icon: Tent, label: "Attractions" },
   { icon: CarTaxiFront, label: "Airport Transfer" },
   { icon: Car, label: "Car Rentals" },
-  { icon: Signal, label: "eSIM" },
+  { icon: Smartphone, label: "eSIM" },
   { icon: TrainFront, label: "Trains", muted: true },
 ];
 
