@@ -37,7 +37,7 @@ function MorePage() {
           Sign in to sync bookings across devices and unlock VIP member prices.
         </p>
         <Link
-          to="/welcome"
+          to="/auth"
           className="mt-4 inline-block rounded-full bg-brand px-6 py-3 text-[17px] font-semibold text-brand-foreground"
         >
           Login / Sign up
