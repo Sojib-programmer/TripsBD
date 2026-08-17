@@ -14,16 +14,371 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      booking_events: {
+        Row: {
+          booking_id: string
+          created_at: string
+          id: string
+          message: string | null
+          status: Database["public"]["Enums"]["booking_status"]
+        }
+        Insert: {
+          booking_id: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          status: Database["public"]["Enums"]["booking_status"]
+        }
+        Update: {
+          booking_id?: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          status?: Database["public"]["Enums"]["booking_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_events_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bookings: {
+        Row: {
+          check_in: string
+          check_out: string
+          created_at: string
+          deal_code: string | null
+          guest_email: string
+          guest_name: string
+          guest_phone: string | null
+          guests: number
+          id: string
+          listing_id: string
+          nights: number
+          note: string | null
+          reference: string
+          status: Database["public"]["Enums"]["booking_status"]
+          total_bdt: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          check_in: string
+          check_out: string
+          created_at?: string
+          deal_code?: string | null
+          guest_email: string
+          guest_name: string
+          guest_phone?: string | null
+          guests?: number
+          id?: string
+          listing_id: string
+          nights?: number
+          note?: string | null
+          reference?: string
+          status?: Database["public"]["Enums"]["booking_status"]
+          total_bdt: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          check_in?: string
+          check_out?: string
+          created_at?: string
+          deal_code?: string | null
+          guest_email?: string
+          guest_name?: string
+          guest_phone?: string | null
+          guests?: number
+          id?: string
+          listing_id?: string
+          nights?: number
+          note?: string | null
+          reference?: string
+          status?: Database["public"]["Enums"]["booking_status"]
+          total_bdt?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deals: {
+        Row: {
+          code: string
+          created_at: string
+          discount_pct: number
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          starts_at: string
+          subtitle: string | null
+          terms: string | null
+          title: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_pct?: number
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          starts_at?: string
+          subtitle?: string | null
+          terms?: string | null
+          title: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_pct?: number
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          starts_at?: string
+          subtitle?: string | null
+          terms?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      destinations: {
+        Row: {
+          country: string
+          created_at: string
+          hero_url: string | null
+          id: string
+          is_published: boolean
+          name: string
+          slug: string
+          sort_order: number
+          tagline: string | null
+        }
+        Insert: {
+          country: string
+          created_at?: string
+          hero_url?: string | null
+          id?: string
+          is_published?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+          tagline?: string | null
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          hero_url?: string | null
+          id?: string
+          is_published?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          tagline?: string | null
+        }
+        Relationships: []
+      }
+      listings: {
+        Row: {
+          amenities: string[]
+          baths: number
+          bedrooms: number
+          beds: number
+          city: string
+          country: string
+          created_at: string
+          description: string | null
+          destination_id: string | null
+          hero_url: string | null
+          id: string
+          is_guest_favorite: boolean
+          is_published: boolean
+          kind: Database["public"]["Enums"]["listing_kind"]
+          max_guests: number
+          photos: string[]
+          price_bdt: number
+          rating: number
+          review_count: number
+          slug: string
+          summary: string | null
+          supplier: string
+          supplier_ref: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          amenities?: string[]
+          baths?: number
+          bedrooms?: number
+          beds?: number
+          city: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          destination_id?: string | null
+          hero_url?: string | null
+          id?: string
+          is_guest_favorite?: boolean
+          is_published?: boolean
+          kind?: Database["public"]["Enums"]["listing_kind"]
+          max_guests?: number
+          photos?: string[]
+          price_bdt: number
+          rating?: number
+          review_count?: number
+          slug: string
+          summary?: string | null
+          supplier?: string
+          supplier_ref?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          amenities?: string[]
+          baths?: number
+          bedrooms?: number
+          beds?: number
+          city?: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          destination_id?: string | null
+          hero_url?: string | null
+          id?: string
+          is_guest_favorite?: boolean
+          is_published?: boolean
+          kind?: Database["public"]["Enums"]["listing_kind"]
+          max_guests?: number
+          photos?: string[]
+          price_bdt?: number
+          rating?: number
+          review_count?: number
+          slug?: string
+          summary?: string | null
+          supplier?: string
+          supplier_ref?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listings_destination_id_fkey"
+            columns: ["destination_id"]
+            isOneToOne: false
+            referencedRelation: "destinations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+          vip_tier: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+          vip_tier?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          vip_tier?: string
+        }
+        Relationships: []
+      }
+      saved_listings: {
+        Row: {
+          created_at: string
+          id: string
+          listing_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          listing_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          listing_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_listings_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "ops" | "user"
+      booking_status: "pending" | "confirmed" | "cancelled" | "completed"
+      listing_kind: "hotel" | "home" | "apartment" | "resort" | "villa"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +505,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "ops", "user"],
+      booking_status: ["pending", "confirmed", "cancelled", "completed"],
+      listing_kind: ["hotel", "home", "apartment", "resort", "villa"],
+    },
   },
 } as const
