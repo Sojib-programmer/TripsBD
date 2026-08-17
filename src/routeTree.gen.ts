@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as SavedRouteImport } from './routes/saved'
@@ -19,6 +20,11 @@ import { Route as WelcomeRouteImport } from './routes/welcome'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -49,6 +55,7 @@ const WelcomeRoute = WelcomeRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
@@ -74,14 +83,24 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
+  fullPaths:
+    '/' | '/auth' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
-  id: '__root__' | '/' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
+  to: '/' | '/auth' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/deals'
+    | '/more'
+    | '/saved'
+    | '/trips'
+    | '/welcome'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   DealsRoute: typeof DealsRoute
   MoreRoute: typeof MoreRoute
   SavedRoute: typeof SavedRoute
@@ -96,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -138,6 +164,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   DealsRoute: DealsRoute,
   MoreRoute: MoreRoute,
   SavedRoute: SavedRoute,
