@@ -16,6 +16,7 @@ import { Route as MoreRouteImport } from './routes/more'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const WelcomeRoute = WelcomeRouteImport.update({
   path: '/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListingSlugRoute = ListingSlugRouteImport.update({
+  id: '/listing/$slug',
+  path: '/listing/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/saved': typeof SavedRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/listing/$slug': typeof ListingSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/saved': typeof SavedRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/listing/$slug': typeof ListingSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,13 +88,29 @@ export interface FileRoutesById {
   '/saved': typeof SavedRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/listing/$slug': typeof ListingSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
+    | '/'
+    | '/auth'
+    | '/deals'
+    | '/more'
+    | '/saved'
+    | '/trips'
+    | '/welcome'
+    | '/listing/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/deals' | '/more' | '/saved' | '/trips' | '/welcome'
+  to:
+    | '/'
+    | '/auth'
+    | '/deals'
+    | '/more'
+    | '/saved'
+    | '/trips'
+    | '/welcome'
+    | '/listing/$slug'
   id:
     | '__root__'
     | '/'
@@ -96,6 +120,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/trips'
     | '/welcome'
+    | '/listing/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +131,7 @@ export interface RootRouteChildren {
   SavedRoute: typeof SavedRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
+  ListingSlugRoute: typeof ListingSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -159,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/listing/$slug': {
+      id: '/listing/$slug'
+      path: '/listing/$slug'
+      fullPath: '/listing/$slug'
+      preLoaderRoute: typeof ListingSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -170,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   SavedRoute: SavedRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
+  ListingSlugRoute: ListingSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
