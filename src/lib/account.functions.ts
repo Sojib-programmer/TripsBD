@@ -142,3 +142,17 @@ export const createBooking = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return booking;
   });
+
+export const getBookingByReference = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ reference: z.string().min(4) }).parse(input))
+  .handler(async ({ context, data }) => {
+    const { data: row } = await context.supabase
+      .from("bookings")
+      .select(
+        "id, reference, check_in, check_out, guests, nights, total_bdt, status, guest_name, guest_email, deal_code, created_at, listing:listings(slug, title, city, country, hero_url)",
+      )
+      .eq("reference", data.reference.toUpperCase())
+      .maybeSingle();
+    return row;
+  });
