@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as SavedRouteImport } from './routes/saved'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
@@ -35,6 +38,11 @@ const DealsRoute = DealsRouteImport.update({
   path: '/deals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HostRoute = HostRouteImport.update({
+  id: '/host',
+  path: '/host',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MoreRoute = MoreRouteImport.update({
   id: '/more',
   path: '/more',
@@ -43,6 +51,16 @@ const MoreRoute = MoreRouteImport.update({
 const SavedRoute = SavedRouteImport.update({
   id: '/saved',
   path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TripsRoute = TripsRouteImport.update({
@@ -75,8 +93,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
+  '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
+  '/search': typeof SearchRoute
+  '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
   '/book/$slug': typeof BookSlugRoute
@@ -87,8 +108,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
+  '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
+  '/search': typeof SearchRoute
+  '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
   '/book/$slug': typeof BookSlugRoute
@@ -100,8 +124,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
+  '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
+  '/search': typeof SearchRoute
+  '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
   '/book/$slug': typeof BookSlugRoute
@@ -114,8 +141,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/deals'
+    | '/host'
     | '/more'
     | '/saved'
+    | '/search'
+    | '/support'
     | '/trips'
     | '/welcome'
     | '/book/$slug'
@@ -126,8 +156,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/deals'
+    | '/host'
     | '/more'
     | '/saved'
+    | '/search'
+    | '/support'
     | '/trips'
     | '/welcome'
     | '/book/$slug'
@@ -138,8 +171,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/deals'
+    | '/host'
     | '/more'
     | '/saved'
+    | '/search'
+    | '/support'
     | '/trips'
     | '/welcome'
     | '/book/$slug'
@@ -151,8 +187,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DealsRoute: typeof DealsRoute
+  HostRoute: typeof HostRoute
   MoreRoute: typeof MoreRoute
   SavedRoute: typeof SavedRoute
+  SearchRoute: typeof SearchRoute
+  SupportRoute: typeof SupportRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
   BookSlugRoute: typeof BookSlugRoute
@@ -183,6 +222,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DealsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/host': {
+      id: '/host'
+      path: '/host'
+      fullPath: '/host'
+      preLoaderRoute: typeof HostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/more': {
       id: '/more'
       path: '/more'
@@ -195,6 +241,20 @@ declare module '@tanstack/react-router' {
       path: '/saved'
       fullPath: '/saved'
       preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trips': {
@@ -239,8 +299,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DealsRoute: DealsRoute,
+  HostRoute: HostRoute,
   MoreRoute: MoreRoute,
   SavedRoute: SavedRoute,
+  SearchRoute: SearchRoute,
+  SupportRoute: SupportRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
   BookSlugRoute: BookSlugRoute,
