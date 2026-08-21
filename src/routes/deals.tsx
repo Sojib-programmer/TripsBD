@@ -1,9 +1,15 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Ticket, Star, Percent } from "lucide-react";
+import { Ticket } from "lucide-react";
+import { toast } from "sonner";
 
-import { AppShell, PageHeader } from "@/components/AppShell";
+import { AppShell, EmptyState, PageHeader } from "@/components/AppShell";
+import { dealsQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/deals")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(dealsQuery);
+  },
   component: DealsPage,
   head: () => ({
     meta: [
@@ -17,30 +23,53 @@ export const Route = createFileRoute("/deals")({
   }),
 });
 
-const deals = [
-  { icon: Ticket, title: "Up to 8% off", body: "On your first hotel booking", code: "FIRST8" },
-  { icon: Star, title: "VIP Gold trial", body: "Unlock up to 18% off for 30 days", code: "GOLD30" },
-  { icon: Percent, title: "Flight + Hotel", body: "Bundle and save an extra 12%", code: "BUNDLE12" },
-];
-
 function DealsPage() {
+  const { data: deals } = useSuspenseQuery(dealsQuery);
+
+  const copy = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      toast.success(`Code ${code} copied`);
+    } catch {
+      toast.error("Could not copy the code");
+    }
+  };
+
   return (
     <AppShell>
       <PageHeader title="Deals" subtitle="Member prices, refreshed daily" />
-      <ul className="space-y-3 px-5">
-        {deals.map(({ icon: Icon, title, body, code }) => (
-          <li key={code} className="flex gap-3 rounded-2xl border border-border p-4">
-            <Icon size={28} className="mt-1 shrink-0 text-dot-amber" />
-            <div>
-              <p className="text-[17px] font-semibold text-foreground">{title}</p>
-              <p className="text-[15px] text-muted-foreground">{body}</p>
-              <p className="mt-2 inline-block rounded-md bg-muted px-2 py-1 text-[13px] font-medium tracking-wide text-foreground">
-                {code}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {deals.length === 0 ? (
+        <EmptyState
+          icon={<Ticket size={34} />}
+          title="No live deals"
+          body="New member offers land here every week. Check back soon."
+        />
+      ) : (
+        <ul className="space-y-3 px-5">
+          {deals.map((deal) => (
+            <li key={deal.id} className="flex gap-3 rounded-2xl border border-border p-4">
+              <Ticket size={28} className="mt-1 shrink-0 text-dot-amber" />
+              <div className="min-w-0">
+                <p className="text-[17px] font-semibold text-foreground">{deal.title}</p>
+                <p className="text-[15px] text-muted-foreground">{deal.subtitle}</p>
+                {deal.terms ? (
+                  <p className="mt-1 text-[13px] text-muted-foreground">{deal.terms}</p>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={() => void copy(deal.code)}
+                  className="mt-2 inline-block rounded-md bg-muted px-2 py-1 text-[13px] font-medium tracking-wide text-foreground"
+                >
+                  {deal.code} · tap to copy
+                </button>
+              </div>
+              <span className="ml-auto shrink-0 self-start text-[15px] font-semibold text-brand">
+                -{deal.discount_pct}%
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </AppShell>
   );
 }
