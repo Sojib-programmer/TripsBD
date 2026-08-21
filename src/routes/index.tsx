@@ -4,8 +4,12 @@ import { useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 import { HomeScreen } from "@/components/screens/HomeScreen";
 import { hasOnboarded } from "@/lib/onboarding";
+import { homeFeedQuery } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData(homeFeedQuery);
+  },
   component: Index,
   head: () => ({
     meta: [
