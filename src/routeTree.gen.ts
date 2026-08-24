@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
@@ -38,6 +40,11 @@ const DealsRoute = DealsRouteImport.update({
   path: '/deals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FlightsRoute = FlightsRouteImport.update({
+  id: '/flights',
+  path: '/flights',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HostRoute = HostRouteImport.update({
   id: '/host',
   path: '/host',
@@ -56,6 +63,11 @@ const SavedRoute = SavedRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaysRoute = StaysRouteImport.update({
+  id: '/stays',
+  path: '/stays',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SupportRoute = SupportRouteImport.update({
@@ -93,10 +105,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
+  '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
+  '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
@@ -108,10 +122,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
+  '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
+  '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
@@ -124,10 +140,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/deals': typeof DealsRoute
+  '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
+  '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
@@ -141,10 +159,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/deals'
+    | '/flights'
     | '/host'
     | '/more'
     | '/saved'
     | '/search'
+    | '/stays'
     | '/support'
     | '/trips'
     | '/welcome'
@@ -156,10 +176,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/deals'
+    | '/flights'
     | '/host'
     | '/more'
     | '/saved'
     | '/search'
+    | '/stays'
     | '/support'
     | '/trips'
     | '/welcome'
@@ -171,10 +193,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/deals'
+    | '/flights'
     | '/host'
     | '/more'
     | '/saved'
     | '/search'
+    | '/stays'
     | '/support'
     | '/trips'
     | '/welcome'
@@ -187,10 +211,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DealsRoute: typeof DealsRoute
+  FlightsRoute: typeof FlightsRoute
   HostRoute: typeof HostRoute
   MoreRoute: typeof MoreRoute
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
+  StaysRoute: typeof StaysRoute
   SupportRoute: typeof SupportRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
@@ -222,6 +248,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DealsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/flights': {
+      id: '/flights'
+      path: '/flights'
+      fullPath: '/flights'
+      preLoaderRoute: typeof FlightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/host': {
       id: '/host'
       path: '/host'
@@ -248,6 +281,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stays': {
+      id: '/stays'
+      path: '/stays'
+      fullPath: '/stays'
+      preLoaderRoute: typeof StaysRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/support': {
@@ -299,10 +339,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DealsRoute: DealsRoute,
+  FlightsRoute: FlightsRoute,
   HostRoute: HostRoute,
   MoreRoute: MoreRoute,
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
+  StaysRoute: StaysRoute,
   SupportRoute: SupportRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
