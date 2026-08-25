@@ -206,7 +206,7 @@ function FlightsPage() {
                       </p>
                     </div>
                     <Link
-                      to="/flights/book"
+                      to="/book-flight"
                       search={{
                         flightId: f.id,
                         depart: search.depart,

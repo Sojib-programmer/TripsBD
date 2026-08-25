@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BookFlightRouteImport } from './routes/book-flight'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
@@ -21,9 +22,11 @@ import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
+import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -33,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookFlightRoute = BookFlightRouteImport.update({
+  id: '/book-flight',
+  path: '/book-flight',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -85,6 +93,11 @@ const WelcomeRoute = WelcomeRouteImport.update({
   path: '/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
+  id: '/activities/',
+  path: '/activities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookSlugRoute = BookSlugRouteImport.update({
   id: '/book/$slug',
   path: '/book/$slug',
@@ -100,10 +113,16 @@ const ListingSlugRoute = ListingSlugRouteImport.update({
   path: '/listing/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrderReferenceRoute = OrderReferenceRouteImport.update({
+  id: '/order/$reference',
+  path: '/order/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/book-flight': typeof BookFlightRoute
   '/deals': typeof DealsRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
@@ -117,10 +136,13 @@ export interface FileRoutesByFullPath {
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
+  '/order/$reference': typeof OrderReferenceRoute
+  '/activities/': typeof ActivitiesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/book-flight': typeof BookFlightRoute
   '/deals': typeof DealsRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
@@ -134,11 +156,14 @@ export interface FileRoutesByTo {
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
+  '/order/$reference': typeof OrderReferenceRoute
+  '/activities': typeof ActivitiesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/book-flight': typeof BookFlightRoute
   '/deals': typeof DealsRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
@@ -152,12 +177,15 @@ export interface FileRoutesById {
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
+  '/order/$reference': typeof OrderReferenceRoute
+  '/activities/': typeof ActivitiesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
+    | '/book-flight'
     | '/deals'
     | '/flights'
     | '/host'
@@ -171,10 +199,13 @@ export interface FileRouteTypes {
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
+    | '/order/$reference'
+    | '/activities/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/book-flight'
     | '/deals'
     | '/flights'
     | '/host'
@@ -188,10 +219,13 @@ export interface FileRouteTypes {
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
+    | '/order/$reference'
+    | '/activities'
   id:
     | '__root__'
     | '/'
     | '/auth'
+    | '/book-flight'
     | '/deals'
     | '/flights'
     | '/host'
@@ -205,11 +239,14 @@ export interface FileRouteTypes {
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
+    | '/order/$reference'
+    | '/activities/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  BookFlightRoute: typeof BookFlightRoute
   DealsRoute: typeof DealsRoute
   FlightsRoute: typeof FlightsRoute
   HostRoute: typeof HostRoute
@@ -223,6 +260,8 @@ export interface RootRouteChildren {
   BookSlugRoute: typeof BookSlugRoute
   BookingReferenceRoute: typeof BookingReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
+  OrderReferenceRoute: typeof OrderReferenceRoute
+  ActivitiesIndexRoute: typeof ActivitiesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -239,6 +278,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-flight': {
+      id: '/book-flight'
+      path: '/book-flight'
+      fullPath: '/book-flight'
+      preLoaderRoute: typeof BookFlightRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -311,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activities/': {
+      id: '/activities/'
+      path: '/activities'
+      fullPath: '/activities/'
+      preLoaderRoute: typeof ActivitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/book/$slug': {
       id: '/book/$slug'
       path: '/book/$slug'
@@ -332,12 +385,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListingSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/order/$reference': {
+      id: '/order/$reference'
+      path: '/order/$reference'
+      fullPath: '/order/$reference'
+      preLoaderRoute: typeof OrderReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  BookFlightRoute: BookFlightRoute,
   DealsRoute: DealsRoute,
   FlightsRoute: FlightsRoute,
   HostRoute: HostRoute,
@@ -351,6 +412,8 @@ const rootRouteChildren: RootRouteChildren = {
   BookSlugRoute: BookSlugRoute,
   BookingReferenceRoute: BookingReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
+  OrderReferenceRoute: OrderReferenceRoute,
+  ActivitiesIndexRoute: ActivitiesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
