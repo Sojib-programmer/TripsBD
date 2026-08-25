@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BookFlightRouteImport } from './routes/book-flight'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
@@ -33,6 +34,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookFlightRoute = BookFlightRouteImport.update({
+  id: '/book-flight',
+  path: '/book-flight',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -104,6 +110,7 @@ const ListingSlugRoute = ListingSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/book-flight': typeof BookFlightRoute
   '/deals': typeof DealsRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/book-flight': typeof BookFlightRoute
   '/deals': typeof DealsRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/book-flight': typeof BookFlightRoute
   '/deals': typeof DealsRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/book-flight'
     | '/deals'
     | '/flights'
     | '/host'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/book-flight'
     | '/deals'
     | '/flights'
     | '/host'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/book-flight'
     | '/deals'
     | '/flights'
     | '/host'
@@ -210,6 +222,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  BookFlightRoute: typeof BookFlightRoute
   DealsRoute: typeof DealsRoute
   FlightsRoute: typeof FlightsRoute
   HostRoute: typeof HostRoute
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-flight': {
+      id: '/book-flight'
+      path: '/book-flight'
+      fullPath: '/book-flight'
+      preLoaderRoute: typeof BookFlightRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -338,6 +358,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  BookFlightRoute: BookFlightRoute,
   DealsRoute: DealsRoute,
   FlightsRoute: FlightsRoute,
   HostRoute: HostRoute,
