@@ -22,6 +22,7 @@ import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
@@ -92,6 +93,11 @@ const WelcomeRoute = WelcomeRouteImport.update({
   path: '/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
+  id: '/activities/',
+  path: '/activities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookSlugRoute = BookSlugRouteImport.update({
   id: '/book/$slug',
   path: '/book/$slug',
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/activities/': typeof ActivitiesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/activities': typeof ActivitiesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/activities/': typeof ActivitiesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/activities/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/activities'
   id:
     | '__root__'
     | '/'
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/activities/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   BookingReferenceRoute: typeof BookingReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
+  ActivitiesIndexRoute: typeof ActivitiesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -344,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activities/': {
+      id: '/activities/'
+      path: '/activities'
+      fullPath: '/activities/'
+      preLoaderRoute: typeof ActivitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/book/$slug': {
       id: '/book/$slug'
       path: '/book/$slug'
@@ -393,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingReferenceRoute: BookingReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
   OrderReferenceRoute: OrderReferenceRoute,
+  ActivitiesIndexRoute: ActivitiesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
