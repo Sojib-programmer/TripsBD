@@ -23,6 +23,7 @@ import { Route as SupportRouteImport } from './routes/support'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
+import { Route as ActivitiesSlugRouteImport } from './routes/activities.$slug'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
@@ -98,6 +99,11 @@ const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
   path: '/activities/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivitiesSlugRoute = ActivitiesSlugRouteImport.update({
+  id: '/activities/$slug',
+  path: '/activities/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookSlugRoute = BookSlugRouteImport.update({
   id: '/book/$slug',
   path: '/book/$slug',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/trips'
     | '/welcome'
+    | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/trips'
     | '/welcome'
+    | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
@@ -236,6 +247,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/trips'
     | '/welcome'
+    | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
@@ -257,6 +269,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
+  ActivitiesSlugRoute: typeof ActivitiesSlugRoute
   BookSlugRoute: typeof BookSlugRoute
   BookingReferenceRoute: typeof BookingReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActivitiesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activities/$slug': {
+      id: '/activities/$slug'
+      path: '/activities/$slug'
+      fullPath: '/activities/$slug'
+      preLoaderRoute: typeof ActivitiesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/book/$slug': {
       id: '/book/$slug'
       path: '/book/$slug'
@@ -409,6 +429,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
+  ActivitiesSlugRoute: ActivitiesSlugRoute,
   BookSlugRoute: BookSlugRoute,
   BookingReferenceRoute: BookingReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
