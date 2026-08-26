@@ -20,6 +20,7 @@ import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as TransfersRouteImport } from './routes/transfers'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
@@ -84,6 +85,11 @@ const SupportRoute = SupportRouteImport.update({
   path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransfersRoute = TransfersRouteImport.update({
+  id: '/transfers',
+  path: '/transfers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TripsRoute = TripsRouteImport.update({
   id: '/trips',
   path: '/trips',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/stays'
     | '/support'
+    | '/transfers'
     | '/trips'
     | '/welcome'
     | '/activities/$slug'
@@ -224,6 +234,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/stays'
     | '/support'
+    | '/transfers'
     | '/trips'
     | '/welcome'
     | '/activities/$slug'
@@ -245,6 +256,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/stays'
     | '/support'
+    | '/transfers'
     | '/trips'
     | '/welcome'
     | '/activities/$slug'
@@ -267,6 +279,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   StaysRoute: typeof StaysRoute
   SupportRoute: typeof SupportRoute
+  TransfersRoute: typeof TransfersRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
   ActivitiesSlugRoute: typeof ActivitiesSlugRoute
@@ -356,6 +369,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transfers': {
+      id: '/transfers'
+      path: '/transfers'
+      fullPath: '/transfers'
+      preLoaderRoute: typeof TransfersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trips': {
       id: '/trips'
       path: '/trips'
@@ -427,6 +447,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   StaysRoute: StaysRoute,
   SupportRoute: SupportRoute,
+  TransfersRoute: TransfersRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
   ActivitiesSlugRoute: ActivitiesSlugRoute,
