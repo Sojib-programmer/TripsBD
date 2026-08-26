@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookFlightRouteImport } from './routes/book-flight'
 import { Route as CarsRouteImport } from './routes/cars'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as EsimRouteImport } from './routes/esim'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
@@ -54,6 +55,11 @@ const CarsRoute = CarsRouteImport.update({
 const DealsRoute = DealsRouteImport.update({
   id: '/deals',
   path: '/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsimRoute = EsimRouteImport.update({
+  id: '/esim',
+  path: '/esim',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FlightsRoute = FlightsRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/book-flight': typeof BookFlightRoute
   '/cars': typeof CarsRoute
   '/deals': typeof DealsRoute
+  '/esim': typeof EsimRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/book-flight': typeof BookFlightRoute
   '/cars': typeof CarsRoute
   '/deals': typeof DealsRoute
+  '/esim': typeof EsimRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
@@ -190,6 +198,7 @@ export interface FileRoutesById {
   '/book-flight': typeof BookFlightRoute
   '/cars': typeof CarsRoute
   '/deals': typeof DealsRoute
+  '/esim': typeof EsimRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/book-flight'
     | '/cars'
     | '/deals'
+    | '/esim'
     | '/flights'
     | '/host'
     | '/more'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/book-flight'
     | '/cars'
     | '/deals'
+    | '/esim'
     | '/flights'
     | '/host'
     | '/more'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/book-flight'
     | '/cars'
     | '/deals'
+    | '/esim'
     | '/flights'
     | '/host'
     | '/more'
@@ -285,6 +297,7 @@ export interface RootRouteChildren {
   BookFlightRoute: typeof BookFlightRoute
   CarsRoute: typeof CarsRoute
   DealsRoute: typeof DealsRoute
+  EsimRoute: typeof EsimRoute
   FlightsRoute: typeof FlightsRoute
   HostRoute: typeof HostRoute
   MoreRoute: typeof MoreRoute
@@ -338,6 +351,13 @@ declare module '@tanstack/react-router' {
       path: '/deals'
       fullPath: '/deals'
       preLoaderRoute: typeof DealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/esim': {
+      id: '/esim'
+      path: '/esim'
+      fullPath: '/esim'
+      preLoaderRoute: typeof EsimRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flights': {
@@ -461,6 +481,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookFlightRoute: BookFlightRoute,
   CarsRoute: CarsRoute,
   DealsRoute: DealsRoute,
+  EsimRoute: EsimRoute,
   FlightsRoute: FlightsRoute,
   HostRoute: HostRoute,
   MoreRoute: MoreRoute,
