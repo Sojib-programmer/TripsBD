@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookFlightRouteImport } from './routes/book-flight'
+import { Route as CarsRouteImport } from './routes/cars'
 import { Route as DealsRouteImport } from './routes/deals'
+import { Route as EsimRouteImport } from './routes/esim'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
@@ -20,9 +22,11 @@ import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as TransfersRouteImport } from './routes/transfers'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
+import { Route as ActivitiesSlugRouteImport } from './routes/activities.$slug'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
@@ -43,9 +47,19 @@ const BookFlightRoute = BookFlightRouteImport.update({
   path: '/book-flight',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CarsRoute = CarsRouteImport.update({
+  id: '/cars',
+  path: '/cars',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DealsRoute = DealsRouteImport.update({
   id: '/deals',
   path: '/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsimRoute = EsimRouteImport.update({
+  id: '/esim',
+  path: '/esim',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FlightsRoute = FlightsRouteImport.update({
@@ -83,6 +97,11 @@ const SupportRoute = SupportRouteImport.update({
   path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransfersRoute = TransfersRouteImport.update({
+  id: '/transfers',
+  path: '/transfers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TripsRoute = TripsRouteImport.update({
   id: '/trips',
   path: '/trips',
@@ -96,6 +115,11 @@ const WelcomeRoute = WelcomeRouteImport.update({
 const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
   id: '/activities/',
   path: '/activities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesSlugRoute = ActivitiesSlugRouteImport.update({
+  id: '/activities/$slug',
+  path: '/activities/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookSlugRoute = BookSlugRouteImport.update({
@@ -123,7 +147,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/book-flight': typeof BookFlightRoute
+  '/cars': typeof CarsRoute
   '/deals': typeof DealsRoute
+  '/esim': typeof EsimRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
@@ -131,8 +157,10 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
@@ -143,7 +171,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/book-flight': typeof BookFlightRoute
+  '/cars': typeof CarsRoute
   '/deals': typeof DealsRoute
+  '/esim': typeof EsimRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
@@ -151,8 +181,10 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
@@ -164,7 +196,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/book-flight': typeof BookFlightRoute
+  '/cars': typeof CarsRoute
   '/deals': typeof DealsRoute
+  '/esim': typeof EsimRoute
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
@@ -172,8 +206,10 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
@@ -186,7 +222,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/book-flight'
+    | '/cars'
     | '/deals'
+    | '/esim'
     | '/flights'
     | '/host'
     | '/more'
@@ -194,8 +232,10 @@ export interface FileRouteTypes {
     | '/search'
     | '/stays'
     | '/support'
+    | '/transfers'
     | '/trips'
     | '/welcome'
+    | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
@@ -206,7 +246,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/book-flight'
+    | '/cars'
     | '/deals'
+    | '/esim'
     | '/flights'
     | '/host'
     | '/more'
@@ -214,8 +256,10 @@ export interface FileRouteTypes {
     | '/search'
     | '/stays'
     | '/support'
+    | '/transfers'
     | '/trips'
     | '/welcome'
+    | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
@@ -226,7 +270,9 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/book-flight'
+    | '/cars'
     | '/deals'
+    | '/esim'
     | '/flights'
     | '/host'
     | '/more'
@@ -234,8 +280,10 @@ export interface FileRouteTypes {
     | '/search'
     | '/stays'
     | '/support'
+    | '/transfers'
     | '/trips'
     | '/welcome'
+    | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
     | '/listing/$slug'
@@ -247,7 +295,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   BookFlightRoute: typeof BookFlightRoute
+  CarsRoute: typeof CarsRoute
   DealsRoute: typeof DealsRoute
+  EsimRoute: typeof EsimRoute
   FlightsRoute: typeof FlightsRoute
   HostRoute: typeof HostRoute
   MoreRoute: typeof MoreRoute
@@ -255,8 +305,10 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   StaysRoute: typeof StaysRoute
   SupportRoute: typeof SupportRoute
+  TransfersRoute: typeof TransfersRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
+  ActivitiesSlugRoute: typeof ActivitiesSlugRoute
   BookSlugRoute: typeof BookSlugRoute
   BookingReferenceRoute: typeof BookingReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
@@ -287,11 +339,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookFlightRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cars': {
+      id: '/cars'
+      path: '/cars'
+      fullPath: '/cars'
+      preLoaderRoute: typeof CarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/deals': {
       id: '/deals'
       path: '/deals'
       fullPath: '/deals'
       preLoaderRoute: typeof DealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/esim': {
+      id: '/esim'
+      path: '/esim'
+      fullPath: '/esim'
+      preLoaderRoute: typeof EsimRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flights': {
@@ -343,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transfers': {
+      id: '/transfers'
+      path: '/transfers'
+      fullPath: '/transfers'
+      preLoaderRoute: typeof TransfersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trips': {
       id: '/trips'
       path: '/trips'
@@ -362,6 +435,13 @@ declare module '@tanstack/react-router' {
       path: '/activities'
       fullPath: '/activities/'
       preLoaderRoute: typeof ActivitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities/$slug': {
+      id: '/activities/$slug'
+      path: '/activities/$slug'
+      fullPath: '/activities/$slug'
+      preLoaderRoute: typeof ActivitiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/book/$slug': {
@@ -399,7 +479,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   BookFlightRoute: BookFlightRoute,
+  CarsRoute: CarsRoute,
   DealsRoute: DealsRoute,
+  EsimRoute: EsimRoute,
   FlightsRoute: FlightsRoute,
   HostRoute: HostRoute,
   MoreRoute: MoreRoute,
@@ -407,8 +489,10 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   StaysRoute: StaysRoute,
   SupportRoute: SupportRoute,
+  TransfersRoute: TransfersRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
+  ActivitiesSlugRoute: ActivitiesSlugRoute,
   BookSlugRoute: BookSlugRoute,
   BookingReferenceRoute: BookingReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
