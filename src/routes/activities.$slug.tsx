@@ -104,7 +104,15 @@ function ActivityPage() {
 
       <section className="space-y-3 border-t border-border px-5 py-4">
         <h2 className="text-[19px] font-semibold text-foreground">Choose date & time</h2>
-        <FieldRow label="Date" value={prettyDate(date)} onClick={() => setOpenDate(true)} />
+        <FieldRow label="Date">
+          <button
+            type="button"
+            onClick={() => setOpenDate(true)}
+            className="w-full rounded-xl border border-border px-4 py-3 text-left text-[16px] text-foreground"
+          >
+            {prettyDate(date)}
+          </button>
+        </FieldRow>
         <div className="flex flex-wrap gap-2">
           {slots.map((s) => (
             <button
@@ -147,9 +155,8 @@ function ActivityPage() {
 
       <Sheet open={openDate} title="Select date" onClose={() => setOpenDate(false)}>
         <DateRangeCalendar
-          mode="single"
+          single
           start={date}
-          end=""
           onChange={(s) => {
             setDate(s);
             setOpenDate(false);
