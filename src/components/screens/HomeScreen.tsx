@@ -9,7 +9,9 @@ import {
   Gift,
   Ticket,
   Search,
+  Bell,
 } from "lucide-react";
+import type { ReactNode } from "react";
 
 import tileHotels from "@/assets/tile-hotels.png";
 import tileFlights from "@/assets/tile-flights.png";
@@ -21,34 +23,25 @@ import { useAuth } from "@/hooks/useAuth";
 import { homeFeedQuery } from "@/lib/queries";
 import { Logo } from "../Logo";
 
-const services = [
-  { icon: Tent, label: "Attractions" },
-  { icon: CarTaxiFront, label: "Airport Transfer" },
-  { icon: Car, label: "Car Rentals" },
-  { icon: Smartphone, label: "eSIM" },
-  { icon: TrainFront, label: "Trains", muted: true },
-];
-
 function Tile({
   title,
   bg,
   img,
   alt,
   className = "",
+  href,
 }: {
   title: string;
   bg: string;
   img: string;
   alt: string;
   className?: string;
+  href: ReactNode;
 }) {
   return (
-    <Link
-      to="/search"
-      search={{ q: "", guests: 2 }}
-      className={`relative flex h-[110px] overflow-hidden rounded-2xl p-4 text-left ${bg} ${className}`}
-    >
-      <span className="relative z-10 whitespace-pre-line text-[22px] font-bold leading-tight text-foreground">
+    <div className={`relative flex h-[110px] overflow-hidden rounded-2xl ${bg} ${className}`}>
+      {href}
+      <span className="pointer-events-none absolute left-4 top-4 z-10 whitespace-pre-line text-[22px] font-bold leading-tight text-foreground">
         {title}
       </span>
       <img
@@ -57,11 +50,13 @@ function Tile({
         loading="lazy"
         width={512}
         height={512}
-        className="absolute -bottom-1 right-0 h-[70px] w-[70px] object-contain"
+        className="pointer-events-none absolute -bottom-1 right-0 h-[70px] w-[70px] object-contain"
       />
-    </Link>
+    </div>
   );
 }
+
+const fill = "absolute inset-0 z-0";
 
 export function HomeScreen() {
   const { data } = useSuspenseQuery(homeFeedQuery);
@@ -71,19 +66,39 @@ export function HomeScreen() {
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 pt-6">
         <Logo size="sm" />
-        <Link
-          to="/search"
-          search={{ q: "", guests: 2 }}
-          aria-label="Search stays"
-          className="rounded-full border border-border p-2 text-muted-foreground"
-        >
-          <Search size={20} />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/notifications"
+            aria-label="Notifications"
+            className="rounded-full border border-border p-2 text-muted-foreground"
+          >
+            <Bell size={20} />
+          </Link>
+          <Link
+            to="/stays"
+            aria-label="Search stays"
+            className="rounded-full border border-border p-2 text-muted-foreground"
+          >
+            <Search size={20} />
+          </Link>
+        </div>
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-3 px-5">
-        <Tile title="Hotels" bg="bg-tile-hotels" img={tileHotels} alt="Hotel building" />
-        <Tile title="Flights" bg="bg-tile-flights" img={tileFlights} alt="Airplane" />
+        <Tile
+          title="Hotels"
+          bg="bg-tile-hotels"
+          img={tileHotels}
+          alt="Hotel building"
+          href={<Link to="/stays" aria-label="Search hotels" className={fill} />}
+        />
+        <Tile
+          title="Flights"
+          bg="bg-tile-flights"
+          img={tileFlights}
+          alt="Airplane"
+          href={<Link to="/flights" aria-label="Search flights" className={fill} />}
+        />
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-3 px-5">
@@ -93,6 +108,7 @@ export function HomeScreen() {
           img={tileFlightHotel}
           alt="Plane and hotel"
           className="[&_span]:text-[17px]"
+          href={<Link to="/packages" aria-label="Flight plus hotel bundles" className={fill} />}
         />
         <Tile
           title="Activities"
@@ -100,6 +116,7 @@ export function HomeScreen() {
           img={tileActivities}
           alt="Ferris wheel"
           className="[&_span]:text-[17px]"
+          href={<Link to="/activities" aria-label="Browse activities" className={fill} />}
         />
         <Tile
           title={"Homes\n& Apts"}
@@ -107,22 +124,40 @@ export function HomeScreen() {
           img={tileHomes}
           alt="Houses"
           className="[&_span]:text-[17px]"
+          href={
+            <Link
+              to="/stays"
+              search={{ kind: "home" }}
+              aria-label="Homes and apartments"
+              className={fill}
+            />
+          }
         />
       </div>
 
       <div className="mx-5 mt-4 grid grid-cols-5 gap-1 rounded-2xl border border-border px-2 py-4">
-        {services.map(({ icon: Icon, label, muted }) => (
-          <button key={label} className="flex flex-col items-center gap-2">
-            <Icon size={26} className={muted ? "text-muted-foreground" : "text-brand"} />
-            <span
-              className={`text-center text-[13px] leading-tight ${
-                muted ? "text-muted-foreground" : "text-foreground"
-              }`}
-            >
-              {label}
-            </span>
-          </button>
-        ))}
+        <Link to="/activities" className="flex flex-col items-center gap-2">
+          <Tent size={26} className="text-brand" />
+          <span className="text-center text-[13px] leading-tight text-foreground">Attractions</span>
+        </Link>
+        <Link to="/transfers" className="flex flex-col items-center gap-2">
+          <CarTaxiFront size={26} className="text-brand" />
+          <span className="text-center text-[13px] leading-tight text-foreground">
+            Airport Transfer
+          </span>
+        </Link>
+        <Link to="/cars" className="flex flex-col items-center gap-2">
+          <Car size={26} className="text-brand" />
+          <span className="text-center text-[13px] leading-tight text-foreground">Car Rentals</span>
+        </Link>
+        <Link to="/esim" className="flex flex-col items-center gap-2">
+          <Smartphone size={26} className="text-brand" />
+          <span className="text-center text-[13px] leading-tight text-foreground">eSIM</span>
+        </Link>
+        <Link to="/trains" className="flex flex-col items-center gap-2">
+          <TrainFront size={26} className="text-brand" />
+          <span className="text-center text-[13px] leading-tight text-foreground">Trains</span>
+        </Link>
       </div>
 
       {data.destinations.length ? (
