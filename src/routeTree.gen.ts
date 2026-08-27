@@ -18,10 +18,13 @@ import { Route as EsimRouteImport } from './routes/esim'
 import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as PackagesRouteImport } from './routes/packages'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as TrainsRouteImport } from './routes/trains'
 import { Route as TransfersRouteImport } from './routes/transfers'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
@@ -77,6 +80,16 @@ const MoreRoute = MoreRouteImport.update({
   path: '/more',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PackagesRoute = PackagesRouteImport.update({
+  id: '/packages',
+  path: '/packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavedRoute = SavedRouteImport.update({
   id: '/saved',
   path: '/saved',
@@ -95,6 +108,11 @@ const StaysRoute = StaysRouteImport.update({
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrainsRoute = TrainsRouteImport.update({
+  id: '/trains',
+  path: '/trains',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransfersRoute = TransfersRouteImport.update({
@@ -153,10 +171,13 @@ export interface FileRoutesByFullPath {
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
+  '/notifications': typeof NotificationsRoute
+  '/packages': typeof PackagesRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/trains': typeof TrainsRoute
   '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
@@ -177,10 +198,13 @@ export interface FileRoutesByTo {
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
+  '/notifications': typeof NotificationsRoute
+  '/packages': typeof PackagesRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/trains': typeof TrainsRoute
   '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
@@ -202,10 +226,13 @@ export interface FileRoutesById {
   '/flights': typeof FlightsRoute
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
+  '/notifications': typeof NotificationsRoute
+  '/packages': typeof PackagesRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/trains': typeof TrainsRoute
   '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
@@ -228,10 +255,13 @@ export interface FileRouteTypes {
     | '/flights'
     | '/host'
     | '/more'
+    | '/notifications'
+    | '/packages'
     | '/saved'
     | '/search'
     | '/stays'
     | '/support'
+    | '/trains'
     | '/transfers'
     | '/trips'
     | '/welcome'
@@ -252,10 +282,13 @@ export interface FileRouteTypes {
     | '/flights'
     | '/host'
     | '/more'
+    | '/notifications'
+    | '/packages'
     | '/saved'
     | '/search'
     | '/stays'
     | '/support'
+    | '/trains'
     | '/transfers'
     | '/trips'
     | '/welcome'
@@ -276,10 +309,13 @@ export interface FileRouteTypes {
     | '/flights'
     | '/host'
     | '/more'
+    | '/notifications'
+    | '/packages'
     | '/saved'
     | '/search'
     | '/stays'
     | '/support'
+    | '/trains'
     | '/transfers'
     | '/trips'
     | '/welcome'
@@ -301,10 +337,13 @@ export interface RootRouteChildren {
   FlightsRoute: typeof FlightsRoute
   HostRoute: typeof HostRoute
   MoreRoute: typeof MoreRoute
+  NotificationsRoute: typeof NotificationsRoute
+  PackagesRoute: typeof PackagesRoute
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   StaysRoute: typeof StaysRoute
   SupportRoute: typeof SupportRoute
+  TrainsRoute: typeof TrainsRoute
   TransfersRoute: typeof TransfersRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
@@ -381,6 +420,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/packages': {
+      id: '/packages'
+      path: '/packages'
+      fullPath: '/packages'
+      preLoaderRoute: typeof PackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saved': {
       id: '/saved'
       path: '/saved'
@@ -407,6 +460,13 @@ declare module '@tanstack/react-router' {
       path: '/support'
       fullPath: '/support'
       preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trains': {
+      id: '/trains'
+      path: '/trains'
+      fullPath: '/trains'
+      preLoaderRoute: typeof TrainsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transfers': {
@@ -485,10 +545,13 @@ const rootRouteChildren: RootRouteChildren = {
   FlightsRoute: FlightsRoute,
   HostRoute: HostRoute,
   MoreRoute: MoreRoute,
+  NotificationsRoute: NotificationsRoute,
+  PackagesRoute: PackagesRoute,
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   StaysRoute: StaysRoute,
   SupportRoute: SupportRoute,
+  TrainsRoute: TrainsRoute,
   TransfersRoute: TransfersRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
