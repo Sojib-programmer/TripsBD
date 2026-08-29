@@ -1,0 +1,61 @@
+{
+  "id": "/",
+  "name": "Trips.bd — Hotels, Flights & Activities",
+  "short_name": "Trips.bd",
+  "description": "Book hotels, homes, flights, trains, airport transfers, car rentals, activities and eSIM across Bangladesh.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "background_color": "#ffffff",
+  "theme_color": "#2a4bd7",
+  "categories": ["travel", "lifestyle", "navigation"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/store/screenshot-home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Search hotels, flights and more"
+    },
+    {
+      "src": "/store/screenshot-stays.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Stays across Bangladesh"
+    },
+    {
+      "src": "/store/screenshot-flights.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Compare domestic flights"
+    },
+    {
+      "src": "/store/screenshot-trips.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Track every booking in one place"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Search stays", "url": "/stays" },
+    { "name": "Search flights", "url": "/flights" },
+    { "name": "My trips", "url": "/trips" }
+  ],
+  "prefer_related_applications": false
+}
