@@ -21,6 +21,16 @@ import tileHomes from "@/assets/tile-homes.png";
 import { ListingCard } from "@/components/ListingCard";
 import { useAuth } from "@/hooks/useAuth";
 import { homeFeedQuery } from "@/lib/queries";
+import {
+  activitiesSearch,
+  carsSearch,
+  esimSearch,
+  flightsSearch,
+  packagesSearch,
+  staysSearch,
+  trainsSearch,
+  transfersSearch,
+} from "@/lib/search-defaults";
 import { Logo } from "../Logo";
 
 function Tile({
@@ -76,6 +86,7 @@ export function HomeScreen() {
           </Link>
           <Link
             to="/stays"
+            search={staysSearch()}
             aria-label="Search stays"
             className="rounded-full border border-border p-2 text-muted-foreground"
           >
@@ -90,14 +101,14 @@ export function HomeScreen() {
           bg="bg-tile-hotels"
           img={tileHotels}
           alt="Hotel building"
-          href={<Link to="/stays" aria-label="Search hotels" className={fill} />}
+          href={<Link to="/stays" search={staysSearch()} aria-label="Search hotels" className={fill} />}
         />
         <Tile
           title="Flights"
           bg="bg-tile-flights"
           img={tileFlights}
           alt="Airplane"
-          href={<Link to="/flights" aria-label="Search flights" className={fill} />}
+          href={<Link to="/flights" search={flightsSearch()} aria-label="Search flights" className={fill} />}
         />
       </div>
 
@@ -108,7 +119,7 @@ export function HomeScreen() {
           img={tileFlightHotel}
           alt="Plane and hotel"
           className="[&_span]:text-[17px]"
-          href={<Link to="/packages" aria-label="Flight plus hotel bundles" className={fill} />}
+          href={<Link to="/packages" search={packagesSearch()} aria-label="Flight plus hotel bundles" className={fill} />}
         />
         <Tile
           title="Activities"
@@ -116,7 +127,7 @@ export function HomeScreen() {
           img={tileActivities}
           alt="Ferris wheel"
           className="[&_span]:text-[17px]"
-          href={<Link to="/activities" aria-label="Browse activities" className={fill} />}
+          href={<Link to="/activities" search={activitiesSearch()} aria-label="Browse activities" className={fill} />}
         />
         <Tile
           title={"Homes\n& Apts"}
@@ -127,7 +138,7 @@ export function HomeScreen() {
           href={
             <Link
               to="/stays"
-              search={{ kind: "home" }}
+              search={staysSearch({ kind: "home" })}
               aria-label="Homes and apartments"
               className={fill}
             />
@@ -136,25 +147,25 @@ export function HomeScreen() {
       </div>
 
       <div className="mx-5 mt-4 grid grid-cols-5 gap-1 rounded-2xl border border-border px-2 py-4">
-        <Link to="/activities" className="flex flex-col items-center gap-2">
+        <Link to="/activities" search={activitiesSearch()} className="flex flex-col items-center gap-2">
           <Tent size={26} className="text-brand" />
           <span className="text-center text-[13px] leading-tight text-foreground">Attractions</span>
         </Link>
-        <Link to="/transfers" className="flex flex-col items-center gap-2">
+        <Link to="/transfers" search={transfersSearch()} className="flex flex-col items-center gap-2">
           <CarTaxiFront size={26} className="text-brand" />
           <span className="text-center text-[13px] leading-tight text-foreground">
             Airport Transfer
           </span>
         </Link>
-        <Link to="/cars" className="flex flex-col items-center gap-2">
+        <Link to="/cars" search={carsSearch()} className="flex flex-col items-center gap-2">
           <Car size={26} className="text-brand" />
           <span className="text-center text-[13px] leading-tight text-foreground">Car Rentals</span>
         </Link>
-        <Link to="/esim" className="flex flex-col items-center gap-2">
+        <Link to="/esim" search={esimSearch()} className="flex flex-col items-center gap-2">
           <Smartphone size={26} className="text-brand" />
           <span className="text-center text-[13px] leading-tight text-foreground">eSIM</span>
         </Link>
-        <Link to="/trains" className="flex flex-col items-center gap-2">
+        <Link to="/trains" search={trainsSearch()} className="flex flex-col items-center gap-2">
           <TrainFront size={26} className="text-brand" />
           <span className="text-center text-[13px] leading-tight text-foreground">Trains</span>
         </Link>
