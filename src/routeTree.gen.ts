@@ -20,14 +20,17 @@ import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as PackagesRouteImport } from './routes/packages'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TrainsRouteImport } from './routes/trains'
 import { Route as TransfersRouteImport } from './routes/transfers'
 import { Route as TripsRouteImport } from './routes/trips'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as AccountDeleteRouteImport } from './routes/account.delete'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
 import { Route as ActivitiesSlugRouteImport } from './routes/activities.$slug'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
@@ -90,6 +93,11 @@ const PackagesRoute = PackagesRouteImport.update({
   path: '/packages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavedRoute = SavedRouteImport.update({
   id: '/saved',
   path: '/saved',
@@ -110,6 +118,11 @@ const SupportRoute = SupportRouteImport.update({
   path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrainsRoute = TrainsRouteImport.update({
   id: '/trains',
   path: '/trains',
@@ -128,6 +141,11 @@ const TripsRoute = TripsRouteImport.update({
 const WelcomeRoute = WelcomeRouteImport.update({
   id: '/welcome',
   path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountDeleteRoute = AccountDeleteRouteImport.update({
+  id: '/account/delete',
+  path: '/account/delete',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
@@ -173,14 +191,17 @@ export interface FileRoutesByFullPath {
   '/more': typeof MoreRoute
   '/notifications': typeof NotificationsRoute
   '/packages': typeof PackagesRoute
+  '/privacy': typeof PrivacyRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/terms': typeof TermsRoute
   '/trains': typeof TrainsRoute
   '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/account/delete': typeof AccountDeleteRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
@@ -200,14 +221,17 @@ export interface FileRoutesByTo {
   '/more': typeof MoreRoute
   '/notifications': typeof NotificationsRoute
   '/packages': typeof PackagesRoute
+  '/privacy': typeof PrivacyRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/terms': typeof TermsRoute
   '/trains': typeof TrainsRoute
   '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/account/delete': typeof AccountDeleteRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
@@ -228,14 +252,17 @@ export interface FileRoutesById {
   '/more': typeof MoreRoute
   '/notifications': typeof NotificationsRoute
   '/packages': typeof PackagesRoute
+  '/privacy': typeof PrivacyRoute
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
+  '/terms': typeof TermsRoute
   '/trains': typeof TrainsRoute
   '/transfers': typeof TransfersRoute
   '/trips': typeof TripsRoute
   '/welcome': typeof WelcomeRoute
+  '/account/delete': typeof AccountDeleteRoute
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
@@ -257,14 +284,17 @@ export interface FileRouteTypes {
     | '/more'
     | '/notifications'
     | '/packages'
+    | '/privacy'
     | '/saved'
     | '/search'
     | '/stays'
     | '/support'
+    | '/terms'
     | '/trains'
     | '/transfers'
     | '/trips'
     | '/welcome'
+    | '/account/delete'
     | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
@@ -284,14 +314,17 @@ export interface FileRouteTypes {
     | '/more'
     | '/notifications'
     | '/packages'
+    | '/privacy'
     | '/saved'
     | '/search'
     | '/stays'
     | '/support'
+    | '/terms'
     | '/trains'
     | '/transfers'
     | '/trips'
     | '/welcome'
+    | '/account/delete'
     | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
@@ -311,14 +344,17 @@ export interface FileRouteTypes {
     | '/more'
     | '/notifications'
     | '/packages'
+    | '/privacy'
     | '/saved'
     | '/search'
     | '/stays'
     | '/support'
+    | '/terms'
     | '/trains'
     | '/transfers'
     | '/trips'
     | '/welcome'
+    | '/account/delete'
     | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
@@ -339,14 +375,17 @@ export interface RootRouteChildren {
   MoreRoute: typeof MoreRoute
   NotificationsRoute: typeof NotificationsRoute
   PackagesRoute: typeof PackagesRoute
+  PrivacyRoute: typeof PrivacyRoute
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   StaysRoute: typeof StaysRoute
   SupportRoute: typeof SupportRoute
+  TermsRoute: typeof TermsRoute
   TrainsRoute: typeof TrainsRoute
   TransfersRoute: typeof TransfersRoute
   TripsRoute: typeof TripsRoute
   WelcomeRoute: typeof WelcomeRoute
+  AccountDeleteRoute: typeof AccountDeleteRoute
   ActivitiesSlugRoute: typeof ActivitiesSlugRoute
   BookSlugRoute: typeof BookSlugRoute
   BookingReferenceRoute: typeof BookingReferenceRoute
@@ -434,6 +473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saved': {
       id: '/saved'
       path: '/saved'
@@ -462,6 +508,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trains': {
       id: '/trains'
       path: '/trains'
@@ -488,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/welcome'
       fullPath: '/welcome'
       preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account/delete': {
+      id: '/account/delete'
+      path: '/account/delete'
+      fullPath: '/account/delete'
+      preLoaderRoute: typeof AccountDeleteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/activities/': {
@@ -547,14 +607,17 @@ const rootRouteChildren: RootRouteChildren = {
   MoreRoute: MoreRoute,
   NotificationsRoute: NotificationsRoute,
   PackagesRoute: PackagesRoute,
+  PrivacyRoute: PrivacyRoute,
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   StaysRoute: StaysRoute,
   SupportRoute: SupportRoute,
+  TermsRoute: TermsRoute,
   TrainsRoute: TrainsRoute,
   TransfersRoute: TransfersRoute,
   TripsRoute: TripsRoute,
   WelcomeRoute: WelcomeRoute,
+  AccountDeleteRoute: AccountDeleteRoute,
   ActivitiesSlugRoute: ActivitiesSlugRoute,
   BookSlugRoute: BookSlugRoute,
   BookingReferenceRoute: BookingReferenceRoute,
