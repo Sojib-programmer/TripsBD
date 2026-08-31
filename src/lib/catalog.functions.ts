@@ -76,11 +76,15 @@ export const searchListings = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }) => {
     const sb = publicClient();
-    let q = sb.from("listings").select(LIST_COLS);
-    if (data.q) q = q.or(`title.ilike.%${data.q}%,city.ilike.%${data.q}%,summary.ilike.%${data.q}%`);
+    let q = sb.from("listings").select(LIST_COLS).eq("is_published", true);
+    const term = data.q ? sanitizeFilterTerm(data.q) : "";
+    if (term) {
+      q = q.or(`title.ilike.%${term}%,city.ilike.%${term}%,summary.ilike.%${term}%`);
+    }
     if (data.destinationId) q = q.eq("destination_id", data.destinationId);
     if (data.kind) q = q.eq("kind", data.kind);
     if (data.guests) q = q.gte("max_guests", data.guests);
+
     const { data: rows } = await q.order("rating", { ascending: false }).limit(50);
     return rows ?? [];
   });
