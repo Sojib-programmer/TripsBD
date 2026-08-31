@@ -25,6 +25,21 @@ function publicClient() {
 const LIST_COLS =
   "id, slug, title, kind, city, country, summary, hero_url, photos, price_bdt, rating, review_count, is_guest_favorite, max_guests, destination_id";
 
+/**
+ * PostgREST parses `or=(...)` as a structured expression, so characters like
+ * `,` `.` `(` `)` `:` `"` `\` `*` and `%` are operators, not literal text.
+ * Interpolating raw user input lets a caller inject extra filter clauses, so
+ * strip every structural character and cap the length before building a filter.
+ */
+function sanitizeFilterTerm(term: string): string {
+  return term
+    .replace(/[,.()":*%\\]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 80);
+}
+
+
 export const getHomeFeed = createServerFn({ method: "GET" }).handler(async () => {
   const sb = publicClient();
   const [destinations, listings, deals] = await Promise.all([
