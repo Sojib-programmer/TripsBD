@@ -25,6 +25,21 @@ function publicClient() {
 const LIST_COLS =
   "id, slug, title, kind, city, country, summary, hero_url, photos, price_bdt, rating, review_count, is_guest_favorite, max_guests, destination_id";
 
+/**
+ * PostgREST parses `or=(...)` as a structured expression, so characters like
+ * `,` `.` `(` `)` `:` `"` `\` `*` and `%` are operators, not literal text.
+ * Interpolating raw user input lets a caller inject extra filter clauses, so
+ * strip every structural character and cap the length before building a filter.
+ */
+function sanitizeFilterTerm(term: string): string {
+  return term
+    .replace(/[,.()":*%\\]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 80);
+}
+
+
 export const getHomeFeed = createServerFn({ method: "GET" }).handler(async () => {
   const sb = publicClient();
   const [destinations, listings, deals] = await Promise.all([
@@ -61,11 +76,15 @@ export const searchListings = createServerFn({ method: "GET" })
   )
   .handler(async ({ data }) => {
     const sb = publicClient();
-    let q = sb.from("listings").select(LIST_COLS);
-    if (data.q) q = q.or(`title.ilike.%${data.q}%,city.ilike.%${data.q}%,summary.ilike.%${data.q}%`);
+    let q = sb.from("listings").select(LIST_COLS).eq("is_published", true);
+    const term = data.q ? sanitizeFilterTerm(data.q) : "";
+    if (term) {
+      q = q.or(`title.ilike.%${term}%,city.ilike.%${term}%,summary.ilike.%${term}%`);
+    }
     if (data.destinationId) q = q.eq("destination_id", data.destinationId);
     if (data.kind) q = q.eq("kind", data.kind);
     if (data.guests) q = q.gte("max_guests", data.guests);
+
     const { data: rows } = await q.order("rating", { ascending: false }).limit(50);
     return rows ?? [];
   });
