@@ -12,7 +12,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   prev.current = index;
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-28">
+    <div className="flex min-h-dvh flex-col overflow-x-hidden bg-background pb-28 pt-[env(safe-area-inset-top)] [padding-left:env(safe-area-inset-left)] [padding-right:env(safe-area-inset-right)]">
       <div
         key={pathname}
         className={`flex flex-1 flex-col animate-in fade-in duration-300 ease-out motion-reduce:animate-none ${
