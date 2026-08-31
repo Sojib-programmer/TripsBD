@@ -1,7 +1,18 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Building2, ChevronRight, CreditCard, Globe, LifeBuoy, LogOut, Shield, User } from "lucide-react";
+import {
+  Building2,
+  ChevronRight,
+  CreditCard,
+  FileText,
+  Globe,
+  LifeBuoy,
+  LogOut,
+  Shield,
+  Trash2,
+  User,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell, PageHeader } from "@/components/AppShell";
@@ -113,6 +124,27 @@ function MorePage() {
           <Link to="/support" className="flex w-full items-center gap-3 px-5 py-4 text-left">
             <LifeBuoy size={22} className="text-brand" />
             <span className="flex-1 text-[17px] text-foreground">Help centre</span>
+            <ChevronRight size={20} className="text-muted-foreground" />
+          </Link>
+        </li>
+        <li>
+          <Link to="/privacy" className="flex w-full items-center gap-3 px-5 py-4 text-left">
+            <Shield size={22} className="text-brand" />
+            <span className="flex-1 text-[17px] text-foreground">Privacy Policy</span>
+            <ChevronRight size={20} className="text-muted-foreground" />
+          </Link>
+        </li>
+        <li>
+          <Link to="/terms" className="flex w-full items-center gap-3 px-5 py-4 text-left">
+            <FileText size={22} className="text-brand" />
+            <span className="flex-1 text-[17px] text-foreground">Terms of Use</span>
+            <ChevronRight size={20} className="text-muted-foreground" />
+          </Link>
+        </li>
+        <li>
+          <Link to="/account/delete" className="flex w-full items-center gap-3 px-5 py-4 text-left">
+            <Trash2 size={22} className="text-destructive" />
+            <span className="flex-1 text-[17px] text-foreground">Delete my account</span>
             <ChevronRight size={20} className="text-muted-foreground" />
           </Link>
         </li>
