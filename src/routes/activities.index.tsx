@@ -31,10 +31,11 @@ export const Route = createFileRoute("/activities/")({
 const chips = [
   { id: "all", label: "All" },
   { id: "tour", label: "Tours" },
-  { id: "nature", label: "Nature" },
+  { id: "water", label: "Water" },
   { id: "culture", label: "Culture" },
   { id: "food", label: "Food" },
   { id: "adventure", label: "Adventure" },
+  { id: "service", label: "Services" },
 ];
 
 function ActivitiesPage() {
