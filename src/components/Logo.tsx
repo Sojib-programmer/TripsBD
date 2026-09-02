@@ -36,21 +36,24 @@ export function Logo({ size = "md", onDark = false, markOnly = false, className 
           </linearGradient>
         </defs>
         <rect width="64" height="64" rx="15" fill={`url(#${gid})`} />
+        {/* crossbar of the T */}
         <path
           fill="var(--brand-foreground)"
-          d="M21.02 22.59
-             L40.55 22.59
-             L40.90 19.30
+          d="M21.02 22.90 L39.22 22.90 L28.00 29.33 L21.02 29.33 Z"
+        />
+        {/* stem sweeping into the flight-path arrow */}
+        <path
+          fill="var(--brand-foreground)"
+          d="M34.20 45.10
+             C34.20 40.00 34.30 34.00 35.92 30.27
+             C37.20 27.60 39.00 25.00 41.33 22.43
+             L43.65 22.95
              L45.34 17.73
-             L43.75 23.00
-             L41.25 21.55
-             C38.90 24.60 35.85 28.30 34.75 33.10
-             C34.35 34.90 34.20 36.60 34.20 38.20
-             L34.20 45.10
+             L40.70 19.40
+             L40.78 22.43
+             C38.60 24.60 36.30 26.90 34.20 28.71
+             C31.00 31.80 27.80 35.20 26.98 39.69
              L26.98 46.98
-             L26.98 38.60
-             C26.98 34.60 28.30 31.30 30.60 29.65
-             L21.02 29.65
              Z"
         />
       </svg>
