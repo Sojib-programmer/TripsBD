@@ -93,6 +93,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "Trips.bd" },
       { name: "application-name", content: "Trips.bd" },
+      {
+        name: "google-site-verification",
+        content: "yE8iOc5q6niMi1fCATYR1c1wq5mvXTJbnXqyI2O61Qc",
+      },
+
     ],
     links: [
       {
