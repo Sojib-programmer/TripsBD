@@ -19,17 +19,21 @@ export function VerticalHeader({
         <Link to="/" aria-label="Back to home" className="rounded-full p-1 text-foreground">
           <ChevronLeft size={24} />
         </Link>
-        <button
-          type="button"
-          onClick={onEdit}
-          disabled={!onEdit}
-          className="flex min-w-0 flex-1 flex-col rounded-2xl bg-muted px-4 py-2 text-left disabled:bg-transparent"
-        >
-          <span className="truncate text-[16px] font-semibold text-foreground">{title}</span>
-          {summary ? (
-            <span className="truncate text-[13px] text-muted-foreground">{summary}</span>
-          ) : null}
-        </button>
+        <h1 className="min-w-0 flex-1">
+          <button
+            type="button"
+            onClick={onEdit}
+            disabled={!onEdit}
+            className="flex w-full min-w-0 flex-col rounded-2xl bg-muted px-4 py-2 text-left disabled:bg-transparent"
+          >
+            <span className="truncate text-[16px] font-semibold text-foreground">{title}</span>
+            {summary ? (
+              <span className="truncate text-[13px] font-normal text-muted-foreground">
+                {summary}
+              </span>
+            ) : null}
+          </button>
+        </h1>
         {right}
       </div>
     </header>
