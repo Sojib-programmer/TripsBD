@@ -95,7 +95,11 @@ export function HomeScreen() {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 px-5">
+      <h1 className="mt-5 px-5 font-display text-[26px] font-bold leading-tight tracking-tight text-foreground">
+        Book hotels, flights and activities in Bangladesh
+      </h1>
+
+      <div className="mt-4 grid grid-cols-2 gap-3 px-5">
         <Tile
           title="Hotels"
           bg="bg-tile-hotels"
