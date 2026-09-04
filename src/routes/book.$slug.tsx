@@ -83,7 +83,7 @@ function BookPage() {
         },
       }),
     onSuccess: (booking) => {
-      toast.success(`Reserved · ${booking.reference}`);
+      toast.success(`Request sent · ${booking.reference}`);
       void navigate({ to: "/booking/$reference", params: { reference: booking.reference } });
     },
     onError: (e) => toast.error(e instanceof Error ? e.message : "Could not create the booking"),
@@ -203,7 +203,7 @@ function BookPage() {
           className="flex w-full items-center justify-center gap-2 rounded-full bg-brand py-4 text-[17px] font-semibold text-brand-foreground disabled:opacity-60"
         >
           {mutation.isPending ? <Loader2 size={18} className="animate-spin" /> : null}
-          Confirm reservation
+          Send booking request
         </button>
       </form>
     </main>

@@ -12,10 +12,11 @@ export const Route = createFileRoute("/booking/$reference")({
   component: ConfirmationPage,
   head: () => ({
     meta: [
-      { title: "Booking confirmed — Trips.bd" },
-      { name: "description", content: "Your Trips.bd reservation details, status timeline and reference number." },
-      { property: "og:title", content: "Booking confirmed — Trips.bd" },
-      { property: "og:description", content: "Reservation details and live status." },
+      { title: "Booking request received — Trips.bd" },
+      { name: "description", content: "Your Trips.bd booking request details, status timeline and reference number." },
+      { property: "og:title", content: "Booking request received — Trips.bd" },
+      { property: "og:description", content: "Request details and live status." },
+
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
