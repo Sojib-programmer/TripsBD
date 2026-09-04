@@ -1,19 +1,26 @@
 # Trips.bd — Google Play Console submission pack
 
-The web app is packaged for Play as a **Trusted Web Activity (TWA)** using Bubblewrap.
-Everything below lives in this repo and is served from the production domain.
+**Status: NOT yet packaged.** The web app is *intended* to ship as a Trusted Web Activity
+(TWA) built with Bubblewrap. There is no Android/Gradle project, no signing key and no AAB
+in this repo yet, and `public/.well-known/assetlinks.json` still holds placeholder
+fingerprints. Section 1 below is the build step to be run locally; sections 2–5 are the
+Play Console inputs. Release is gated by `docs/launch-gates.md`.
+
+Product claims in this document must match `docs/product-truth.md` — the app is
+**request-to-book**, with no live inventory and no in-app payment.
 
 | Item | Location |
 | --- | --- |
 | Web app manifest | `https://app.trips.bd/manifest.webmanifest` |
-| Digital Asset Links | `https://app.trips.bd/.well-known/assetlinks.json` |
+| Digital Asset Links | `https://app.trips.bd/.well-known/assetlinks.json` (placeholders — blocker) |
 | Privacy policy URL | `https://app.trips.bd/privacy` |
 | Terms of use | `https://app.trips.bd/terms` |
 | Account/data deletion URL | `https://app.trips.bd/account/delete` |
 | Support | `https://app.trips.bd/support` · support@trips.bd |
-| App icon 512×512 | `public/store/app-icon-512.png` |
-| Feature graphic 1024×500 | `public/store/feature-graphic.png` (crop/pad to 1024×500 on upload) |
-| Phone screenshots | `public/store/screenshot-*.png` |
+| App icon 512×512 | `public/store/app-icon-512.png` (verified 512×512) |
+| Feature graphic 1024×500 | `public/store/feature-graphic.png` (verified exactly 1024×500) |
+| Phone screenshots | `public/store/screenshot-*.png` (1080×1920) |
+
 
 ## 1. Build the Android package
 
