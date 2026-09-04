@@ -41,8 +41,8 @@ function SupportPage() {
               privacy@trips.bd
             </a>
           </li>
-          <li>Phone: +880 1700 000000 (09:00–21:00 BST)</li>
-          <li>Trips.bd, Gulshan Avenue, Dhaka 1212, Bangladesh</li>
+          <li>Response time: within one business day, 09:00–21:00 (BST, UTC+6)</li>
+
         </ul>
         <div className="mt-3 flex gap-4 text-[15px]">
           <Link to="/privacy" className="font-medium text-brand underline underline-offset-2">
