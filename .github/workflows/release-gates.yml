@@ -1,0 +1,48 @@
+name: Release gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  play-store-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Digital Asset Links must not contain placeholders
+        run: |
+          if grep -q "REPLACE_WITH" public/.well-known/assetlinks.json; then
+            echo "::error file=public/.well-known/assetlinks.json::assetlinks.json still contains placeholder SHA-256 fingerprints — the TWA will show a URL bar. Release blocked."
+            exit 1
+          fi
+
+      - name: No placeholder contact details
+        run: |
+          if grep -rEn "\+880 1700 000000|Gulshan Avenue, Dhaka 1212|example\.com" src/ docs/; then
+            echo "::error::Placeholder contact details found. Release blocked."
+            exit 1
+          fi
+
+      - name: No overstated booking claims
+        run: |
+          if grep -rEin "instant(ly)? book|book instantly|live fares|real-?time availability" src/; then
+            echo "::error::Copy claims instant/live booking, which the product does not do (see docs/product-truth.md). Release blocked."
+            exit 1
+          fi
+
+      - name: Store asset dimensions
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick
+          check() {
+            actual=$(identify -format "%wx%h" "$1")
+            if [ "$actual" != "$2" ]; then
+              echo "::error file=$1::expected $2, got $actual"; exit 1
+            fi
+          }
+          check public/store/app-icon-512.png 512x512
+          check public/store/feature-graphic.png 1024x500
+          check public/icons/icon-512.png 512x512
+          check public/icons/icon-192.png 192x192
+          check public/icons/icon-maskable-512.png 512x512
