@@ -29,8 +29,9 @@ export const Route = createFileRoute("/account/delete")({
 
 function DeleteAccountPage() {
   const { user } = useAuth();
+  const navigate = Route.useNavigate();
   const queryClient = useQueryClient();
-  const submit = useServerFn(requestAccountDeletion);
+  const deleteNow = useServerFn(deleteMyAccountNow);
   const fetchExisting = useServerFn(getMyDeletionRequest);
   const [reason, setReason] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -42,13 +43,17 @@ function DeleteAccountPage() {
   });
 
   const mutation = useMutation({
-    mutationFn: () => submit({ data: { reason: reason.trim() || undefined } }),
-    onSuccess: () => {
-      toast.success("Deletion request received. We'll confirm by email within 30 days.");
-      void queryClient.invalidateQueries({ queryKey: ["deletion-request"] });
+    mutationFn: () =>
+      deleteNow({ data: { confirm: "DELETE" as const, reason: reason.trim() || undefined } }),
+    onSuccess: async () => {
+      toast.success("Your account and personal data have been deleted.");
+      queryClient.clear();
+      await signOut();
+      void navigate({ to: "/" });
     },
-    onError: () => toast.error("Could not submit the request. Please try again."),
+    onError: () => toast.error("Could not delete the account. Please try again or email us."),
   });
+
 
   return (
     <AppShell>
