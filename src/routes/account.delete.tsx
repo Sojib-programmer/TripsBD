@@ -7,7 +7,8 @@ import { toast } from "sonner";
 
 import { AppShell, PageHeader } from "@/components/AppShell";
 import { useAuth } from "@/hooks/useAuth";
-import { getMyDeletionRequest, requestAccountDeletion } from "@/lib/compliance.functions";
+import { signOut } from "@/lib/auth";
+import { deleteMyAccountNow, getMyDeletionRequest } from "@/lib/compliance.functions";
 
 export const Route = createFileRoute("/account/delete")({
   component: DeleteAccountPage,
@@ -71,7 +72,8 @@ function DeleteAccountPage() {
           <h2 className="mt-5 text-[17px] font-semibold text-foreground">What we must keep</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-[15px] text-muted-foreground">
             <li>
-              Completed booking and payment records, retained in anonymised form for up to 6 years
+              Booking amounts and references, retained in anonymised form (no name, email or
+              phone) for up to 6 years
               for tax, accounting and consumer-protection law in Bangladesh.
             </li>
           </ul>
@@ -108,8 +110,9 @@ function DeleteAccountPage() {
           <section className="mt-5 flex gap-3 rounded-2xl border border-border p-4">
             <ShieldAlert size={22} className="mt-0.5 shrink-0 text-dot-amber" />
             <p className="text-[15px] text-muted-foreground">
-              A deletion request is already {existing.data.status}. We'll email you at{" "}
-              <span className="text-foreground">{user.email}</span> when it completes.
+              A deletion request for <span className="text-foreground">{user.email}</span> is{" "}
+              {existing.data.status}. If it has not completed, email privacy@trips.bd and we will
+              finish it within 30 days.
             </p>
           </section>
         ) : (
@@ -140,7 +143,7 @@ function DeleteAccountPage() {
               onClick={() => mutation.mutate()}
               className="mt-4 w-full rounded-full bg-destructive px-6 py-3 text-[17px] font-semibold text-destructive-foreground disabled:opacity-50"
             >
-              {mutation.isPending ? "Submitting…" : "Request account deletion"}
+              {mutation.isPending ? "Deleting…" : "Delete my account permanently"}
             </button>
           </section>
         )}
