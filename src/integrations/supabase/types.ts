@@ -323,27 +323,66 @@ export type Database = {
         }
         Relationships: []
       }
+      deletion_audit: {
+        Row: {
+          created_at: string
+          deleted_counts: Json
+          email_hash: string
+          id: string
+          request_id: string | null
+          retained_note: string | null
+          user_ref: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_counts?: Json
+          email_hash: string
+          id?: string
+          request_id?: string | null
+          retained_note?: string | null
+          user_ref: string
+        }
+        Update: {
+          created_at?: string
+          deleted_counts?: Json
+          email_hash?: string
+          id?: string
+          request_id?: string | null
+          retained_note?: string | null
+          user_ref?: string
+        }
+        Relationships: []
+      }
       deletion_requests: {
         Row: {
+          completed_at: string | null
           created_at: string
           email: string
           id: string
+          note: string | null
+          processed_at: string | null
           reason: string | null
           status: string
           user_id: string | null
         }
         Insert: {
+          completed_at?: string | null
           created_at?: string
           email: string
           id?: string
+          note?: string | null
+          processed_at?: string | null
           reason?: string | null
           status?: string
           user_id?: string | null
         }
         Update: {
+          completed_at?: string | null
           created_at?: string
           email?: string
           id?: string
+          note?: string | null
+          processed_at?: string | null
           reason?: string | null
           status?: string
           user_id?: string | null
@@ -823,6 +862,45 @@ export type Database = {
           phone?: string | null
           updated_at?: string
           vip_tier?: string
+        }
+        Relationships: []
+      }
+      retained_financial_records: {
+        Row: {
+          created_at: string
+          id: string
+          reference: string | null
+          retain_until: string
+          source: string
+          starts_at: string | null
+          status: string | null
+          total_bdt: number | null
+          user_ref: string
+          vertical: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reference?: string | null
+          retain_until?: string
+          source: string
+          starts_at?: string | null
+          status?: string | null
+          total_bdt?: number | null
+          user_ref: string
+          vertical?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reference?: string | null
+          retain_until?: string
+          source?: string
+          starts_at?: string | null
+          status?: string | null
+          total_bdt?: number | null
+          user_ref?: string
+          vertical?: string | null
         }
         Relationships: []
       }
