@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Book hotels, flights, homes and activities with Trips.bd. Member deals, VIP status and instant booking from your phone.",
+          "Book hotels, flights, homes and activities with Trips.bd. Member deals, VIP status and request-to-book confirmation from your phone.",
       },
       { property: "og:title", content: "Trips.bd — Hotels, Flights & Activities" },
       {
