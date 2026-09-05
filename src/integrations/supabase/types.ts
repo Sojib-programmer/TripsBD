@@ -323,27 +323,66 @@ export type Database = {
         }
         Relationships: []
       }
+      deletion_audit: {
+        Row: {
+          created_at: string
+          deleted_counts: Json
+          email_hash: string
+          id: string
+          request_id: string | null
+          retained_note: string | null
+          user_ref: string
+        }
+        Insert: {
+          created_at?: string
+          deleted_counts?: Json
+          email_hash: string
+          id?: string
+          request_id?: string | null
+          retained_note?: string | null
+          user_ref: string
+        }
+        Update: {
+          created_at?: string
+          deleted_counts?: Json
+          email_hash?: string
+          id?: string
+          request_id?: string | null
+          retained_note?: string | null
+          user_ref?: string
+        }
+        Relationships: []
+      }
       deletion_requests: {
         Row: {
+          completed_at: string | null
           created_at: string
           email: string
           id: string
+          note: string | null
+          processed_at: string | null
           reason: string | null
           status: string
           user_id: string | null
         }
         Insert: {
+          completed_at?: string | null
           created_at?: string
           email: string
           id?: string
+          note?: string | null
+          processed_at?: string | null
           reason?: string | null
           status?: string
           user_id?: string | null
         }
         Update: {
+          completed_at?: string | null
           created_at?: string
           email?: string
           id?: string
+          note?: string | null
+          processed_at?: string | null
           reason?: string | null
           status?: string
           user_id?: string | null
