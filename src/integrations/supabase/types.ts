@@ -865,6 +865,45 @@ export type Database = {
         }
         Relationships: []
       }
+      retained_financial_records: {
+        Row: {
+          created_at: string
+          id: string
+          reference: string | null
+          retain_until: string
+          source: string
+          starts_at: string | null
+          status: string | null
+          total_bdt: number | null
+          user_ref: string
+          vertical: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reference?: string | null
+          retain_until?: string
+          source: string
+          starts_at?: string | null
+          status?: string | null
+          total_bdt?: number | null
+          user_ref: string
+          vertical?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reference?: string | null
+          retain_until?: string
+          source?: string
+          starts_at?: string | null
+          status?: string | null
+          total_bdt?: number | null
+          user_ref?: string
+          vertical?: string | null
+        }
+        Relationships: []
+      }
       saved_listings: {
         Row: {
           created_at: string
