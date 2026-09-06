@@ -10,7 +10,7 @@ Do not describe the app as production-ready until every gate is checked with evi
 | 3 | Account deletion actually deletes data end-to-end within the disclosed SLA | Lovable | **Blocked** — `compliance.functions.ts` only queues a `deletion_requests` row |
 | 4 | Data Safety declaration matches `docs/product-truth.md` line for line | Ops | Pending |
 | 5 | Privacy policy and Terms truthful and reachable signed out | Lovable + Legal | Pending truth pass |
-| 6 | `targetSdk` 36, release-signed AAB, mapping uploaded | Android | **Blocked** — no Android project |
+| 6 | `targetSdk` 36, release-signed AAB, mapping uploaded | Android | **Blocked** — build config committed at `android/twa-manifest.json` + `android/README.md`; `bubblewrap init/build`, keystore and upload must be run on a workstation with JDK 17 + Android SDK |
 | 7 | Google, Apple and email sign-in verified inside the TWA on a physical device | Android + Ops | Pending |
 | 8 | Every shipped vertical completes request → confirmation → Trips → cancellation | Lovable + QA | Pending (cancellation not implemented) |
 | 9 | Zero P0 crashes/ANRs in the Play pre-launch report; error monitoring live | QA | Pending |

@@ -1,0 +1,64 @@
+{
+  "packageId": "bd.trips.app",
+  "host": "app.trips.bd",
+  "name": "Trips.bd — Hotels & Flights",
+  "launcherName": "Trips.bd",
+  "display": "standalone",
+  "orientation": "portrait",
+  "themeColor": "#2a4bd7",
+  "themeColorDark": "#0b1020",
+  "navigationColor": "#2a4bd7",
+  "navigationColorDark": "#0b1020",
+  "navigationDividerColor": "#00000000",
+  "navigationDividerColorDark": "#00000000",
+  "backgroundColor": "#ffffff",
+  "enableNotifications": false,
+  "startUrl": "/?source=pwa",
+  "iconUrl": "https://app.trips.bd/icons/icon-512.png",
+  "maskableIconUrl": "https://app.trips.bd/icons/icon-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "1.0.0",
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Search stays",
+      "short_name": "Stays",
+      "url": "/stays",
+      "chosenIconUrl": "https://app.trips.bd/icons/icon-192.png"
+    },
+    {
+      "name": "Search flights",
+      "short_name": "Flights",
+      "url": "/flights",
+      "chosenIconUrl": "https://app.trips.bd/icons/icon-192.png"
+    },
+    {
+      "name": "My trips",
+      "short_name": "Trips",
+      "url": "/trips",
+      "chosenIconUrl": "https://app.trips.bd/icons/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://app.trips.bd/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": { "enabled": false },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://app.trips.bd/",
+  "minSdkVersion": 23,
+  "compileSdkVersion": 36,
+  "targetSdkVersion": 36,
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "navigate-existing"
+}
