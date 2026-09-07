@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+import { INVENTORY_LIVE } from "./inventory";
 import { publicClient } from "./supabase-public";
 
 export const listAirports = createServerFn({ method: "GET" }).handler(async () => {
@@ -22,6 +23,7 @@ export const searchFlights = createServerFn({ method: "GET" })
       .parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     const sb = publicClient();
     let q = sb
       .from("flights")
@@ -38,6 +40,7 @@ export const searchFlights = createServerFn({ method: "GET" })
 export const getFlight = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return null;
     const { data: row } = await publicClient()
       .from("flights")
       .select("*")
@@ -51,6 +54,7 @@ export const listActivities = createServerFn({ method: "GET" })
     z.object({ city: z.string().optional(), category: z.string().optional() }).parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     let q = publicClient()
       .from("activities")
       .select(
@@ -65,6 +69,7 @@ export const listActivities = createServerFn({ method: "GET" })
 export const getActivity = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ slug: z.string() }).parse(input))
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return null;
     const sb = publicClient();
     const { data: activity } = await sb
       .from("activities")
@@ -85,6 +90,7 @@ export const listTransfers = createServerFn({ method: "GET" })
     z.object({ airport: z.string().default("DAC") }).parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     const { data: rows } = await publicClient()
       .from("transfers")
       .select("*")
@@ -98,6 +104,7 @@ export const listCars = createServerFn({ method: "GET" })
     z.object({ city: z.string().default("Dhaka") }).parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     const { data: rows } = await publicClient()
       .from("car_rentals")
       .select("*")
@@ -111,6 +118,7 @@ export const listEsimPlans = createServerFn({ method: "GET" })
     z.object({ country: z.string().optional() }).parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     let q = publicClient().from("esim_plans").select("*");
     if (data.country && data.country !== "all") q = q.eq("country", data.country);
     const { data: rows } = await q.order("price_bdt");
@@ -122,6 +130,7 @@ export const listTrains = createServerFn({ method: "GET" })
     z.object({ from: z.string().default("Dhaka"), to: z.string().optional() }).parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     let q = publicClient().from("trains").select("*").eq("from_city", data.from);
     if (data.to && data.to !== "all") q = q.eq("to_city", data.to);
     const { data: rows } = await q.order("depart_time");
@@ -129,6 +138,7 @@ export const listTrains = createServerFn({ method: "GET" })
   });
 
 export const listTrainCities = createServerFn({ method: "GET" }).handler(async () => {
+  if (!INVENTORY_LIVE) return { from: [], to: [] };
   const { data } = await publicClient().from("trains").select("from_city, to_city");
   const from = new Set<string>();
   const to = new Set<string>();
@@ -140,6 +150,7 @@ export const listTrainCities = createServerFn({ method: "GET" }).handler(async (
 });
 
 export const listPackages = createServerFn({ method: "GET" }).handler(async () => {
+  if (!INVENTORY_LIVE) return [];
   const { data } = await publicClient()
     .from("packages")
     .select(

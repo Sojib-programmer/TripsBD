@@ -72,7 +72,7 @@ export async function fulfilAccountDeletion(
     bookings: bookings?.length ?? 0,
   };
 
-  for (const table of ["saved_listings", "notifications", "user_roles"] as const) {
+  for (const table of ["saved_listings", "notifications", "user_roles", "support_messages"] as const) {
     const { count } = await supabaseAdmin
       .from(table)
       .delete({ count: "exact" })
