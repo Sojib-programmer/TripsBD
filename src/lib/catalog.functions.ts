@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
 import type { Database } from "@/integrations/supabase/types";
+import { INVENTORY_LIVE } from "./inventory";
 
 function publicClient() {
   const url = process.env["SUPABASE_URL"]!;
@@ -41,6 +42,7 @@ function sanitizeFilterTerm(term: string): string {
 
 
 export const getHomeFeed = createServerFn({ method: "GET" }).handler(async () => {
+  if (!INVENTORY_LIVE) return { destinations: [], listings: [], deals: [] };
   const sb = publicClient();
   const [destinations, listings, deals] = await Promise.all([
     sb.from("destinations").select("id, slug, name, country, tagline, hero_url").order("sort_order"),
@@ -55,6 +57,7 @@ export const getHomeFeed = createServerFn({ method: "GET" }).handler(async () =>
 });
 
 export const getDeals = createServerFn({ method: "GET" }).handler(async () => {
+  if (!INVENTORY_LIVE) return [];
   const sb = publicClient();
   const { data } = await sb
     .from("deals")
@@ -75,6 +78,7 @@ export const searchListings = createServerFn({ method: "GET" })
       .parse(input ?? {}),
   )
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return [];
     const sb = publicClient();
     let q = sb.from("listings").select(LIST_COLS).eq("is_published", true);
     const term = data.q ? sanitizeFilterTerm(data.q) : "";
@@ -92,6 +96,7 @@ export const searchListings = createServerFn({ method: "GET" })
 export const getListing = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => z.object({ slug: z.string() }).parse(input))
   .handler(async ({ data }) => {
+    if (!INVENTORY_LIVE) return null;
     const sb = publicClient();
     const { data: row } = await sb
       .from("listings")
