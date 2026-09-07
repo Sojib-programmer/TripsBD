@@ -933,6 +933,45 @@ export type Database = {
           },
         ]
       }
+      support_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          order_reference: string | null
+          status: string
+          topic: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          order_reference?: string | null
+          status?: string
+          topic?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          order_reference?: string | null
+          status?: string
+          topic?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       trains: {
         Row: {
           arrive_time: string
