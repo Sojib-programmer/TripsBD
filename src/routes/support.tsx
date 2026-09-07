@@ -1,17 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell, PageHeader } from "@/components/AppShell";
-import { TallyForm } from "@/components/TallyForm";
-import { useAuth } from "@/hooks/useAuth";
+import { CompanyDetails } from "@/components/CompanyDetails";
+import { SupportForm } from "@/components/SupportForm";
+import { COMPANY } from "@/lib/company";
 
 export const Route = createFileRoute("/support")({
   component: SupportPage,
   head: () => ({
     meta: [
       { title: "Support & Feedback — Trips.bd" },
-      { name: "description", content: "Contact Trips.bd support about a booking, payment, refund or account issue, or send product feedback." },
+      { name: "description", content: "Contact Trips.bd support about a booking request, refund or account issue, or send product feedback." },
       { property: "og:title", content: "Support & Feedback — Trips.bd" },
-      { property: "og:description", content: "Get help with bookings, payments and your account." },
+      { property: "og:description", content: "Get help with booking requests and your account." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -19,32 +20,35 @@ export const Route = createFileRoute("/support")({
 });
 
 function SupportPage() {
-  const { user } = useAuth();
   return (
     <AppShell>
       <PageHeader title="Support" subtitle="We reply within one business day" />
-      <div className="px-2">
-        <TallyForm form="support" title="Trips.bd support form" prefill={{ email: user?.email ?? undefined }} />
-      </div>
+      <SupportForm />
+
       <section className="mx-5 mt-6 rounded-2xl border border-border p-4">
         <h2 className="text-[17px] font-semibold text-foreground">Contact details</h2>
         <ul className="mt-2 space-y-1 text-[15px] text-muted-foreground">
           <li>
             Support:{" "}
-            <a href="mailto:support@trips.bd" className="font-medium text-brand underline underline-offset-2">
-              support@trips.bd
+            <a href={`mailto:${COMPANY.supportEmail}`} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.supportEmail}
             </a>
           </li>
           <li>
             Privacy requests:{" "}
-            <a href="mailto:privacy@trips.bd" className="font-medium text-brand underline underline-offset-2">
-              privacy@trips.bd
+            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.privacyEmail}
             </a>
           </li>
-          <li>Response time: within one business day, 09:00–21:00 (BST, UTC+6)</li>
-
+          <li>
+            Phone:{" "}
+            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.phone}
+            </a>
+          </li>
+          <li>Response time: {COMPANY.supportHours}</li>
         </ul>
-        <div className="mt-3 flex gap-4 text-[15px]">
+        <div className="mt-3 flex flex-wrap gap-4 text-[15px]">
           <Link to="/privacy" className="font-medium text-brand underline underline-offset-2">
             Privacy Policy
           </Link>
@@ -56,6 +60,8 @@ function SupportPage() {
           </Link>
         </div>
       </section>
+
+      <CompanyDetails />
     </AppShell>
   );
 }
