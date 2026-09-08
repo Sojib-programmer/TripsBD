@@ -1,16 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import {
-  Tent,
-  CarTaxiFront,
-  Car,
-  Smartphone,
-  TrainFront,
-  Gift,
-  Ticket,
-  Search,
-  Bell,
-} from "lucide-react";
+import { Tent, Gift, Ticket, Search, Bell } from "lucide-react";
 import type { ReactNode } from "react";
 
 import tileHotels from "@/assets/tile-hotels.png";
@@ -23,12 +13,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { homeFeedQuery } from "@/lib/queries";
 import {
   activitiesSearch,
-  carsSearch,
-  esimSearch,
   flightsSearch,
-  packagesSearch,
   staysSearch,
-  trainsSearch,
   transfersSearch,
 } from "@/lib/search-defaults";
 import { Logo } from "../Logo";
@@ -118,14 +104,6 @@ export function HomeScreen() {
 
       <div className="mt-3 grid grid-cols-3 gap-3 px-5">
         <Tile
-          title={"Flight\n+ Hotel"}
-          bg="bg-tile-fh"
-          img={tileFlightHotel}
-          alt="Plane and hotel"
-          className="[&_span]:text-[17px]"
-          href={<Link to="/packages" search={packagesSearch()} aria-label="Flight plus hotel bundles" className={fill} />}
-        />
-        <Tile
           title="Activities"
           bg="bg-tile-activities"
           img={tileActivities}
@@ -148,32 +126,30 @@ export function HomeScreen() {
             />
           }
         />
+        <Tile
+          title={"Airport\nTransfer"}
+          bg="bg-tile-fh"
+          img={tileFlightHotel}
+          alt="Airport transfer car"
+          className="[&_span]:text-[15px]"
+          href={
+            <Link
+              to="/transfers"
+              search={transfersSearch()}
+              aria-label="Airport transfers"
+              className={fill}
+            />
+          }
+        />
       </div>
 
-      <div className="mx-5 mt-4 grid grid-cols-5 gap-1 rounded-2xl border border-border px-2 py-4">
-        <Link to="/activities" search={activitiesSearch()} className="flex flex-col items-center gap-2">
-          <Tent size={26} className="text-brand" />
-          <span className="text-center text-[13px] leading-tight text-foreground">Attractions</span>
-        </Link>
-        <Link to="/transfers" search={transfersSearch()} className="flex flex-col items-center gap-2">
-          <CarTaxiFront size={26} className="text-brand" />
-          <span className="text-center text-[13px] leading-tight text-foreground">
-            Airport Transfer
-          </span>
-        </Link>
-        <Link to="/cars" search={carsSearch()} className="flex flex-col items-center gap-2">
-          <Car size={26} className="text-brand" />
-          <span className="text-center text-[13px] leading-tight text-foreground">Car Rentals</span>
-        </Link>
-        <Link to="/esim" search={esimSearch()} className="flex flex-col items-center gap-2">
-          <Smartphone size={26} className="text-brand" />
-          <span className="text-center text-[13px] leading-tight text-foreground">eSIM</span>
-        </Link>
-        <Link to="/trains" search={trainsSearch()} className="flex flex-col items-center gap-2">
-          <TrainFront size={26} className="text-brand" />
-          <span className="text-center text-[13px] leading-tight text-foreground">Trains</span>
-        </Link>
-      </div>
+      <section className="mx-5 mt-4 flex gap-3 rounded-2xl border border-border p-4">
+        <Tent size={22} className="mt-0.5 shrink-0 text-brand" />
+        <p className="text-[15px] leading-snug text-muted-foreground">
+          Trips.bd is a request-to-book service. Tell us what you need and our team confirms
+          availability and price with the supplier, usually within one business day.
+        </p>
+      </section>
 
       {data.destinations.length ? (
         <section className="mt-6 border-t border-border pt-6">
