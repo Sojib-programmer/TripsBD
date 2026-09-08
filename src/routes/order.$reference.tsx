@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, Clock, Loader2, XCircle } from "lucide-react";
@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 import { VerticalHeader } from "@/components/VerticalHeader";
 import { supabase } from "@/integrations/supabase/client";
+import { cancelMyOrder } from "@/lib/cancellation.functions";
 import { bdt, prettyDateTime } from "@/lib/format";
 import { getOrderByReference } from "@/lib/orders.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/order/$reference")({
   component: OrderPage,
@@ -58,6 +60,17 @@ function OrderPage() {
   });
 
   const orderId = q.data?.order.id;
+
+  const cancelOrder = useServerFn(cancelMyOrder);
+  const cancel = useMutation({
+    mutationFn: () => cancelOrder({ data: { reference } }),
+    onSuccess: () => {
+      toast.success("Request cancelled");
+      void qc.invalidateQueries({ queryKey: ["order", reference] });
+      void qc.invalidateQueries({ queryKey: ["my-orders"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
 
   useEffect(() => {
     if (!orderId) return;
@@ -134,6 +147,28 @@ function OrderPage() {
             ))}
           </ol>
         </section>
+
+        {order.status === "pending" || order.status === "confirmed" ? (
+          <button
+            onClick={() => {
+              if (!window.confirm("Cancel this request? This cannot be undone.")) return;
+              cancel.mutate();
+            }}
+            disabled={cancel.isPending}
+            className="block w-full rounded-full border border-destructive py-3 text-center text-[17px] font-semibold text-destructive disabled:opacity-50"
+          >
+            {cancel.isPending ? "Cancelling…" : "Cancel this request"}
+          </button>
+        ) : null}
+
+        <p className="text-[13px] text-muted-foreground">
+          Cancelling before we confirm availability is free. Once confirmed, the supplier
+          cancellation terms in our{" "}
+          <Link to="/terms" className="font-medium text-brand underline underline-offset-2">
+            Terms of Use
+          </Link>{" "}
+          apply.
+        </p>
 
         <Link
           to="/trips"

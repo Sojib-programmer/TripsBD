@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, Loader2 } from "lucide-react";
@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { bdt } from "@/components/ListingCard";
 import { supabase } from "@/integrations/supabase/client";
 import { getBookingByReference, getBookingTimeline } from "@/lib/account.functions";
+import { cancelMyBooking } from "@/lib/cancellation.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/booking/$reference")({
   component: ConfirmationPage,
@@ -39,6 +41,17 @@ function ConfirmationPage() {
   });
 
   const bookingId = booking.data?.id;
+
+  const cancelBooking = useServerFn(cancelMyBooking);
+  const cancel = useMutation({
+    mutationFn: () => cancelBooking({ data: { reference } }),
+    onSuccess: () => {
+      toast.success("Request cancelled");
+      void queryClient.invalidateQueries({ queryKey: ["booking", reference] });
+      void queryClient.invalidateQueries({ queryKey: ["my-bookings"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
 
   const timeline = useQuery({
     queryKey: ["booking-timeline", bookingId],
@@ -88,7 +101,7 @@ function ConfirmationPage() {
   return (
     <main className="mx-auto max-w-[440px] px-5 pb-16 pt-10">
       <CheckCircle2 size={44} className="text-brand" />
-      <h1 className="mt-4 font-display text-[28px] font-semibold text-foreground">Reservation requested</h1>
+      <h1 className="mt-4 font-display text-[28px] font-semibold text-foreground">Request received</h1>
       <p className="mt-1 text-[16px] text-muted-foreground">
         Reference <span className="font-semibold text-foreground">{b.reference}</span> · status {b.status}
       </p>
@@ -131,6 +144,24 @@ function ConfirmationPage() {
           ) : null}
         </ol>
       </section>
+
+      {b.status === "pending" || b.status === "confirmed" ? (
+        <button
+          onClick={() => {
+            if (!window.confirm("Cancel this request? This cannot be undone.")) return;
+            cancel.mutate();
+          }}
+          disabled={cancel.isPending}
+          className="mt-6 w-full rounded-full border border-destructive py-3 text-[16px] font-semibold text-destructive disabled:opacity-50"
+        >
+          {cancel.isPending ? "Cancelling…" : "Cancel this request"}
+        </button>
+      ) : null}
+
+      <p className="mt-3 text-[13px] text-muted-foreground">
+        Cancelling before we confirm availability is free. Once confirmed, the supplier
+        cancellation terms in our Terms of Use apply.
+      </p>
 
       <div className="mt-8 flex gap-3">
         <Link to="/trips" className="flex-1 rounded-full bg-brand py-3 text-center text-[16px] font-semibold text-brand-foreground">
