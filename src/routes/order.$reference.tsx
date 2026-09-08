@@ -135,6 +135,28 @@ function OrderPage() {
           </ol>
         </section>
 
+        {order.status === "pending" || order.status === "confirmed" ? (
+          <button
+            onClick={() => {
+              if (!window.confirm("Cancel this request? This cannot be undone.")) return;
+              cancel.mutate();
+            }}
+            disabled={cancel.isPending}
+            className="block w-full rounded-full border border-destructive py-3 text-center text-[17px] font-semibold text-destructive disabled:opacity-50"
+          >
+            {cancel.isPending ? "Cancelling…" : "Cancel this request"}
+          </button>
+        ) : null}
+
+        <p className="text-[13px] text-muted-foreground">
+          Cancelling before we confirm availability is free. Once confirmed, the supplier
+          cancellation terms in our{" "}
+          <Link to="/terms" className="font-medium text-brand underline underline-offset-2">
+            Terms of Use
+          </Link>{" "}
+          apply.
+        </p>
+
         <Link
           to="/trips"
           className="block rounded-full border border-border py-3 text-center text-[17px] font-semibold text-foreground"
