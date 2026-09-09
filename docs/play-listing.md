@@ -14,9 +14,8 @@ fares, no in-app payment). Release remains gated by `docs/launch-gates.md`.
 **Full description (4000 chars max):**
 
 ```
-Trips.bd is Bangladesh's all-in-one travel app. Browse hotels, homes and apartments,
-domestic and international flights, airport transfers, car rentals, trains, eSIM plans
-and local activities — then send a booking request. Our team checks availability with
+Trips.bd is Bangladesh's travel booking app. Tell us the hotel, home, flight, airport
+transfer or activity you need and send a booking request. Our team checks availability with
 the supplier, confirms it with you, and sends a secure payment link. Everything is
 priced in BDT.
 
