@@ -3,6 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
+import { RequestPanel } from "@/components/RequestPanel";
+import { inventoryLiveClient } from "@/lib/inventory";
 import { AppShell } from "@/components/AppShell";
 import { ListingCard } from "@/components/ListingCard";
 import { ChipBar, VerticalHeader } from "@/components/VerticalHeader";
@@ -140,6 +142,19 @@ function StaysPage() {
         active={search.sort}
         onSelect={(sort) => void navigate({ to: "/stays", search: { ...search, sort } })}
       />
+
+      {!inventoryLiveClient ? (
+        <div className="px-5 pt-4">
+          <RequestPanel
+            vertical="stay"
+            heading={`Stay in ${search.q || "Bangladesh"}`}
+            summary={`${prettyDate(search.checkIn)} – ${prettyDate(search.checkOut)}, ${search.rooms} room${search.rooms > 1 ? "s" : ""}`}
+            startsAt={search.checkIn}
+            defaultTravellers={guests}
+            details={{ ...search }}
+          />
+        </div>
+      ) : null}
 
       <section className="px-5 py-4">
         {results.isLoading ? (

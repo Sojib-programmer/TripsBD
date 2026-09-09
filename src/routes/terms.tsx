@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell, PageHeader } from "@/components/AppShell";
+import { COMPANY, COMPANY_ADDRESS } from "@/lib/company";
 
 export const Route = createFileRoute("/terms")({
   component: TermsPage,
@@ -10,115 +11,123 @@ export const Route = createFileRoute("/terms")({
       {
         name: "description",
         content:
-          "The booking, cancellation, refund, payment and acceptable-use terms that apply when you use Trips.bd.",
+          "The terms that apply when you use Trips.bd: how request-to-book works, pricing, cancellations, your responsibilities and our liability.",
       },
       { property: "og:title", content: "Terms of Use — Trips.bd" },
-      { property: "og:description", content: "Booking, cancellation, refund and acceptable-use terms." },
-      { property: "og:type", content: "article" },
+      { property: "og:description", content: "How booking requests, pricing and cancellations work." },
+      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
 });
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mt-6">
-      <h2 className="text-[19px] font-semibold text-foreground">{title}</h2>
-      <div className="mt-2 space-y-2 text-[15px] leading-relaxed text-muted-foreground">{children}</div>
-    </section>
-  );
-}
+const LAST_UPDATED = "5 September 2026";
 
 function TermsPage() {
   return (
     <AppShell>
-      <PageHeader title="Terms of Use" subtitle="Last updated 29 August 2026" />
-      <div className="px-5 pb-10">
-        <p className="text-[15px] leading-relaxed text-muted-foreground">
-          By creating an account or placing a booking request on Trips.bd you agree to these terms.
-          If you do not agree, do not use the service.
+      <PageHeader title="Terms of Use" subtitle={`Last updated ${LAST_UPDATED}`} />
+      <div className="space-y-6 px-5 pb-12 text-[15px] leading-relaxed text-muted-foreground">
+        <p>
+          These terms are an agreement between you and {COMPANY.legalName}, trading as{" "}
+          {COMPANY.tradingName} ({COMPANY.website}). By using the app you accept them. You must be
+          18 or older to send a booking request.
         </p>
 
-        <Section title="1. What Trips.bd is">
-          <p>
-            Trips.bd is an intermediary. We display inventory from hotels, homes, airlines, rail and
-            transport operators and activity providers and pass your request to them. The travel
-            contract for the service itself is between you and that supplier.
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">1. What Trips.bd is</h2>
+          <p className="mt-2">
+            Trips.bd is a request-to-book travel agency service. You tell us what you need; our
+            team checks availability and price with the hotel, airline agent or transport
+            operator, then replies to you. We act as your agent in arranging the booking; the
+            supplier performs the travel service itself.
           </p>
-        </Section>
+        </section>
 
-        <Section title="2. Eligibility and accounts">
-          <p>
-            You must be 18 or older and able to enter a binding contract. Keep your credentials
-            secure; you are responsible for activity on your account.
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">2. Nothing is booked until we confirm</h2>
+          <p className="mt-2">
+            Sending a request creates no reservation and no contract with a supplier. Anything
+            shown in the app before we confirm is indicative only. A booking exists only once we
+            confirm it to you in writing with a reference and a final price.
           </p>
-        </Section>
+        </section>
 
-        <Section title="3. Bookings and pricing">
-          <p>
-            Prices are shown in Bangladeshi Taka (BDT) and include stated taxes and fees unless
-            marked otherwise. A booking request is confirmed only when you receive a confirmed status
-            and reference in the app. If a supplier cannot honour a request, we cancel it and refund
-            in full.
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">3. Prices and payment</h2>
+          <p className="mt-2">
+            All prices are in Bangladeshi Taka. No payment is taken inside the app and there are
+            no in-app purchases. After we confirm availability we send a payment instruction
+            separately. Taxes, resort fees or supplier surcharges are stated before you pay.
           </p>
-        </Section>
+        </section>
 
-        <Section title="4. Cancellations and refunds">
-          <p>
-            Each listing shows its cancellation policy; that policy governs. Where a booking is
-            refundable, approved refunds are returned to the original payment method within 7–14
-            business days. Non-refundable and promotional fares cannot be cancelled for a refund but
-            may be eligible for supplier-side date changes at their discretion.
-          </p>
-        </Section>
-
-        <Section title="5. Your responsibilities">
-          <p>
-            Provide accurate traveller details, valid identification and any visa or health documents
-            required for your trip. We are not liable for denied boarding or check-in caused by
-            incorrect or missing documents.
-          </p>
-        </Section>
-
-        <Section title="6. Acceptable use">
-          <p>
-            Do not scrape, resell, reverse-engineer or disrupt the service, submit fraudulent
-            bookings or payments, or post reviews for trips you did not take.
-          </p>
-        </Section>
-
-        <Section title="7. Liability">
-          <p>
-            To the extent permitted by law, our liability for any booking is limited to the amount
-            you paid through Trips.bd for that booking. We are not liable for supplier acts,
-            omissions, delays or force-majeure events.
-          </p>
-        </Section>
-
-        <Section title="8. Governing law">
-          <p>
-            These terms are governed by the laws of Bangladesh, with the courts of Dhaka having
-            exclusive jurisdiction.
-          </p>
-        </Section>
-
-        <Section title="9. Contact">
-          <p>
-            Questions or complaints:{" "}
-            <Link to="/support" className="font-semibold text-brand underline underline-offset-2">
-              our support page
-            </Link>{" "}
-            or{" "}
-            <a href="mailto:support@trips.bd" className="font-semibold text-brand underline underline-offset-2">
-              support@trips.bd
-            </a>
-            . See also our{" "}
-            <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">
-              Privacy Policy
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">4. Changes and cancellations</h2>
+          <p className="mt-2">
+            You can cancel any request in the app while it is pending or confirmed, from the
+            request page or from{" "}
+            <Link to="/trips" className="font-medium text-brand underline underline-offset-2">
+              My Trips
             </Link>
-            .
+            . Cancelling before we confirm availability is always free. After confirmation, the
+            supplier&apos;s own cancellation and refund rules apply and are quoted to you at the
+            time of confirmation. Refunds are returned by the same method you paid, within 14
+            business days of the supplier releasing the funds.
           </p>
-        </Section>
+        </section>
+
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">5. Your responsibilities</h2>
+          <p className="mt-2">
+            Give accurate traveller names and contact details, hold valid travel documents and
+            visas, and arrive at the times confirmed. You are responsible for activity on your
+            account. Do not misuse the service, submit false requests, or attempt to access other
+            travellers&apos; data.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">6. Liability</h2>
+          <p className="mt-2">
+            We are responsible for arranging your booking with reasonable care and skill. We are
+            not liable for a supplier&apos;s own acts or omissions, or for delays, weather,
+            strikes and other events outside our control. Nothing in these terms limits liability
+            that cannot be limited under the law of Bangladesh.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">7. Account termination</h2>
+          <p className="mt-2">
+            You may delete your account at any time at{" "}
+            <Link to="/account/delete" className="font-medium text-brand underline underline-offset-2">
+              app.trips.bd/account/delete
+            </Link>
+            . We may suspend an account that abuses the service or breaches these terms.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">8. Governing law and contact</h2>
+          <p className="mt-2">
+            These terms are governed by the laws of Bangladesh, with the courts of Bangladesh
+            having jurisdiction.
+          </p>
+          <p className="mt-2">
+            {COMPANY.legalName} · {COMPANY_ADDRESS}
+            <br />
+            Trade licence {COMPANY.tradeLicence} · TIN {COMPANY.tin}
+            <br />
+            <a href={`mailto:${COMPANY.supportEmail}`} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.supportEmail}
+            </a>{" "}
+            ·{" "}
+            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.phone}
+            </a>
+          </p>
+        </section>
       </div>
     </AppShell>
   );
