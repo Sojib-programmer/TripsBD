@@ -1,9 +1,9 @@
 # Trips.bd — Google Play Console submission pack
 
-**Status: NOT yet packaged.** The web app is *intended* to ship as a Trusted Web Activity
-(TWA) built with Bubblewrap. There is no Android/Gradle project, no signing key and no AAB
-in this repo yet, and `public/.well-known/assetlinks.json` still holds placeholder
-fingerprints. Section 1 below is the build step to be run locally; sections 2–5 are the
+**Status: not packaged.** The web app ships as a Trusted Web Activity (TWA) built with
+Bubblewrap from `android/twa-manifest.json`. The Gradle project, signing key and AAB are
+produced on a workstation (JDK 17 + Android SDK) and are not in this repo, and
+`public/.well-known/assetlinks.json` still holds placeholder fingerprints. Section 1 below is the build step to be run locally; sections 2–5 are the
 Play Console inputs. Release is gated by `docs/launch-gates.md`.
 
 Product claims in this document must match `docs/product-truth.md` — the app is
@@ -16,7 +16,8 @@ Product claims in this document must match `docs/product-truth.md` — the app i
 | Privacy policy URL | `https://app.trips.bd/privacy` |
 | Terms of use | `https://app.trips.bd/terms` |
 | Account/data deletion URL | `https://app.trips.bd/account/delete` |
-| Support | `https://app.trips.bd/support` · support@trips.bd |
+| Support | `https://app.trips.bd/support` · support@trips.bd · +8801540723530 |
+| Registered operator | Marketsync Global Ltd. (trading as Trips.bd), Kashidanga City Gate, Rajpara, Rajshahi-6201, Bangladesh · trade licence 01/13-2665 · TIN 317774303960 |
 | App icon 512×512 | `public/store/app-icon-512.png` (verified 512×512) |
 | Feature graphic 1024×500 | `public/store/feature-graphic.png` (verified exactly 1024×500) |
 | Phone screenshots | `public/store/screenshot-*.png` (1080×1920) |
@@ -61,6 +62,7 @@ shared with third parties for advertising, **no** advertising ID collected.
 | Phone number | Yes | `public.profiles`, `public.orders.contact_phone` | Booking fulfilment | Yes |
 | App interactions (searches, saved items, booking requests) | Yes | `saved_listings`, `orders`, `bookings` | App functionality | No |
 | Crash logs / diagnostics | Yes | client error reporting | Stability | No |
+| Messages (support enquiries) | Yes | `public.support_messages` | Customer support | Yes |
 | Purchase history | **No** | — | No in-app payment exists at V1 | — |
 
 Answers to the standard questions:
@@ -71,8 +73,9 @@ Answers to the standard questions:
 - Do you collect precise location, contacts, photos, SMS, health or financial account numbers?
   **No.**
 - Do you share data with third parties? Only with the travel supplier fulfilling a booking and with
-  processors (Supabase, Tally, Google/Apple sign-in, hosting/CDN, error reporting) — declared as
-  processing, not sharing.
+  processors (Supabase, Google/Apple sign-in, hosting/CDN, error reporting) — declared as
+  processing, not sharing. Support enquiries are stored first-party in `public.support_messages`,
+  not with a third-party form host, so account deletion removes them.
 
 ## 3. Content rating & audience
 
@@ -96,12 +99,15 @@ Trips.bd is Bangladesh's all-in-one travel app. Browse hotels, homes and apartme
 international flights, airport transfers and local activities, then send a booking request — our
 team confirms availability and sends you a payment link. Everything is priced in BDT.
 
-- Browse hotels and homes across Dhaka, Cox's Bazar, Sylhet, Chattogram and beyond
-- One-way and return flight search with cheapest and fastest options highlighted
-- Flight + hotel bundles
-- Track every request in My Trips with live status updates as our team confirms it
-- Deals and promo codes
+- Request a hotel, home or apartment anywhere in Bangladesh
+- Request domestic and international flights
+- Request airport transfers, tours and activities
+- Track every request in My Trips, with status updates as our team works on it
+- Cancel any request yourself while it is pending or confirmed
 - Save listings for later and get notified when your request status changes
+
+Launch scope is stays, flights, activities and airport transfers only. Car rental, eSIM,
+trains and bundled packages are marked "coming soon" in the app and must not be advertised.
 
 No payment is taken in the app. We confirm availability first, then send a secure payment link.
 
@@ -118,4 +124,5 @@ No payment is taken in the app. We confirm availability first, then send a secur
 - [ ] `targetSdk` 36, release-signed AAB, mapping file uploaded
 - [ ] Test the AAB on internal testing and confirm no URL bar appears
 - [ ] All gates in `docs/launch-gates.md` pass
+- [ ] `INVENTORY_LIVE` stays unset until contracted supplier inventory is loaded
 

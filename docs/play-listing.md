@@ -26,10 +26,9 @@ human confirms availability, usually within one business day. No payment is take
 the app, and nothing is confirmed until we tell you it is.
 
 WHAT YOU CAN DO
-• Browse hotels, homes and apartments in Dhaka, Cox's Bazar, Sylhet, Chattogram and beyond
-• Search one-way and return flights, with cheapest and fastest options highlighted
-• Request airport transfers, car rentals, train seats, tours and activities
-• Buy-ready eSIM data plans for travel
+• Request hotels, homes and apartments in Dhaka, Cox's Bazar, Sylhet, Chattogram and beyond
+• Request one-way and return flights, domestic and international
+• Request airport transfers, tours and activities
 • Track every request in My Trips, with status updates as our team works on it
 • Save listings for later and get notified when a request status changes
 • Sign in with Google, Apple or email
@@ -71,13 +70,12 @@ values are a Policy → Developer information rejection, and CI blocks them.
 | Support email | `support@trips.bd` | in use in the app — confirm the mailbox is monitored |
 | Privacy contact | `privacy@trips.bd` | in use in the app — confirm the mailbox is monitored |
 | Website | `https://app.trips.bd` | ready |
-| Support phone | — | **missing** — supply the real registered number |
-| Registered legal entity name | — | **missing** |
-| Registered business address | — | **missing** |
+| Support phone | `+8801540723530` | ready |
+| Registered legal entity name | Marketsync Global Ltd. | ready |
+| Registered business address | Kashidanga City Gate, Rajpara, Rajshahi-6201, Bangladesh | ready |
 | D-U-N-S number (org accounts) | — | **missing** |
 
-Until the four missing rows are supplied, the listing cannot be completed. Nothing
-fabricated will be written into the app or the docs.
+D-U-N-S is the only outstanding row, and only if the Play account is an organisation account.
 
 ## 4. Graphics assets — verified in repo
 
