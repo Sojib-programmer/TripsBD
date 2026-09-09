@@ -30,6 +30,8 @@ export const Route = createFileRoute("/sitemap.xml")({
         const entries: SitemapEntry[] = [...STATIC_ENTRIES];
 
         try {
+          const { INVENTORY_LIVE } = await import("@/lib/inventory");
+          if (!INVENTORY_LIVE) throw new Error("inventory gated: no detail pages to index");
           const { publicClient } = await import("@/lib/supabase-public");
           const sb = publicClient();
           const pageSize = 1000;
