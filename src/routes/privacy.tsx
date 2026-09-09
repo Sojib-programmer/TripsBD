@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { AppShell, PageHeader } from "@/components/AppShell";
+import { COMPANY, COMPANY_ADDRESS } from "@/lib/company";
 
 export const Route = createFileRoute("/privacy")({
   component: PrivacyPage,
@@ -10,134 +11,136 @@ export const Route = createFileRoute("/privacy")({
       {
         name: "description",
         content:
-          "How Trips.bd collects, uses, shares and deletes your personal data when you book hotels, flights, trains, transfers, cars, activities and eSIM.",
+          "What data Trips.bd collects, why we collect it, who we share it with, how long we keep it, and how to delete your account.",
       },
       { property: "og:title", content: "Privacy Policy — Trips.bd" },
-      { property: "og:description", content: "Our data collection, use, sharing and deletion practices." },
-      { property: "og:type", content: "article" },
+      { property: "og:description", content: "Data we collect, why, and how to delete it." },
+      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
 });
 
-const UPDATED = "29 August 2026";
+const LAST_UPDATED = "5 September 2026";
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mt-6">
-      <h2 className="text-[19px] font-semibold text-foreground">{title}</h2>
-      <div className="mt-2 space-y-2 text-[15px] leading-relaxed text-muted-foreground">{children}</div>
-    </section>
-  );
-}
+const DATA = [
+  {
+    what: "Account data — email address, and name and photo if you sign in with Google or Apple",
+    why: "To create and secure your account and let you sign back in",
+    keep: "Until you delete your account",
+  },
+  {
+    what: "Booking request data — traveller name, email, phone, dates, group size and your notes",
+    why: "To source and fulfil the booking request you send us",
+    keep: "Until you delete your account; anonymised amounts kept for 6 years for accounting",
+  },
+  {
+    what: "Support messages you send us in the app",
+    why: "To answer your question",
+    keep: "Until you delete your account",
+  },
+  {
+    what: "Saved listings and in-app notifications",
+    why: "To show your shortlist and the status of your requests",
+    keep: "Until you delete your account",
+  },
+];
 
 function PrivacyPage() {
   return (
     <AppShell>
-      <PageHeader title="Privacy Policy" subtitle={`Last updated ${UPDATED}`} />
-      <div className="px-5 pb-10">
-        <p className="text-[15px] leading-relaxed text-muted-foreground">
-          Trips.bd ("we", "us") operates the Trips.bd website and Android application, a travel
-          marketplace for stays, flights, trains, airport transfers, car rentals, activities and eSIM
-          in and around Bangladesh. This policy explains what we collect, why, and the control you
-          have over it.
+      <PageHeader title="Privacy Policy" subtitle={`Last updated ${LAST_UPDATED}`} />
+      <div className="space-y-6 px-5 pb-12 text-[15px] leading-relaxed text-muted-foreground">
+        <p>
+          This policy explains how {COMPANY.legalName}, trading as {COMPANY.tradingName}, handles
+          your personal data in the Trips.bd app and at {COMPANY.website}. We are the data
+          controller.
         </p>
 
-        <Section title="Data we collect">
-          <ul className="list-disc space-y-1 pl-5">
-            <li>
-              <strong className="text-foreground">Account data</strong> — email address, name, and
-              (optionally) phone number and avatar, created when you register or sign in with Google
-              or Apple.
-            </li>
-            <li>
-              <strong className="text-foreground">Booking data</strong> — searches, selected
-              inventory, travel dates, traveller counts, booking references, order status and totals.
-            </li>
-            <li>
-              <strong className="text-foreground">Support data</strong> — messages and form
-              submissions you send us.
-            </li>
-            <li>
-              <strong className="text-foreground">Device and usage data</strong> — app version,
-              device type, coarse language/region, crash and performance diagnostics.
-            </li>
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">What we collect and why</h2>
+          <ul className="mt-3 space-y-4">
+            {DATA.map((row) => (
+              <li key={row.what} className="rounded-2xl border border-border p-4">
+                <p className="font-medium text-foreground">{row.what}</p>
+                <p className="mt-1">Why: {row.why}</p>
+                <p className="mt-1">Retention: {row.keep}</p>
+              </li>
+            ))}
           </ul>
-          <p>
-            We do not collect precise location, contacts, photos, SMS, call logs, or financial
-            instrument numbers in the app.
+          <p className="mt-3">
+            We do not collect precise location, contacts, photos, health data or advertising
+            identifiers. We do not take payments in the app, so we never hold your card details.
+            We do not sell personal data, and we do not use it for advertising or profiling.
           </p>
-        </Section>
+        </section>
 
-        <Section title="How we use it">
-          <ul className="list-disc space-y-1 pl-5">
-            <li>To create and secure your account and keep you signed in.</li>
-            <li>To process booking requests and show your trips and order status.</li>
-            <li>To send transactional notifications about your bookings.</li>
-            <li>To provide customer support and resolve disputes.</li>
-            <li>To detect fraud, abuse and to meet legal and accounting obligations.</li>
-          </ul>
-        </Section>
-
-        <Section title="Sharing">
-          <p>
-            We share only what is needed to deliver a booking: the traveller name, contact and trip
-            details go to the supplier fulfilling it (hotel, airline, operator, transfer or rental
-            partner). We also use these processors:
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">Who we share it with</h2>
+          <p className="mt-2">
+            Supabase, our database and authentication provider, stores the data on our behalf.
+            Google and Apple process your sign-in if you choose those options. When you send a
+            booking request, we pass only the details needed for that booking (traveller name,
+            dates, group size, contact number) to the hotel, airline agent or transport operator
+            fulfilling it. Nothing else is shared.
           </p>
-          <ul className="list-disc space-y-1 pl-5">
-            <li>Supabase — database, authentication and realtime hosting.</li>
-            <li>Google and Apple — sign-in, only when you choose those buttons.</li>
-            <li>Tally — hosted forms for support requests and property listings.</li>
-          </ul>
-          <p>We never sell personal data or share it with data brokers.</p>
-        </Section>
+        </section>
 
-        <Section title="Security">
-          <p>
-            All traffic is encrypted in transit with TLS. Data is stored in access-controlled
-            Postgres with row-level security so a signed-in user can only reach their own records.
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">Your rights</h2>
+          <p className="mt-2">
+            You can access, correct, export or delete your data. Deletion is immediate and
+            self-service at{" "}
+            <Link to="/account/delete" className="font-medium text-brand underline underline-offset-2">
+              app.trips.bd/account/delete
+            </Link>
+            : it removes your account, profile, requests, saved items, notifications and support
+            messages. Anonymised transaction amounts (no name, email or phone) are kept for six
+            years to meet Bangladesh accounting and tax obligations.
           </p>
-        </Section>
-
-        <Section title="Retention">
-          <p>
-            Account data is kept while your account is active. Booking and payment records are kept
-            for up to 6 years where tax and consumer-protection law requires it, then deleted or
-            irreversibly anonymised. Support messages are kept for 24 months.
-          </p>
-        </Section>
-
-        <Section title="Your rights and data deletion">
-          <p>
-            You can access, correct, export or delete your data at any time. Use the in-app{" "}
-            <Link to="/account/delete" className="font-semibold text-brand underline underline-offset-2">
-              Delete my account
-            </Link>{" "}
-            page, or email{" "}
-            <a href="mailto:privacy@trips.bd" className="font-semibold text-brand underline underline-offset-2">
-              privacy@trips.bd
+          <p className="mt-2">
+            To exercise any other right, email{" "}
+            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.privacyEmail}
             </a>
-            . We action verified requests within 30 days.
+            . We respond within one business day and complete requests within 30 days.
           </p>
-        </Section>
+        </section>
 
-        <Section title="Children">
-          <p>
-            Trips.bd is intended for users aged 18 and over. We do not knowingly collect data from
-            children. Contact us if you believe a child has created an account.
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">Children</h2>
+          <p className="mt-2">
+            Trips.bd is for people aged 18 and over. We do not knowingly collect data from
+            children. If you believe a child has an account, email {COMPANY.privacyEmail} and we
+            will delete it.
           </p>
-        </Section>
+        </section>
 
-        <Section title="Changes and contact">
-          <p>
-            We will post material changes on this page and update the date above. Questions:{" "}
-            <a href="mailto:privacy@trips.bd" className="font-semibold text-brand underline underline-offset-2">
-              privacy@trips.bd
-            </a>{" "}
-            · Trips.bd, Gulshan, Dhaka 1212, Bangladesh.
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">Security</h2>
+          <p className="mt-2">
+            Data is encrypted in transit, held in access-controlled databases with row-level
+            security so one traveller can never read another traveller&apos;s records, and
+            accessible to a small number of staff who need it to fulfil bookings.
           </p>
-        </Section>
+        </section>
+
+        <section>
+          <h2 className="text-[19px] font-semibold text-foreground">Contact</h2>
+          <p className="mt-2">
+            {COMPANY.legalName} · {COMPANY_ADDRESS}
+            <br />
+            Phone:{" "}
+            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.phone}
+            </a>
+            <br />
+            Privacy:{" "}
+            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+              {COMPANY.privacyEmail}
+            </a>
+          </p>
+        </section>
       </div>
     </AppShell>
   );
