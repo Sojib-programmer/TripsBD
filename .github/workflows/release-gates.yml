@@ -32,6 +32,23 @@ jobs:
             exit 1
           fi
 
+      - name: Inventory gate must be present
+        run: |
+          test -f src/lib/inventory.ts || { echo "::error::src/lib/inventory.ts (INVENTORY_LIVE gate) is missing."; exit 1; }
+          for f in src/routes/stays.tsx src/routes/flights.tsx src/routes/activities.index.tsx src/routes/transfers.tsx; do
+            grep -q "inventoryLiveClient" "$f" || { echo "::error file=$f::vertical does not honour the inventory gate — seeded rows would be shown as bookable."; exit 1; }
+          done
+
+      - name: Out-of-scope verticals must not be shippable
+        run: |
+          for f in src/routes/cars.tsx src/routes/esim.tsx src/routes/trains.tsx src/routes/packages.tsx; do
+            grep -q "ComingSoon" "$f" || { echo "::error file=$f::vertical is outside launch scope (docs/product-truth.md) but renders inventory."; exit 1; }
+          done
+
+      - name: Account deletion must be real
+        run: |
+          grep -q "fulfilAccountDeletion" src/lib/compliance.functions.ts || { echo "::error::Account deletion no longer performs a real deletion. Play policy violation."; exit 1; }
+
       - name: Store asset dimensions
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick
