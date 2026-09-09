@@ -3,7 +3,7 @@
 Single source of truth for what the app actually does. Store listing copy, the privacy
 policy and the Play Data Safety declaration must not claim anything absent here.
 
-Last verified: 2026-09-04 against `src/lib/orders.functions.ts`, `src/lib/account.functions.ts`,
+Last verified: 2026-09-05 against `src/lib/orders.functions.ts`, `src/lib/account.functions.ts`,
 `supabase/migrations/*` and all routes in `src/routes/`.
 
 ## Booking model
@@ -29,20 +29,29 @@ instantly", "live fares", "real-time availability", "pay now".
 | Flights | `flights.tsx`, `book-flight.tsx` | `public.flights` (seeded) | request-to-book |
 | Activities | `activities.index.tsx`, `activities.$slug.tsx` | `public.activities` / `activity_slots` (seeded) | request-to-book |
 | Airport transfers | `transfers.tsx` | `public.transfers` (seeded) | request-to-book |
-| Car rentals | `cars.tsx` | `public.car_rentals` (seeded) | pending ops sign-off |
-| eSIM | `esim.tsx` | `public.esim_plans` (seeded) | pending ops sign-off |
-| Trains | `trains.tsx` | `public.trains` (seeded) | pending ops sign-off |
-| Packages | `packages.tsx` | `public.packages` (seeded) | pending ops sign-off |
+| Car rentals | `cars.tsx` | none | **out of launch scope** — route renders `ComingSoon`, removed from home grid and sitemap |
+| eSIM | `esim.tsx` | none | **out of launch scope** — `ComingSoon` |
+| Trains | `trains.tsx` | none | **out of launch scope** — `ComingSoon` |
+| Packages | `packages.tsx` | none | **out of launch scope** — `ComingSoon` |
 
-Verticals marked "pending ops sign-off" must either get a named fulfilment owner or be
-removed from the home tile grid and store copy before production release (launch gate 8/10).
+Launch scope is exactly four verticals: stays, flights, activities, airport transfers.
+Each is fulfilled manually by the Trips.bd ops team.
 
 ## Inventory reality
 
-All catalogue rows come from literal `insert into` seed statements in
-`supabase/migrations/`. No row represents a contractually available product today.
-Before production release, seeded rows must be either replaced with real contracted
-inventory or flagged and hidden in production.
+All catalogue rows in the database come from literal `insert into` seed statements in
+`supabase/migrations/`. No row represents contracted, available inventory.
+
+Therefore catalogue reads are gated by `src/lib/inventory.ts`:
+
+- server: `INVENTORY_LIVE` (`process.env.INVENTORY_LIVE === "true"`) — every catalogue
+  server function returns empty until real supplier rows are loaded,
+- client: `inventoryLiveClient` (`VITE_INVENTORY_LIVE`) — while off, stays, flights,
+  activities and transfers show `RequestPanel` instead of listings, which writes a real
+  `public.orders` row with `total_bdt = 0` (no price is claimed),
+- the sitemap omits listing/activity detail URLs while the gate is off.
+
+Nothing seeded is presented to a traveller as bookable.
 
 ## Non-goals for V1
 
@@ -59,8 +68,8 @@ tablet-optimised layouts, offline booking, multi-currency.
 | Booking details, dates, travellers, total | `public.orders`, `public.bookings` | order/booking functions |
 | Saved listings | `public.saved_listings` | `src/routes/saved.tsx` |
 | Notifications | `public.notifications` | order status trigger |
-| Deletion requests | `public.deletion_requests` | `src/lib/compliance.functions.ts` |
-| Support/host form submissions | Tally (third-party processor) | `src/components/TallyForm.tsx` |
+| Deletion requests + anonymised audit | `public.deletion_requests`, `public.deletion_audit` | `src/lib/compliance.functions.ts`, `src/lib/deletion.server.ts` |
+| Support messages | `public.support_messages` | `src/components/SupportForm.tsx` (first-party; deleted on account deletion) |
 | Client error reports | error reporting endpoint | `src/lib/lovable-error-reporting.ts` |
 
 Not collected: precise location, contacts, photos, SMS, health data, financial account
