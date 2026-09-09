@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Clock, Loader2, Star } from "lucide-react";
 
+import { RequestPanel } from "@/components/RequestPanel";
+import { inventoryLiveClient } from "@/lib/inventory";
 import { AppShell } from "@/components/AppShell";
 import { ChipBar, VerticalHeader } from "@/components/VerticalHeader";
 import { bdt, duration } from "@/lib/format";
@@ -55,6 +57,18 @@ function ActivitiesPage() {
         active={category}
         onSelect={(c) => void navigate({ to: "/activities", search: { category: c } })}
       />
+
+      {!inventoryLiveClient ? (
+        <div className="px-5 pt-4">
+          <RequestPanel
+            vertical="activity"
+            heading="Tour or activity request"
+            summary="Tell us the city, dates and group size"
+            startsAt={new Date().toISOString().slice(0, 10)}
+            details={{ category }}
+          />
+        </div>
+      ) : null}
 
       <section className="space-y-4 px-5 py-4">
         {q.isLoading ? (

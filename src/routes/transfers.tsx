@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Briefcase, Loader2, Users } from "lucide-react";
 import { useState } from "react";
 
+import { RequestPanel } from "@/components/RequestPanel";
+import { inventoryLiveClient } from "@/lib/inventory";
 import { AppShell } from "@/components/AppShell";
 import { CheckoutPanel } from "@/components/CheckoutPanel";
 import { DateRangeCalendar } from "@/components/search/DateRangeCalendar";
@@ -76,6 +78,19 @@ function TransfersPage() {
         active={search.direction}
         onSelect={(d) => void navigate({ to: "/transfers", search: (p) => ({ ...p, direction: d }) })}
       />
+
+      {!inventoryLiveClient ? (
+        <div className="px-5 pt-4">
+          <RequestPanel
+            vertical="transfer"
+            heading={`Airport transfer · ${airportName}`}
+            summary={`${prettyDate(search.date)} at ${search.time}`}
+            startsAt={search.date}
+            defaultTravellers={search.pax}
+            details={{ ...search }}
+          />
+        </div>
+      ) : null}
 
       <section className="space-y-3 px-5 py-4">
         {rows.isLoading ? (

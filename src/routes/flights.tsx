@@ -3,6 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeftRight, Loader2, Plane } from "lucide-react";
 import { useState } from "react";
 
+import { RequestPanel } from "@/components/RequestPanel";
+import { inventoryLiveClient } from "@/lib/inventory";
 import { AppShell } from "@/components/AppShell";
 import { ChipBar, VerticalHeader } from "@/components/VerticalHeader";
 import { DateRangeCalendar } from "@/components/search/DateRangeCalendar";
@@ -129,6 +131,19 @@ function FlightsPage() {
         active={search.sort}
         onSelect={(sort) => void navigate({ to: "/flights", search: { ...search, sort } })}
       />
+
+      {!inventoryLiveClient ? (
+        <div className="px-4 pt-4">
+          <RequestPanel
+            vertical="flight"
+            heading={`Flight ${search.from} → ${search.to}`}
+            summary={`Departing ${prettyDate(search.depart)}${search.trip === "return" && search.ret ? `, returning ${prettyDate(search.ret)}` : ""}`}
+            startsAt={search.depart}
+            defaultTravellers={pax}
+            details={{ ...search }}
+          />
+        </div>
+      ) : null}
 
       <section className="px-4 py-4">
         {flights.isLoading ? (
