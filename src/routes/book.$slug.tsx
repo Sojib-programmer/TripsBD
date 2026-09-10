@@ -167,7 +167,7 @@ function BookPage() {
 
         <label className="block text-[14px] font-medium text-muted-foreground">
           Email
-          <input required type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} placeholder="name@example.com" className={field} />
+          <input required type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} placeholder="you@email.com" className={field} />
         </label>
 
         <label className="block text-[14px] font-medium text-muted-foreground">
