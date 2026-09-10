@@ -1,7 +1,7 @@
 {
   "packageId": "bd.trips.app",
   "host": "app.trips.bd",
-  "name": "Trips.bd — Hotels & Flights",
+  "name": "Trips.bd: Hotels & Flights",
   "launcherName": "Trips.bd",
   "display": "standalone",
   "orientation": "portrait",
