@@ -89,7 +89,7 @@ Answers to the standard questions:
 
 Copy must match `docs/product-truth.md`: request-to-book, human confirmation, no live fares.
 
-**App name:** Trips.bd — Hotels & Flights
+**App name:** Trips.bd: Hotels & Flights
 
 **Short description (80 chars):**
 Request hotels, flights, activities and transfers across Bangladesh in one app.

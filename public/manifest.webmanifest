@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Trips.bd — Hotels, Flights & Activities",
+  "name": "Trips.bd: Hotels & Flights",
   "short_name": "Trips.bd",
-  "description": "Book hotels, homes, flights, trains, airport transfers, car rentals, activities and eSIM across Bangladesh.",
+  "description": "Request hotels, homes, flights, airport transfers and activities across Bangladesh. Our team confirms availability — no payment is taken in the app.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
@@ -28,7 +28,7 @@
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Search hotels, flights and more"
+      "label": "Search stays, flights, transfers and activities"
     },
     {
       "src": "/store/screenshot-stays.png",
@@ -42,14 +42,14 @@
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Compare domestic flights"
+      "label": "Request domestic and international flights"
     },
     {
       "src": "/store/screenshot-trips.png",
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Track every booking in one place"
+      "label": "Track every request in one place"
     }
   ],
   "shortcuts": [
