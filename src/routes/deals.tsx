@@ -14,7 +14,11 @@ export const Route = createFileRoute("/deals")({
   head: () => ({
     meta: [
       { title: "Deals & Promotions — Trips.bd" },
-      { name: "description", content: "Member-only discounts on hotels, flights and activities across Bangladesh and beyond." },
+      {
+        name: "description",
+        content:
+          "Member-only discounts on hotels, flights and activities across Bangladesh and beyond.",
+      },
       { property: "og:title", content: "Deals & Promotions — Trips.bd" },
       { property: "og:description", content: "Member-only travel discounts, updated daily." },
       { property: "og:type", content: "website" },

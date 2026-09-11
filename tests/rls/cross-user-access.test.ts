@@ -11,8 +11,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { beforeAll, describe, expect, it } from "vitest";
 
 const url = process.env["VITE_SUPABASE_URL"] ?? process.env["SUPABASE_URL"];
-const key =
-  process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ?? process.env["SUPABASE_PUBLISHABLE_KEY"];
+const key = process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ?? process.env["SUPABASE_PUBLISHABLE_KEY"];
 const a = {
   email: process.env["RLS_TEST_USER_A_EMAIL"],
   password: process.env["RLS_TEST_USER_A_PASSWORD"],

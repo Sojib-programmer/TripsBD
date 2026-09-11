@@ -268,7 +268,9 @@ function FlightsPage() {
               type="button"
               onClick={() => setTrip(t)}
               className={`rounded-full border px-4 py-1.5 text-[14px] font-medium ${
-                trip === t ? "border-brand bg-brand/10 text-brand" : "border-border text-muted-foreground"
+                trip === t
+                  ? "border-brand bg-brand/10 text-brand"
+                  : "border-border text-muted-foreground"
               }`}
             >
               {t === "oneway" ? "One-way" : "Return"}
@@ -328,7 +330,14 @@ function FlightsPage() {
         </div>
 
         <div className="border-t border-border">
-          <Stepper label="Adults" hint="Age 12+" value={adults} min={1} max={9} onChange={setAdults} />
+          <Stepper
+            label="Adults"
+            hint="Age 12+"
+            value={adults}
+            min={1}
+            max={9}
+            onChange={setAdults}
+          />
           <Stepper label="Children" hint="Age 2–11" value={kids} max={8} onChange={setKids} />
         </div>
 

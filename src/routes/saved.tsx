@@ -14,9 +14,15 @@ export const Route = createFileRoute("/saved")({
   head: () => ({
     meta: [
       { title: "Saved — Trips.bd" },
-      { name: "description", content: "Your shortlisted hotels, homes and activities, saved for later on Trips.bd." },
+      {
+        name: "description",
+        content: "Your shortlisted hotels, homes and activities, saved for later on Trips.bd.",
+      },
       { property: "og:title", content: "Saved — Trips.bd" },
-      { property: "og:description", content: "Shortlist places and come back when you are ready to book." },
+      {
+        property: "og:description",
+        content: "Shortlist places and come back when you are ready to book.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

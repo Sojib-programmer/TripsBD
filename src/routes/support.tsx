@@ -10,7 +10,11 @@ export const Route = createFileRoute("/support")({
   head: () => ({
     meta: [
       { title: "Support & Feedback — Trips.bd" },
-      { name: "description", content: "Contact Trips.bd support about a booking request, refund or account issue, or send product feedback." },
+      {
+        name: "description",
+        content:
+          "Contact Trips.bd support about a booking request, refund or account issue, or send product feedback.",
+      },
       { property: "og:title", content: "Support & Feedback — Trips.bd" },
       { property: "og:description", content: "Get help with booking requests and your account." },
       { property: "og:type", content: "website" },
@@ -30,19 +34,28 @@ function SupportPage() {
         <ul className="mt-2 space-y-1 text-[15px] text-muted-foreground">
           <li>
             Support:{" "}
-            <a href={`mailto:${COMPANY.supportEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.supportEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.supportEmail}
             </a>
           </li>
           <li>
             Privacy requests:{" "}
-            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.privacyEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.privacyEmail}
             </a>
           </li>
           <li>
             Phone:{" "}
-            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={COMPANY.phoneHref}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.phone}
             </a>
           </li>
@@ -55,7 +68,10 @@ function SupportPage() {
           <Link to="/terms" className="font-medium text-brand underline underline-offset-2">
             Terms of Use
           </Link>
-          <Link to="/account/delete" className="font-medium text-brand underline underline-offset-2">
+          <Link
+            to="/account/delete"
+            className="font-medium text-brand underline underline-offset-2"
+          >
             Delete account
           </Link>
         </div>

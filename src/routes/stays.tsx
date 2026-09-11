@@ -222,7 +222,14 @@ function StaysPage() {
 
         <div className="border-t border-border">
           <Stepper label="Rooms" value={rooms} min={1} max={9} onChange={setRooms} />
-          <Stepper label="Adults" hint="Age 18+" value={adults} min={1} max={16} onChange={setAdults} />
+          <Stepper
+            label="Adults"
+            hint="Age 18+"
+            value={adults}
+            min={1}
+            max={16}
+            onChange={setAdults}
+          />
           <Stepper label="Children" hint="Age 0–17" value={kids} max={10} onChange={setKids} />
         </div>
       </Sheet>

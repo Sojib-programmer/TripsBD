@@ -21,7 +21,7 @@ export const Route = createFileRoute("/privacy")({
   }),
 });
 
-const LAST_UPDATED = "5 September 2026";
+const LAST_UPDATED = "10 September 2026";
 
 const DATA = [
   {
@@ -43,6 +43,11 @@ const DATA = [
     what: "Saved listings and in-app notifications",
     why: "To show your shortlist and the status of your requests",
     keep: "Until you delete your account",
+  },
+  {
+    what: "Crash and error diagnostics — error message, screen, device and app version",
+    why: "To find and fix crashes so the app stays stable",
+    keep: "90 days. Email addresses, phone numbers and access tokens are stripped before the report leaves your device",
   },
 ];
 
@@ -69,9 +74,11 @@ function PrivacyPage() {
             ))}
           </ul>
           <p className="mt-3">
-            We do not collect precise location, contacts, photos, health data or advertising
-            identifiers. We do not take payments in the app, so we never hold your card details.
-            We do not sell personal data, and we do not use it for advertising or profiling.
+            We do not collect precise location, contacts, health data or advertising identifiers,
+            and we never open your camera or photo library — the only picture we hold is the profile
+            photo Google or Apple gives us when you sign in. We do not store your search terms. We
+            do not take payments in the app, so we never hold your card details. We do not sell
+            personal data, and we do not use it for advertising or profiling.
           </p>
         </section>
 
@@ -82,7 +89,9 @@ function PrivacyPage() {
             Google and Apple process your sign-in if you choose those options. When you send a
             booking request, we pass only the details needed for that booking (traveller name,
             dates, group size, contact number) to the hotel, airline agent or transport operator
-            fulfilling it. Nothing else is shared.
+            fulfilling it. Our hosting and content network delivers the app, and Sentry receives
+            crash diagnostics with personal details already stripped out. All of these act only on
+            our instructions. Nothing else is shared, and nothing is shared for advertising.
           </p>
         </section>
 
@@ -91,16 +100,23 @@ function PrivacyPage() {
           <p className="mt-2">
             You can access, correct, export or delete your data. Deletion is immediate and
             self-service at{" "}
-            <Link to="/account/delete" className="font-medium text-brand underline underline-offset-2">
+            <Link
+              to="/account/delete"
+              className="font-medium text-brand underline underline-offset-2"
+            >
               app.trips.bd/account/delete
             </Link>
             : it removes your account, profile, requests, saved items, notifications and support
             messages. Anonymised transaction amounts (no name, email or phone) are kept for six
-            years to meet Bangladesh accounting and tax obligations.
+            years to meet Bangladesh accounting and tax obligations, alongside a short
+            proof-of-deletion record that holds no name, email address or phone number.
           </p>
           <p className="mt-2">
             To exercise any other right, email{" "}
-            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.privacyEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.privacyEmail}
             </a>
             . We respond within one business day and complete requests within 30 days.
@@ -110,9 +126,9 @@ function PrivacyPage() {
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">Children</h2>
           <p className="mt-2">
-            Trips.bd is for people aged 18 and over. We do not knowingly collect data from
-            children. If you believe a child has an account, email {COMPANY.privacyEmail} and we
-            will delete it.
+            Trips.bd is for people aged 18 and over. We do not knowingly collect data from children.
+            If you believe a child has an account, email {COMPANY.privacyEmail} and we will delete
+            it.
           </p>
         </section>
 
@@ -131,12 +147,18 @@ function PrivacyPage() {
             {COMPANY.legalName} · {COMPANY_ADDRESS}
             <br />
             Phone:{" "}
-            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={COMPANY.phoneHref}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.phone}
             </a>
             <br />
             Privacy:{" "}
-            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.privacyEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.privacyEmail}
             </a>
           </p>

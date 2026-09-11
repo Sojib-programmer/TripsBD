@@ -21,7 +21,8 @@ export const Route = createFileRoute("/book-flight")({
       { title: "Review your flight — Trips.bd" },
       {
         name: "description",
-        content: "Check your fare, baggage and traveller details before sending your flight request.",
+        content:
+          "Check your fare, baggage and traveller details before sending your flight request.",
       },
       { property: "og:title", content: "Review your flight — Trips.bd" },
       { property: "og:description", content: "Fare, baggage and traveller details in one screen." },
@@ -64,9 +65,7 @@ function BookFlightPage() {
               </p>
               <div className="mt-3 flex items-center gap-3">
                 <div>
-                  <p className="text-[20px] font-semibold text-foreground">
-                    {hhmm(f.depart_time)}
-                  </p>
+                  <p className="text-[20px] font-semibold text-foreground">{hhmm(f.depart_time)}</p>
                   <p className="text-[13px] text-muted-foreground">{f.from_iata}</p>
                 </div>
                 <div className="flex-1 text-center text-[12px] text-muted-foreground">

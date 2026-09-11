@@ -40,12 +40,14 @@ function sanitizeFilterTerm(term: string): string {
     .slice(0, 80);
 }
 
-
 export const getHomeFeed = createServerFn({ method: "GET" }).handler(async () => {
   if (!INVENTORY_LIVE) return { destinations: [], listings: [], deals: [] };
   const sb = publicClient();
   const [destinations, listings, deals] = await Promise.all([
-    sb.from("destinations").select("id, slug, name, country, tagline, hero_url").order("sort_order"),
+    sb
+      .from("destinations")
+      .select("id, slug, name, country, tagline, hero_url")
+      .order("sort_order"),
     sb.from("listings").select(LIST_COLS).order("rating", { ascending: false }).limit(12),
     sb.from("deals").select("id, code, title, subtitle, discount_pct").limit(6),
   ]);
@@ -98,10 +100,6 @@ export const getListing = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     if (!INVENTORY_LIVE) return null;
     const sb = publicClient();
-    const { data: row } = await sb
-      .from("listings")
-      .select("*")
-      .eq("slug", data.slug)
-      .maybeSingle();
+    const { data: row } = await sb.from("listings").select("*").eq("slug", data.slug).maybeSingle();
     return row;
   });

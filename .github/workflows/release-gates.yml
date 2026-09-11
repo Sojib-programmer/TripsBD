@@ -73,8 +73,9 @@ jobs:
 
       - name: App name must be consistent
         run: |
-          web=$(node -p "require('./public/manifest.webmanifest').name")
-          twa=$(node -p "require('./android/twa-manifest.json').name")
+          read_name() { node -p "JSON.parse(require('fs').readFileSync('$1','utf8')).name"; }
+          web=$(read_name public/manifest.webmanifest)
+          twa=$(read_name android/twa-manifest.json)
           if [ "$web" != "$twa" ]; then
             echo "::error::App name mismatch: manifest '$web' vs TWA '$twa'. Release blocked."
             exit 1

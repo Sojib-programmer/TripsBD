@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { captureError, initMonitoring } from "@/lib/monitoring";
 import { ConsentNotice } from "@/components/ConsentNotice";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { Toaster } from "@/components/ui/sonner";
@@ -43,6 +44,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    captureError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
   return (
@@ -97,7 +99,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "google-site-verification",
         content: "yE8iOc5q6niMi1fCATYR1c1wq5mvXTJbnXqyI2O61Qc",
       },
-
     ],
     links: [
       {
@@ -138,6 +139,10 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+
+  useEffect(() => {
+    initMonitoring();
+  }, []);
 
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {

@@ -91,14 +91,23 @@ export function HomeScreen() {
           bg="bg-tile-hotels"
           img={tileHotels}
           alt="Hotel building"
-          href={<Link to="/stays" search={staysSearch()} aria-label="Search hotels" className={fill} />}
+          href={
+            <Link to="/stays" search={staysSearch()} aria-label="Search hotels" className={fill} />
+          }
         />
         <Tile
           title="Flights"
           bg="bg-tile-flights"
           img={tileFlights}
           alt="Airplane"
-          href={<Link to="/flights" search={flightsSearch()} aria-label="Search flights" className={fill} />}
+          href={
+            <Link
+              to="/flights"
+              search={flightsSearch()}
+              aria-label="Search flights"
+              className={fill}
+            />
+          }
         />
       </div>
 
@@ -109,7 +118,14 @@ export function HomeScreen() {
           img={tileActivities}
           alt="Ferris wheel"
           className="[&_span]:text-[17px]"
-          href={<Link to="/activities" search={activitiesSearch()} aria-label="Browse activities" className={fill} />}
+          href={
+            <Link
+              to="/activities"
+              search={activitiesSearch()}
+              aria-label="Browse activities"
+              className={fill}
+            />
+          }
         />
         <Tile
           title={"Homes\n& Apts"}
