@@ -21,7 +21,7 @@ export const Route = createFileRoute("/privacy")({
   }),
 });
 
-const LAST_UPDATED = "5 September 2026";
+const LAST_UPDATED = "10 September 2026";
 
 const DATA = [
   {
@@ -43,6 +43,11 @@ const DATA = [
     what: "Saved listings and in-app notifications",
     why: "To show your shortlist and the status of your requests",
     keep: "Until you delete your account",
+  },
+  {
+    what: "Crash and error diagnostics — error message, screen, device and app version",
+    why: "To find and fix crashes so the app stays stable",
+    keep: "90 days. Email addresses, phone numbers and access tokens are stripped before the report leaves your device",
   },
 ];
 
