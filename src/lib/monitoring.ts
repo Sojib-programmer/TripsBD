@@ -24,10 +24,7 @@ const TOKEN = /(bearer\s+|(?:access|refresh|api)[-_]?(?:token|key)["'=:\s]+)[\w.
 
 /** Remove anything that could identify a traveller from a free-text field. */
 export function scrubText(value: string): string {
-  return value
-    .replace(EMAIL, "[email]")
-    .replace(TOKEN, "$1[redacted]")
-    .replace(PHONE, "[phone]");
+  return value.replace(EMAIL, "[email]").replace(TOKEN, "$1[redacted]").replace(PHONE, "[phone]");
 }
 
 function scrubDeep<T>(value: T, depth = 0): T {
