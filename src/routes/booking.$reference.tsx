@@ -15,7 +15,10 @@ export const Route = createFileRoute("/booking/$reference")({
   head: () => ({
     meta: [
       { title: "Booking request received — Trips.bd" },
-      { name: "description", content: "Your Trips.bd booking request details, status timeline and reference number." },
+      {
+        name: "description",
+        content: "Your Trips.bd booking request details, status timeline and reference number.",
+      },
       { property: "og:title", content: "Booking request received — Trips.bd" },
       { property: "og:description", content: "Request details and live status." },
 
@@ -65,7 +68,12 @@ function ConfirmationPage() {
       .channel(`booking-${bookingId}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "booking_events", filter: `booking_id=eq.${bookingId}` },
+        {
+          event: "*",
+          schema: "public",
+          table: "booking_events",
+          filter: `booking_id=eq.${bookingId}`,
+        },
         () => {
           void queryClient.invalidateQueries({ queryKey: ["booking-timeline", bookingId] });
           void queryClient.invalidateQueries({ queryKey: ["booking", reference] });
@@ -101,19 +109,30 @@ function ConfirmationPage() {
   return (
     <main className="mx-auto max-w-[440px] px-5 pb-16 pt-10">
       <CheckCircle2 size={44} className="text-brand" />
-      <h1 className="mt-4 font-display text-[28px] font-semibold text-foreground">Request received</h1>
+      <h1 className="mt-4 font-display text-[28px] font-semibold text-foreground">
+        Request received
+      </h1>
       <p className="mt-1 text-[16px] text-muted-foreground">
-        Reference <span className="font-semibold text-foreground">{b.reference}</span> · status {b.status}
+        Reference <span className="font-semibold text-foreground">{b.reference}</span> · status{" "}
+        {b.status}
       </p>
 
       <section className="mt-6 flex gap-3 rounded-2xl border border-border p-3">
         {b.listing?.hero_url ? (
-          <img src={b.listing.hero_url} alt={b.listing.title} className="h-20 w-20 rounded-xl object-cover" />
+          <img
+            src={b.listing.hero_url}
+            alt={b.listing.title}
+            className="h-20 w-20 rounded-xl object-cover"
+          />
         ) : null}
         <div className="min-w-0">
           <p className="truncate text-[16px] font-semibold text-foreground">{b.listing?.title}</p>
-          <p className="truncate text-[15px] text-muted-foreground">{b.listing?.city}, {b.listing?.country}</p>
-          <p className="mt-1 text-[15px] text-foreground">{b.check_in} → {b.check_out} · {b.guests} guests</p>
+          <p className="truncate text-[15px] text-muted-foreground">
+            {b.listing?.city}, {b.listing?.country}
+          </p>
+          <p className="mt-1 text-[15px] text-foreground">
+            {b.check_in} → {b.check_out} · {b.guests} guests
+          </p>
         </div>
       </section>
 
@@ -136,11 +155,15 @@ function ConfirmationPage() {
               <span className="absolute -left-[21px] top-2 h-2 w-2 rounded-full bg-brand" />
               <p className="text-[16px] font-medium text-foreground">{e.status}</p>
               {e.message ? <p className="text-[15px] text-muted-foreground">{e.message}</p> : null}
-              <p className="text-[13px] text-muted-foreground">{new Date(e.created_at).toLocaleString()}</p>
+              <p className="text-[13px] text-muted-foreground">
+                {new Date(e.created_at).toLocaleString()}
+              </p>
             </li>
           ))}
           {!timeline.data?.length ? (
-            <li className="text-[15px] text-muted-foreground">Waiting for the property to respond…</li>
+            <li className="text-[15px] text-muted-foreground">
+              Waiting for the property to respond…
+            </li>
           ) : null}
         </ol>
       </section>
@@ -159,15 +182,21 @@ function ConfirmationPage() {
       ) : null}
 
       <p className="mt-3 text-[13px] text-muted-foreground">
-        Cancelling before we confirm availability is free. Once confirmed, the supplier
-        cancellation terms in our Terms of Use apply.
+        Cancelling before we confirm availability is free. Once confirmed, the supplier cancellation
+        terms in our Terms of Use apply.
       </p>
 
       <div className="mt-8 flex gap-3">
-        <Link to="/trips" className="flex-1 rounded-full bg-brand py-3 text-center text-[16px] font-semibold text-brand-foreground">
+        <Link
+          to="/trips"
+          className="flex-1 rounded-full bg-brand py-3 text-center text-[16px] font-semibold text-brand-foreground"
+        >
           My Trips
         </Link>
-        <Link to="/support" className="flex-1 rounded-full border border-border py-3 text-center text-[16px] font-semibold text-foreground">
+        <Link
+          to="/support"
+          className="flex-1 rounded-full border border-border py-3 text-center text-[16px] font-semibold text-foreground"
+        >
           Need help?
         </Link>
       </div>

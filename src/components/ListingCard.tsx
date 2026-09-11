@@ -70,10 +70,7 @@ export function ListingCard({
           onClick={() => onToggleSave(listing.id)}
           className="absolute right-3 top-3 rounded-full bg-background/80 p-2 backdrop-blur transition-transform active:scale-90"
         >
-          <Heart
-            size={20}
-            className={saved ? "fill-dot-red text-dot-red" : "text-foreground"}
-          />
+          <Heart size={20} className={saved ? "fill-dot-red text-dot-red" : "text-foreground"} />
         </button>
       ) : null}
     </article>

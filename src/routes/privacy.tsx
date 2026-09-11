@@ -70,8 +70,8 @@ function PrivacyPage() {
           </ul>
           <p className="mt-3">
             We do not collect precise location, contacts, photos, health data or advertising
-            identifiers. We do not take payments in the app, so we never hold your card details.
-            We do not sell personal data, and we do not use it for advertising or profiling.
+            identifiers. We do not take payments in the app, so we never hold your card details. We
+            do not sell personal data, and we do not use it for advertising or profiling.
           </p>
         </section>
 
@@ -91,7 +91,10 @@ function PrivacyPage() {
           <p className="mt-2">
             You can access, correct, export or delete your data. Deletion is immediate and
             self-service at{" "}
-            <Link to="/account/delete" className="font-medium text-brand underline underline-offset-2">
+            <Link
+              to="/account/delete"
+              className="font-medium text-brand underline underline-offset-2"
+            >
               app.trips.bd/account/delete
             </Link>
             : it removes your account, profile, requests, saved items, notifications and support
@@ -100,7 +103,10 @@ function PrivacyPage() {
           </p>
           <p className="mt-2">
             To exercise any other right, email{" "}
-            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.privacyEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.privacyEmail}
             </a>
             . We respond within one business day and complete requests within 30 days.
@@ -110,9 +116,9 @@ function PrivacyPage() {
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">Children</h2>
           <p className="mt-2">
-            Trips.bd is for people aged 18 and over. We do not knowingly collect data from
-            children. If you believe a child has an account, email {COMPANY.privacyEmail} and we
-            will delete it.
+            Trips.bd is for people aged 18 and over. We do not knowingly collect data from children.
+            If you believe a child has an account, email {COMPANY.privacyEmail} and we will delete
+            it.
           </p>
         </section>
 
@@ -131,12 +137,18 @@ function PrivacyPage() {
             {COMPANY.legalName} · {COMPANY_ADDRESS}
             <br />
             Phone:{" "}
-            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={COMPANY.phoneHref}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.phone}
             </a>
             <br />
             Privacy:{" "}
-            <a href={`mailto:${COMPANY.privacyEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.privacyEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.privacyEmail}
             </a>
           </p>

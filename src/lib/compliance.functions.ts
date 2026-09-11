@@ -64,4 +64,3 @@ export const deleteMyAccountNow = createServerFn({ method: "POST" })
     const result = await fulfilAccountDeletion(context.userId, email, request?.id ?? null);
     return { ok: true as const, deleted: result.deleted, retained: result.retained };
   });
-

@@ -14,7 +14,10 @@ export const Route = createFileRoute("/terms")({
           "The terms that apply when you use Trips.bd: how request-to-book works, pricing, cancellations, your responsibilities and our liability.",
       },
       { property: "og:title", content: "Terms of Use — Trips.bd" },
-      { property: "og:description", content: "How booking requests, pricing and cancellations work." },
+      {
+        property: "og:description",
+        content: "How booking requests, pricing and cancellations work.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -37,36 +40,40 @@ function TermsPage() {
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">1. What Trips.bd is</h2>
           <p className="mt-2">
-            Trips.bd is a request-to-book travel agency service. You tell us what you need; our
-            team checks availability and price with the hotel, airline agent or transport
-            operator, then replies to you. We act as your agent in arranging the booking; the
-            supplier performs the travel service itself.
+            Trips.bd is a request-to-book travel agency service. You tell us what you need; our team
+            checks availability and price with the hotel, airline agent or transport operator, then
+            replies to you. We act as your agent in arranging the booking; the supplier performs the
+            travel service itself.
           </p>
         </section>
 
         <section>
-          <h2 className="text-[19px] font-semibold text-foreground">2. Nothing is booked until we confirm</h2>
+          <h2 className="text-[19px] font-semibold text-foreground">
+            2. Nothing is booked until we confirm
+          </h2>
           <p className="mt-2">
-            Sending a request creates no reservation and no contract with a supplier. Anything
-            shown in the app before we confirm is indicative only. A booking exists only once we
-            confirm it to you in writing with a reference and a final price.
+            Sending a request creates no reservation and no contract with a supplier. Anything shown
+            in the app before we confirm is indicative only. A booking exists only once we confirm
+            it to you in writing with a reference and a final price.
           </p>
         </section>
 
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">3. Prices and payment</h2>
           <p className="mt-2">
-            All prices are in Bangladeshi Taka. No payment is taken inside the app and there are
-            no in-app purchases. After we confirm availability we send a payment instruction
+            All prices are in Bangladeshi Taka. No payment is taken inside the app and there are no
+            in-app purchases. After we confirm availability we send a payment instruction
             separately. Taxes, resort fees or supplier surcharges are stated before you pay.
           </p>
         </section>
 
         <section>
-          <h2 className="text-[19px] font-semibold text-foreground">4. Changes and cancellations</h2>
+          <h2 className="text-[19px] font-semibold text-foreground">
+            4. Changes and cancellations
+          </h2>
           <p className="mt-2">
-            You can cancel any request in the app while it is pending or confirmed, from the
-            request page or from{" "}
+            You can cancel any request in the app while it is pending or confirmed, from the request
+            page or from{" "}
             <Link to="/trips" className="font-medium text-brand underline underline-offset-2">
               My Trips
             </Link>
@@ -90,10 +97,10 @@ function TermsPage() {
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">6. Liability</h2>
           <p className="mt-2">
-            We are responsible for arranging your booking with reasonable care and skill. We are
-            not liable for a supplier&apos;s own acts or omissions, or for delays, weather,
-            strikes and other events outside our control. Nothing in these terms limits liability
-            that cannot be limited under the law of Bangladesh.
+            We are responsible for arranging your booking with reasonable care and skill. We are not
+            liable for a supplier&apos;s own acts or omissions, or for delays, weather, strikes and
+            other events outside our control. Nothing in these terms limits liability that cannot be
+            limited under the law of Bangladesh.
           </p>
         </section>
 
@@ -101,7 +108,10 @@ function TermsPage() {
           <h2 className="text-[19px] font-semibold text-foreground">7. Account termination</h2>
           <p className="mt-2">
             You may delete your account at any time at{" "}
-            <Link to="/account/delete" className="font-medium text-brand underline underline-offset-2">
+            <Link
+              to="/account/delete"
+              className="font-medium text-brand underline underline-offset-2"
+            >
               app.trips.bd/account/delete
             </Link>
             . We may suspend an account that abuses the service or breaches these terms.
@@ -109,21 +119,29 @@ function TermsPage() {
         </section>
 
         <section>
-          <h2 className="text-[19px] font-semibold text-foreground">8. Governing law and contact</h2>
+          <h2 className="text-[19px] font-semibold text-foreground">
+            8. Governing law and contact
+          </h2>
           <p className="mt-2">
-            These terms are governed by the laws of Bangladesh, with the courts of Bangladesh
-            having jurisdiction.
+            These terms are governed by the laws of Bangladesh, with the courts of Bangladesh having
+            jurisdiction.
           </p>
           <p className="mt-2">
             {COMPANY.legalName} · {COMPANY_ADDRESS}
             <br />
             Trade licence {COMPANY.tradeLicence} · TIN {COMPANY.tin}
             <br />
-            <a href={`mailto:${COMPANY.supportEmail}`} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={`mailto:${COMPANY.supportEmail}`}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.supportEmail}
             </a>{" "}
             ·{" "}
-            <a href={COMPANY.phoneHref} className="font-medium text-brand underline underline-offset-2">
+            <a
+              href={COMPANY.phoneHref}
+              className="font-medium text-brand underline underline-offset-2"
+            >
               {COMPANY.phone}
             </a>
           </p>

@@ -14,10 +14,14 @@ export const Route = createFileRoute("/packages")({
       { title: "Flight + Hotel packages — coming soon — Trips.bd" },
       {
         name: "description",
-        content: "Bundled packages are not yet available on Trips.bd. Request flights and stays separately instead.",
+        content:
+          "Bundled packages are not yet available on Trips.bd. Request flights and stays separately instead.",
       },
       { property: "og:title", content: "Flight + Hotel packages — coming soon — Trips.bd" },
-      { property: "og:description", content: "Bundled packages are not yet available on Trips.bd." },
+      {
+        property: "og:description",
+        content: "Bundled packages are not yet available on Trips.bd.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },

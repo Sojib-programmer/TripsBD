@@ -71,8 +71,8 @@ export function RequestPanel({
       <section className="rounded-2xl border border-border p-4">
         <h2 className="text-[19px] font-semibold text-foreground">Tell us what you need</h2>
         <p className="mt-2 text-[15px] leading-snug text-muted-foreground">
-          We do not list unverified availability. Sign in and send a request — our team checks
-          with the supplier and comes back with a real price, usually within one business day.
+          We do not list unverified availability. Sign in and send a request — our team checks with
+          the supplier and comes back with a real price, usually within one business day.
         </p>
         <button
           onClick={() => void navigate({ to: "/auth" })}
@@ -95,7 +95,12 @@ export function RequestPanel({
       <label className={label} htmlFor="req-name">
         Your name
       </label>
-      <input id="req-name" value={name} onChange={(e) => setName(e.target.value)} className={field} />
+      <input
+        id="req-name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className={field}
+      />
 
       <label className={label} htmlFor="req-email">
         Email
@@ -111,7 +116,12 @@ export function RequestPanel({
       <label className={label} htmlFor="req-phone">
         Phone (optional)
       </label>
-      <input id="req-phone" value={phone} onChange={(e) => setPhone(e.target.value)} className={field} />
+      <input
+        id="req-phone"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        className={field}
+      />
 
       <label className={label} htmlFor="req-travellers">
         Travellers

@@ -55,7 +55,6 @@ function DeleteAccountPage() {
     onError: () => toast.error("Could not delete the account. Please try again or email us."),
   });
 
-
   return (
     <AppShell>
       <PageHeader title="Delete your account" subtitle="Account and data deletion request" />
@@ -72,14 +71,13 @@ function DeleteAccountPage() {
           <h2 className="mt-5 text-[17px] font-semibold text-foreground">What we must keep</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-[15px] text-muted-foreground">
             <li>
-              Booking amounts and references, retained in anonymised form (no name, email or
-              phone) for up to 6 years
-              for tax, accounting and consumer-protection law in Bangladesh.
+              Booking amounts and references, retained in anonymised form (no name, email or phone)
+              for up to 6 years for tax, accounting and consumer-protection law in Bangladesh.
             </li>
           </ul>
           <p className="mt-4 text-[15px] text-muted-foreground">
-            Deletion is permanent and cannot be undone. Active or upcoming bookings must be completed
-            or cancelled first. See our{" "}
+            Deletion is permanent and cannot be undone. Active or upcoming bookings must be
+            completed or cancelled first. See our{" "}
             <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">
               Privacy Policy
             </Link>

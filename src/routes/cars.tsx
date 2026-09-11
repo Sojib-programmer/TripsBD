@@ -14,7 +14,8 @@ export const Route = createFileRoute("/cars")({
       { title: "Car rentals — coming soon — Trips.bd" },
       {
         name: "description",
-        content: "Car rental is not yet available on Trips.bd. Browse stays, flights, activities and airport transfers instead.",
+        content:
+          "Car rental is not yet available on Trips.bd. Browse stays, flights, activities and airport transfers instead.",
       },
       { property: "og:title", content: "Car rentals — coming soon — Trips.bd" },
       { property: "og:description", content: "Car rental is not yet available on Trips.bd." },

@@ -55,7 +55,12 @@ function TripRow({ row }: { row: Row }) {
     <li className="flex gap-3 rounded-2xl border border-border p-3">
       <div className="h-[76px] w-[76px] shrink-0 overflow-hidden rounded-xl bg-muted">
         {row.heroUrl ? (
-          <img src={row.heroUrl} alt={row.title} loading="lazy" className="h-full w-full object-cover" />
+          <img
+            src={row.heroUrl}
+            alt={row.title}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
         ) : null}
       </div>
       <div className="min-w-0 flex-1">

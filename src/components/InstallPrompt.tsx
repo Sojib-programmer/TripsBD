@@ -39,7 +39,9 @@ export function InstallPrompt() {
       <Download size={22} className="shrink-0 text-brand" />
       <div className="min-w-0 flex-1">
         <p className="text-[15px] font-semibold text-foreground">Install Trips.bd</p>
-        <p className="text-[13px] text-muted-foreground">Full-screen app, one tap from your home screen.</p>
+        <p className="text-[13px] text-muted-foreground">
+          Full-screen app, one tap from your home screen.
+        </p>
       </div>
       <button
         onClick={() => {
@@ -54,7 +56,11 @@ export function InstallPrompt() {
       >
         Install
       </button>
-      <button onClick={dismiss} aria-label="Dismiss install prompt" className="text-muted-foreground">
+      <button
+        onClick={dismiss}
+        aria-label="Dismiss install prompt"
+        className="text-muted-foreground"
+      >
         <X size={18} />
       </button>
     </div>

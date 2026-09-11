@@ -26,7 +26,10 @@ export const Route = createFileRoute("/more")({
   head: () => ({
     meta: [
       { title: "Account & Settings — Trips.bd" },
-      { name: "description", content: "Manage your Trips.bd account, payment methods, currency and support preferences." },
+      {
+        name: "description",
+        content: "Manage your Trips.bd account, payment methods, currency and support preferences.",
+      },
       { property: "og:title", content: "Account & Settings — Trips.bd" },
       { property: "og:description", content: "Account, payments, currency and support." },
       { property: "og:type", content: "website" },

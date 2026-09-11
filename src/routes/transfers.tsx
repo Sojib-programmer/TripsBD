@@ -63,8 +63,7 @@ function TransfersPage() {
 
   const list = (rows.data ?? []).filter((t) => t.seats >= search.pax);
   const picked = list.find((t) => t.id === pickedId) ?? null;
-  const airportName =
-    airports.data?.find((a) => a.iata === search.airport)?.city ?? search.airport;
+  const airportName = airports.data?.find((a) => a.iata === search.airport)?.city ?? search.airport;
 
   return (
     <AppShell>
@@ -76,7 +75,9 @@ function TransfersPage() {
       <ChipBar
         chips={directions}
         active={search.direction}
-        onSelect={(d) => void navigate({ to: "/transfers", search: (p) => ({ ...p, direction: d }) })}
+        onSelect={(d) =>
+          void navigate({ to: "/transfers", search: (p) => ({ ...p, direction: d }) })
+        }
       />
 
       {!inventoryLiveClient ? (

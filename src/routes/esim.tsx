@@ -14,7 +14,8 @@ export const Route = createFileRoute("/esim")({
       { title: "Travel eSIM — coming soon — Trips.bd" },
       {
         name: "description",
-        content: "Travel eSIM plans are not yet available on Trips.bd. Browse stays, flights, activities and airport transfers instead.",
+        content:
+          "Travel eSIM plans are not yet available on Trips.bd. Browse stays, flights, activities and airport transfers instead.",
       },
       { property: "og:title", content: "Travel eSIM — coming soon — Trips.bd" },
       { property: "og:description", content: "eSIM plans are not yet available on Trips.bd." },

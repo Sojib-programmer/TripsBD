@@ -34,8 +34,8 @@ export function ConsentNotice() {
       className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[440px] rounded-t-2xl border border-border bg-card p-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] shadow-2xl"
     >
       <p className="text-[15px] leading-snug text-foreground">
-        We use device storage for sign-in, your search preferences and analytics that help us improve
-        Trips.bd. Read our{" "}
+        We use device storage for sign-in, your search preferences and analytics that help us
+        improve Trips.bd. Read our{" "}
         <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">
           Privacy Policy
         </Link>{" "}

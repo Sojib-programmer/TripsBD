@@ -37,7 +37,10 @@ function ActivityPage() {
   const [slotId, setSlotId] = useState<string | null>(null);
   const [openDate, setOpenDate] = useState(false);
 
-  const q = useQuery({ queryKey: ["activity", slug], queryFn: () => getActivity({ data: { slug } }) });
+  const q = useQuery({
+    queryKey: ["activity", slug],
+    queryFn: () => getActivity({ data: { slug } }),
+  });
 
   if (q.isLoading) {
     return (

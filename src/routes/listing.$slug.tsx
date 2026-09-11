@@ -22,9 +22,12 @@ export const Route = createFileRoute("/listing/$slug")({
     return listing;
   },
   head: ({ loaderData }) => {
-    const title = loaderData ? `${loaderData.title}, ${loaderData.city} — Trips.bd` : "Stay — Trips.bd";
+    const title = loaderData
+      ? `${loaderData.title}, ${loaderData.city} — Trips.bd`
+      : "Stay — Trips.bd";
     const description =
-      loaderData?.summary ?? "Book this stay on Trips.bd with member prices and instant confirmation.";
+      loaderData?.summary ??
+      "Book this stay on Trips.bd with member prices and instant confirmation.";
     const image = loaderData?.hero_url ?? undefined;
     return {
       meta: [
@@ -65,7 +68,11 @@ function ListingPage() {
   });
 
   if (!listing) return null;
-  const photos = listing.photos?.length ? listing.photos : listing.hero_url ? [listing.hero_url] : [];
+  const photos = listing.photos?.length
+    ? listing.photos
+    : listing.hero_url
+      ? [listing.hero_url]
+      : [];
 
   return (
     <main className="mx-auto max-w-[440px] pb-32">

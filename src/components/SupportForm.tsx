@@ -54,8 +54,8 @@ export function SupportForm() {
     return (
       <section className="mx-5 rounded-2xl border border-border p-4">
         <p className="text-[15px] text-muted-foreground">
-          Thanks — your message is with our team. We reply within one business day. If it is
-          urgent, call us on the number below.
+          Thanks — your message is with our team. We reply within one business day. If it is urgent,
+          call us on the number below.
         </p>
         <button
           onClick={() => setSent(false)}
@@ -67,7 +67,8 @@ export function SupportForm() {
     );
   }
 
-  const field = "mt-2 w-full rounded-xl border border-border bg-background p-3 text-[15px] text-foreground";
+  const field =
+    "mt-2 w-full rounded-xl border border-border bg-background p-3 text-[15px] text-foreground";
   const label = "mt-4 block text-[15px] font-medium text-foreground first:mt-0";
 
   return (
@@ -75,7 +76,12 @@ export function SupportForm() {
       <label className={label} htmlFor="support-name">
         Your name
       </label>
-      <input id="support-name" value={name} onChange={(e) => setName(e.target.value)} className={field} />
+      <input
+        id="support-name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        className={field}
+      />
 
       <label className={label} htmlFor="support-email">
         Email

@@ -57,13 +57,7 @@ export function Sheet({
   );
 }
 
-export function FieldRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
+export function FieldRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="block py-3">
       <span className="text-[13px] font-medium uppercase tracking-wide text-muted-foreground">

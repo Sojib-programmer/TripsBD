@@ -9,7 +9,11 @@ export const Route = createFileRoute("/host")({
   head: () => ({
     meta: [
       { title: "List your property — Trips.bd" },
-      { name: "description", content: "Partner with Trips.bd: list your hotel, resort, home or villa and reach travellers across Bangladesh." },
+      {
+        name: "description",
+        content:
+          "Partner with Trips.bd: list your hotel, resort, home or villa and reach travellers across Bangladesh.",
+      },
       { property: "og:title", content: "List your property — Trips.bd" },
       { property: "og:description", content: "Become a Trips.bd host or partner property." },
       { property: "og:type", content: "website" },
@@ -24,7 +28,11 @@ function HostPage() {
     <AppShell>
       <PageHeader title="Become a host" subtitle="List your property on Trips.bd" />
       <div className="px-2">
-        <TallyForm form="host" title="Trips.bd host signup form" prefill={{ email: user?.email ?? undefined }} />
+        <TallyForm
+          form="host"
+          title="Trips.bd host signup form"
+          prefill={{ email: user?.email ?? undefined }}
+        />
       </div>
     </AppShell>
   );

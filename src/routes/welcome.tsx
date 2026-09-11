@@ -10,7 +10,11 @@ export const Route = createFileRoute("/welcome")({
   head: () => ({
     meta: [
       { title: "Welcome to Trips.bd" },
-      { name: "description", content: "Get started with Trips.bd: accept the terms and turn on deal alerts for hotels, flights and activities." },
+      {
+        name: "description",
+        content:
+          "Get started with Trips.bd: accept the terms and turn on deal alerts for hotels, flights and activities.",
+      },
       { property: "og:title", content: "Welcome to Trips.bd" },
       { property: "og:description", content: "Get started with Trips.bd in two quick steps." },
       { property: "og:type", content: "website" },

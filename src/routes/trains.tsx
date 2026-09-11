@@ -14,7 +14,8 @@ export const Route = createFileRoute("/trains")({
       { title: "Trains — coming soon — Trips.bd" },
       {
         name: "description",
-        content: "Train tickets are not yet available on Trips.bd. Browse stays, flights, activities and airport transfers instead.",
+        content:
+          "Train tickets are not yet available on Trips.bd. Browse stays, flights, activities and airport transfers instead.",
       },
       { property: "og:title", content: "Trains — coming soon — Trips.bd" },
       { property: "og:description", content: "Train tickets are not yet available on Trips.bd." },

@@ -24,7 +24,10 @@ export const Route = createFileRoute("/book/$slug")({
     return {
       meta: [
         { title },
-        { name: "description", content: "Confirm your dates, guests and details to reserve this stay on Trips.bd." },
+        {
+          name: "description",
+          content: "Confirm your dates, guests and details to reserve this stay on Trips.bd.",
+        },
         { property: "og:title", content: title },
         { property: "og:description", content: "Confirm dates, guests and details to reserve." },
         { property: "og:type", content: "website" },
@@ -35,7 +38,9 @@ export const Route = createFileRoute("/book/$slug")({
   },
   component: BookPage,
   errorComponent: () => (
-    <div className="p-8 text-center text-muted-foreground">This reservation could not be started.</div>
+    <div className="p-8 text-center text-muted-foreground">
+      This reservation could not be started.
+    </div>
   ),
   notFoundComponent: () => (
     <div className="p-8 text-center text-muted-foreground">This stay is no longer available.</div>
@@ -100,7 +105,12 @@ function BookPage() {
   return (
     <main className="mx-auto max-w-[440px] pb-36">
       <header className="flex items-center gap-3 px-5 pt-6">
-        <Link to="/listing/$slug" params={{ slug }} aria-label="Back" className="rounded-full border border-border p-2">
+        <Link
+          to="/listing/$slug"
+          params={{ slug }}
+          aria-label="Back"
+          className="rounded-full border border-border p-2"
+        >
           <ArrowLeft size={20} />
         </Link>
         <h1 className="font-display text-[24px] font-semibold text-foreground">Request to book</h1>
@@ -108,19 +118,30 @@ function BookPage() {
 
       <section className="mx-5 mt-5 flex gap-3 rounded-2xl border border-border p-3">
         {listing.hero_url ? (
-          <img src={listing.hero_url} alt={listing.title} className="h-20 w-20 rounded-xl object-cover" />
+          <img
+            src={listing.hero_url}
+            alt={listing.title}
+            className="h-20 w-20 rounded-xl object-cover"
+          />
         ) : null}
         <div className="min-w-0">
           <p className="truncate text-[16px] font-semibold text-foreground">{listing.title}</p>
-          <p className="truncate text-[15px] text-muted-foreground">{listing.city}, {listing.country}</p>
-          <p className="mt-1 text-[15px] text-foreground">{bdt(listing.price_bdt)} <span className="text-muted-foreground">night</span></p>
+          <p className="truncate text-[15px] text-muted-foreground">
+            {listing.city}, {listing.country}
+          </p>
+          <p className="mt-1 text-[15px] text-foreground">
+            {bdt(listing.price_bdt)} <span className="text-muted-foreground">night</span>
+          </p>
         </div>
       </section>
 
       {!loading && !user ? (
         <section className="mx-5 mt-5 rounded-2xl border border-border p-4">
           <p className="text-[16px] text-foreground">Sign in to complete your reservation.</p>
-          <Link to="/auth" className="mt-3 inline-block rounded-full bg-brand px-6 py-3 text-[16px] font-semibold text-brand-foreground">
+          <Link
+            to="/auth"
+            className="mt-3 inline-block rounded-full bg-brand px-6 py-3 text-[16px] font-semibold text-brand-foreground"
+          >
             Sign in
           </Link>
         </section>
@@ -140,11 +161,23 @@ function BookPage() {
         <div className="grid grid-cols-2 gap-3">
           <label className="block text-[14px] font-medium text-muted-foreground">
             Check in
-            <input type="date" required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className={field} />
+            <input
+              type="date"
+              required
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
+              className={field}
+            />
           </label>
           <label className="block text-[14px] font-medium text-muted-foreground">
             Check out
-            <input type="date" required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className={field} />
+            <input
+              type="date"
+              required
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+              className={field}
+            />
           </label>
         </div>
 
@@ -162,39 +195,72 @@ function BookPage() {
 
         <label className="block text-[14px] font-medium text-muted-foreground">
           Full name
-          <input required minLength={2} value={guestName} onChange={(e) => setGuestName(e.target.value)} placeholder="Rahim Ahmed" className={field} />
+          <input
+            required
+            minLength={2}
+            value={guestName}
+            onChange={(e) => setGuestName(e.target.value)}
+            placeholder="Rahim Ahmed"
+            className={field}
+          />
         </label>
 
         <label className="block text-[14px] font-medium text-muted-foreground">
           Email
-          <input required type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} placeholder="you@email.com" className={field} />
+          <input
+            required
+            type="email"
+            value={guestEmail}
+            onChange={(e) => setGuestEmail(e.target.value)}
+            placeholder="you@email.com"
+            className={field}
+          />
         </label>
 
         <label className="block text-[14px] font-medium text-muted-foreground">
           Phone (optional)
-          <input value={guestPhone} onChange={(e) => setGuestPhone(e.target.value)} placeholder="+8801XXXXXXXXX" className={field} />
+          <input
+            value={guestPhone}
+            onChange={(e) => setGuestPhone(e.target.value)}
+            placeholder="+8801XXXXXXXXX"
+            className={field}
+          />
         </label>
 
         <label className="block text-[14px] font-medium text-muted-foreground">
           Promo code (optional)
-          <input value={dealCode} onChange={(e) => setDealCode(e.target.value.toUpperCase())} placeholder="FIRST8" className={field} />
+          <input
+            value={dealCode}
+            onChange={(e) => setDealCode(e.target.value.toUpperCase())}
+            placeholder="FIRST8"
+            className={field}
+          />
         </label>
 
         <label className="block text-[14px] font-medium text-muted-foreground">
           Message to host (optional)
-          <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} className={field} />
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            rows={3}
+            className={field}
+          />
         </label>
 
         <div className="rounded-2xl border border-border p-4 text-[15px]">
           <div className="flex justify-between text-muted-foreground">
-            <span>{bdt(listing.price_bdt)} × {nights} nights</span>
+            <span>
+              {bdt(listing.price_bdt)} × {nights} nights
+            </span>
             <span>{bdt(estimate)}</span>
           </div>
           <div className="mt-2 flex justify-between text-[17px] font-semibold text-foreground">
             <span>Estimated total</span>
             <span>{bdt(estimate)}</span>
           </div>
-          <p className="mt-1 text-[13px] text-muted-foreground">Promo discounts are applied when the request is confirmed.</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">
+            Promo discounts are applied when the request is confirmed.
+          </p>
         </div>
 
         <button
