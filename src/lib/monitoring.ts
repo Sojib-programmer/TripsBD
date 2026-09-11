@@ -20,7 +20,7 @@ const DSN = import.meta.env["VITE_SENTRY_DSN"] as string | undefined;
 
 const EMAIL = /[\w.+-]+@[\w-]+\.[\w.-]+/g;
 const PHONE = /\+?\d[\d\s\-()]{7,}\d/g;
-const TOKEN = /(bearer\s+|(?:access|refresh|api)[-_]?(?:token|key)["'=:\s]+)[\w.\-]{8,}/gi;
+const TOKEN = /(bearer\s+|(?:access|refresh|api)[-_]?(?:token|key)["'=:\s]+)[\w.-]{8,}/gi;
 
 /** Remove anything that could identify a traveller from a free-text field. */
 export function scrubText(value: string): string {
