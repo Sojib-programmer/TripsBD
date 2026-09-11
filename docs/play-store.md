@@ -51,31 +51,51 @@ be live before release, otherwise the app shows a browser URL bar (a Play qualit
 
 ## 2. Data safety declaration
 
-Every row below is backed by a code path in `docs/product-truth.md`. Do not submit a
-declaration containing anything not listed there. Collected, linked to the user, **not**
-shared with third parties for advertising, **no** advertising ID collected.
+Every row is backed by a named table/column or source file, checked against
+`src/integrations/supabase/types.ts` and `supabase/migrations/`. Do not submit anything
+that is not in this table. All data is linked to the user, **none** is shared for
+advertising, and **no** advertising ID is collected.
 
-| Data type | Collected | Where | Purpose | Optional |
+| Play data type | Collected | Exact source in code | Purpose | Optional |
 | --- | --- | --- | --- | --- |
-| Email address | Yes | `auth.users`, `public.orders.contact_email` | Account, booking contact | No |
-| Name | Yes | `public.profiles`, `public.orders.contact_name` | Booking fulfilment | No |
-| Phone number | Yes | `public.profiles`, `public.orders.contact_phone` | Booking fulfilment | Yes |
-| App interactions (searches, saved items, booking requests) | Yes | `saved_listings`, `orders`, `bookings` | App functionality | No |
-| Crash logs / diagnostics | Yes | client error reporting | Stability | No |
-| Messages (support enquiries) | Yes | `public.support_messages` | Customer support | Yes |
-| Purchase history | **No** | — | No in-app payment exists at V1 | — |
+| Email address | Yes | `auth.users.email`; `public.orders.contact_email`; `public.support_messages.email`; `public.deletion_requests.email` | Account, booking contact, support, deletion confirmation | No |
+| Name | Yes | `public.profiles.full_name`; `public.orders.contact_name`; `public.support_messages.name` | Booking fulfilment, support | No |
+| Phone number | Yes | `public.profiles.phone`; `public.orders.contact_phone` | Booking fulfilment | Yes |
+| User IDs | Yes | `auth.users.id`; `public.profiles.id`; `user_id` on `orders`, `bookings`, `saved_listings`, `notifications`, `support_messages`, `user_roles` | Account management, RLS ownership | No |
+| Photos | Yes (optional) | `public.profiles.avatar_url` — URL only, set from the OAuth provider profile; the app never opens the camera or photo picker | Account personalisation | Yes |
+| App interactions | Yes | `public.saved_listings`; `public.orders` (+ `order_events`); `public.bookings` (+ `booking_events`); `public.notifications` | App functionality, request status | No |
+| Search history | **No** | Search parameters are read-only URL state consumed by `searchListings` in `src/lib/catalog.functions.ts`; no table, column or log stores them | — | — |
+| Other user-generated content | Yes | `public.support_messages.message`/`topic`; free-text request details in `public.orders.details` (JSON) | Customer support, booking fulfilment | Yes |
+| Crash logs / diagnostics | Yes | `src/lib/monitoring.ts` (Sentry, `sendDefaultPii: false`, emails/phones/tokens scrubbed by `scrubText`); `src/lib/error-capture.ts`; `src/lib/lovable-error-reporting.ts` | Stability, diagnostics | No |
+| Purchase / financial info | **No** | No payment is taken in the app; there is no card, wallet or payment-account column anywhere in the schema | — | — |
+
+**Retention after deletion.** `fulfilAccountDeletion` (`src/lib/deletion.server.ts`) deletes the
+profile, orders, bookings, saved listings, notifications, roles, support messages and the auth
+user, then writes two non-identifying records that are *not* Data Safety "collected user data"
+but must be disclosed in the privacy policy:
+
+- `public.deletion_audit` — `email_hash` (hash, not the address), `user_ref`, `deleted_counts`,
+  `retained_note`. Proof-of-deletion record.
+- `public.retained_financial_records` — `user_ref` (pseudonymous), `reference`, `total_bdt`,
+  `vertical`, `status`, `retain_until`. Kept only to satisfy Bangladesh accounting/tax record
+  keeping; contains no name, email, phone or address. Purged after `retain_until`.
 
 Answers to the standard questions:
 
 - Is all data encrypted in transit? **Yes** (HTTPS/TLS everywhere).
-- Can users request data deletion? **Yes** — `https://app.trips.bd/account/delete`, and the
-  request must be *fulfilled*, not just queued (release gate 3).
-- Do you collect precise location, contacts, photos, SMS, health or financial account numbers?
+- Is data encrypted at rest? **Yes** (Supabase managed Postgres).
+- Can users request data deletion? **Yes** — `https://app.trips.bd/account/delete` deletes
+  immediately and in full; it is not a queued request (release gate 3).
+- Do you collect precise location, contacts, SMS, health, fitness or financial account numbers?
   **No.**
-- Do you share data with third parties? Only with the travel supplier fulfilling a booking and with
-  processors (Supabase, Google/Apple sign-in, hosting/CDN, error reporting) — declared as
-  processing, not sharing. Support enquiries are stored first-party in `public.support_messages`,
-  not with a third-party form host, so account deletion removes them.
+- Do you share data with third parties? No sharing in the Play sense. Processors only:
+  **Supabase** (database, auth, hosting of user rows), **Google and Apple** (sign-in only),
+  **Cloudflare/Lovable hosting + CDN** (request delivery), **Sentry** (scrubbed crash
+  diagnostics). Booking details are passed to the travel supplier fulfilling that specific
+  request as part of the service the traveller asked for. Support enquiries are stored
+  first-party in `public.support_messages`, not with a third-party form host, so account
+  deletion removes them.
+
 
 ## 3. Content rating & audience
 
