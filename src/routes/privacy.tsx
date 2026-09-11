@@ -74,9 +74,11 @@ function PrivacyPage() {
             ))}
           </ul>
           <p className="mt-3">
-            We do not collect precise location, contacts, photos, health data or advertising
-            identifiers. We do not take payments in the app, so we never hold your card details. We
-            do not sell personal data, and we do not use it for advertising or profiling.
+            We do not collect precise location, contacts, health data or advertising identifiers,
+            and we never open your camera or photo library — the only picture we hold is the profile
+            photo Google or Apple gives us when you sign in. We do not store your search terms. We
+            do not take payments in the app, so we never hold your card details. We do not sell
+            personal data, and we do not use it for advertising or profiling.
           </p>
         </section>
 
@@ -87,7 +89,9 @@ function PrivacyPage() {
             Google and Apple process your sign-in if you choose those options. When you send a
             booking request, we pass only the details needed for that booking (traveller name,
             dates, group size, contact number) to the hotel, airline agent or transport operator
-            fulfilling it. Nothing else is shared.
+            fulfilling it. Our hosting and content network delivers the app, and Sentry receives
+            crash diagnostics with personal details already stripped out. All of these act only on
+            our instructions. Nothing else is shared, and nothing is shared for advertising.
           </p>
         </section>
 
@@ -104,7 +108,8 @@ function PrivacyPage() {
             </Link>
             : it removes your account, profile, requests, saved items, notifications and support
             messages. Anonymised transaction amounts (no name, email or phone) are kept for six
-            years to meet Bangladesh accounting and tax obligations.
+            years to meet Bangladesh accounting and tax obligations, alongside a short
+            proof-of-deletion record that holds no name, email address or phone number.
           </p>
           <p className="mt-2">
             To exercise any other right, email{" "}
