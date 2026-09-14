@@ -3,6 +3,13 @@
 Production rollout on Google Play is **blocked** while any gate below is unmet.
 Do not describe the app as production-ready until every gate is checked with evidence.
 
+**Last web audit: 14 Sep 2026.** All public routes 200 signed out on the preview host and on
+`https://app.trips.bd` with correct content types; the published `manifest.webmanifest` matches
+the repo; no stale contacts, no instant-booking copy, `INVENTORY_LIVE` unset, four ComingSoon
+verticals intact; every route clean at 360×800 with zero console errors; `typecheck`, `lint`,
+`test` (47 passed, 6 cross-user tests skipped) and `build` green. Reviewer script and this
+evidence are recorded in `docs/play-store.md` §6.
+
 | # | Gate | Owner | Status |
 | --- | --- | --- | --- |
 | 1 | No placeholder contact info, address or phone in app or listing | Lovable + Ops | **Done** — real registered entity (Marketsync Global Ltd., Rajshahi) in `src/lib/company.ts`, used by /support, /privacy, /terms |
