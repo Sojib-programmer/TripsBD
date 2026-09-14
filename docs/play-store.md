@@ -146,3 +146,46 @@ No payment is taken in the app. We confirm availability first, then send a secur
 - [ ] All gates in `docs/launch-gates.md` pass
 - [ ] `INVENTORY_LIVE` stays unset until contracted supplier inventory is loaded
 
+## 6. Reviewer instructions (Play Console → App access)
+
+Paste this verbatim into **App access → All or some functionality is restricted**, together with
+the reviewer account email and password.
+
+> Trips.bd is a **request-to-book** travel service, not a live-inventory booking engine. Nothing
+> is confirmed automatically and **no payment is taken in the app**: a traveller sends a request,
+> our team checks availability with the supplier and replies with confirmation and a payment link.
+>
+> Steps to review the full app:
+>
+> 1. Open the app and tap **Sign in**. Use the credentials supplied above (email + password).
+>    Google and Apple sign-in are also available and use the same account model.
+> 2. From the home screen choose **Hotels**, **Flights**, **Activities** or **Airport Transfer** —
+>    these are the four services available at launch. Car rental, eSIM, trains and Flight+Hotel
+>    packages intentionally show a "Not available yet" screen.
+> 3. On the vertical screen, set your dates/route in the search sheet and tap the
+>    **"Tell us what you need"** request form. Fill in contact details and submit.
+> 4. A confirmation screen shows the **booking reference** (e.g. `TR-1042`).
+> 5. Open the **Trips** tab. The request appears there with a live status (Pending → Confirmed).
+> 6. Open the request and tap **Cancel request** to cancel it yourself.
+> 7. **Support:** `app.trips.bd/support` — messages are stored first-party and are deleted with
+>    the account.
+> 8. **Account and data deletion:** `app.trips.bd/account/delete`, reachable while signed out.
+>    Signed in, it deletes the profile, requests, bookings, saved listings, notifications, support
+>    messages and the sign-in record immediately. Only anonymised financial records are retained
+>    for statutory bookkeeping; they contain no name, email, phone or address.
+> 9. **Privacy policy:** `app.trips.bd/privacy` · **Terms:** `app.trips.bd/terms` — both reachable
+>    signed out.
+>
+> Prices shown are indicative and are confirmed by a person before any payment is requested.
+
+### Verified on the current build (audit 14 Sep 2026)
+
+- All public routes return 200 signed out on both the preview host and `https://app.trips.bd`;
+  `assetlinks.json` serves `application/json`; icons serve `image/png`.
+- The published `manifest.webmanifest` on `app.trips.bd` is byte-identical to the repo file
+  (name `Trips.bd: Hotels & Flights`, V1-only description).
+- Every route renders without horizontal overflow at a 360×800 viewport and with zero console
+  errors; cars/eSIM/trains/packages render the ComingSoon screen.
+- `bun run typecheck`, `bun run lint`, `bun run test` (46 passed, cross-user suite skipped for
+  lack of credentials) and `bun run build` are green.
+
