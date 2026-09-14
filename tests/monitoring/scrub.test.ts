@@ -3,7 +3,7 @@
  */
 import { describe, expect, it } from "vitest";
 
-import { scrubText } from "../../src/lib/monitoring";
+import { APP_RELEASE, scrubDeep, scrubText } from "../../src/lib/monitoring";
 
 describe("scrubText", () => {
   it("removes email addresses", () => {

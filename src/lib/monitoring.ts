@@ -27,7 +27,8 @@ export function scrubText(value: string): string {
   return value.replace(EMAIL, "[email]").replace(TOKEN, "$1[redacted]").replace(PHONE, "[phone]");
 }
 
-function scrubDeep<T>(value: T, depth = 0): T {
+/** Recursively scrub every string in an event payload. Exported for the gate-9 smoke test. */
+export function scrubDeep<T>(value: T, depth = 0): T {
   if (depth > 6 || value == null) return value;
   if (typeof value === "string") return scrubText(value) as unknown as T;
   if (Array.isArray(value)) return value.map((v) => scrubDeep(v, depth + 1)) as unknown as T;
