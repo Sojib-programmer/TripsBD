@@ -27,6 +27,13 @@ export function scrubText(value: string): string {
   return value.replace(EMAIL, "[email]").replace(TOKEN, "$1[redacted]").replace(PHONE, "[phone]");
 }
 
+/**
+ * Build metadata that must survive scrubbing. `release` is `trips-bd@<version>`, which the
+ * email pattern would otherwise rewrite to `[email]` and destroy crash-to-build attribution
+ * in the Play pre-launch report. These fields never carry traveller data.
+ */
+const SAFE_KEYS = new Set(["release", "dist", "environment", "platform"]);
+
 /** Recursively scrub every string in an event payload. Exported for the gate-9 smoke test. */
 export function scrubDeep<T>(value: T, depth = 0): T {
   if (depth > 6 || value == null) return value;
@@ -35,7 +42,7 @@ export function scrubDeep<T>(value: T, depth = 0): T {
   if (typeof value === "object") {
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      out[k] = scrubDeep(v, depth + 1);
+      out[k] = SAFE_KEYS.has(k) ? v : scrubDeep(v, depth + 1);
     }
     return out as unknown as T;
   }
