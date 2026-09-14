@@ -96,8 +96,10 @@ and an authenticated Play Console session. Remaining work, in order:
    (`bubblewrap init/build`, `targetSdk` 36, R8 on, mapping uploaded).
 2. Paste the upload-key **and** Play App Signing SHA-256 fingerprints into
    `public/.well-known/assetlinks.json`, deploy, and confirm the TWA shows no URL bar.
-3. Fulfil the outstanding gates in `docs/launch-gates.md` — in particular real account
-   deletion (gate 3) and the seeded-inventory problem (gate 10).
+3. Fulfil the outstanding gates in `docs/launch-gates.md`. Gates 1, 3, 5, 8, 10 and 11
+   (anonymous RLS) are **Done**; the remaining blockers are gate 2 (assetlinks fingerprints),
+   gate 6 (signed AAB + key custody), gate 7 (on-device auth), gate 9 (`VITE_SENTRY_DSN`
+   plus the pre-launch report) and gate 12 (reviewer account). Gate 4 is ready to submit.
 4. Play Console → create app → paste §1 and §2 → upload §4 → Data safety per
    `docs/play-store.md` §2 → App access reviewer credentials → Internal testing →
    Production rollout.
