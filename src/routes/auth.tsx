@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Apple, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { Logo } from "@/components/Logo";
-import { signInWith, signInWithEmail, signUpWithEmail, type OAuthProvider } from "@/lib/auth";
+import { signInWithEmail, signUpWithEmail } from "@/lib/auth";
+
 
 export const Route = createFileRoute("/auth")({
   component: AuthPage,
