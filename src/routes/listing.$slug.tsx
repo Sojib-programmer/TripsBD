@@ -27,7 +27,7 @@ export const Route = createFileRoute("/listing/$slug")({
       : "Stay — Trips.bd";
     const description =
       loaderData?.summary ??
-      "Book this stay on Trips.bd with member prices and instant confirmation.";
+      "Send a stay request on Trips.bd — our team confirms availability and price with you before anything is booked.";
     const image = loaderData?.hero_url ?? undefined;
     return {
       meta: [

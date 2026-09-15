@@ -20,7 +20,7 @@ export const Route = createFileRoute("/activities/")({
       {
         name: "description",
         content:
-          "Book tea garden walks in Srimangal, Old Dhaka food tours, Sundarbans cruises and Cox's Bazar day trips with instant confirmation.",
+          "Request tea garden walks in Srimangal, Old Dhaka food tours, Sundarbans cruises and Cox's Bazar day trips — our team confirms every booking with you.",
       },
       { property: "og:title", content: "Attractions & tours in Bangladesh — Trips.bd" },
       { property: "og:description", content: "Things to do, picked for Bangladesh travellers." },
