@@ -14,10 +14,11 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Sign in to Trips.bd with email, Google or Apple to sync bookings and unlock VIP member prices.",
+          "Sign in to Trips.bd with your email to sync bookings and unlock VIP member prices.",
       },
       { property: "og:title", content: "Sign in — Trips.bd" },
-      { property: "og:description", content: "Sign in with email, Google or Apple." },
+      { property: "og:description", content: "Sign in with your email address." },
+
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
