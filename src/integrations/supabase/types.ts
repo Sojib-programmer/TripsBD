@@ -839,6 +839,8 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          display_name: string | null
+          email: string | null
           full_name: string | null
           id: string
           phone: string | null
@@ -848,6 +850,8 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          display_name?: string | null
+          email?: string | null
           full_name?: string | null
           id: string
           phone?: string | null
@@ -857,6 +861,8 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          display_name?: string | null
+          email?: string | null
           full_name?: string | null
           id?: string
           phone?: string | null
@@ -932,6 +938,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      subscriptions: {
+        Row: {
+          cancel_at_period_end: boolean
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          environment: string
+          id: string
+          price_id: string | null
+          product_id: string | null
+          status: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          environment?: string
+          id?: string
+          price_id?: string | null
+          product_id?: string | null
+          status?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cancel_at_period_end?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          environment?: string
+          id?: string
+          price_id?: string | null
+          product_id?: string | null
+          status?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       support_messages: {
         Row: {
@@ -1067,6 +1121,30 @@ export type Database = {
           },
         ]
       }
+      usage_counters: {
+        Row: {
+          date: string
+          id: string
+          messages_sent: number
+          trips_created: number
+          user_id: string
+        }
+        Insert: {
+          date: string
+          id?: string
+          messages_sent?: number
+          trips_created?: number
+          user_id: string
+        }
+        Update: {
+          date?: string
+          id?: string
+          messages_sent?: number
+          trips_created?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -1093,7 +1171,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_messages_today: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "ops" | "user"
