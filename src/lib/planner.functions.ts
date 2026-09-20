@@ -1,20 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
+import type { Database } from "@/integrations/supabase/types";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const MESSAGES_PER_DAY = 5;
 
-type Sb = { supabase: { from: (t: string) => never } };
-void (null as unknown as Sb);
-
-/** Narrow helper types kept local so this module stays client-safe. */
-type Ctx = Parameters<
-  Parameters<ReturnType<typeof createServerFn>["middleware"]>[0][number] extends never
-    ? never
-    : never
->[0];
-void (null as unknown as Ctx);
+type Db = SupabaseClient<Database>;
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
@@ -324,10 +317,7 @@ export const sendPlannerMessage = createServerFn({ method: "POST" })
   });
 
 /** Link planned places to real Trips.bd inventory so the UI can offer a booking request. */
-async function matchInventory(
-  sb: Awaited<ReturnType<typeof getPlanClientShim>>,
-  planId: string,
-): Promise<void> {
+async function matchInventory(sb: Db, planId: string): Promise<void> {
   const { INVENTORY_LIVE } = await import("./inventory");
   if (!INVENTORY_LIVE) return;
 
@@ -356,8 +346,3 @@ async function matchInventory(
     if (activity) await sb.from("trip_plan_spots").update({ activity_id: activity.id }).eq("id", spot.id);
   }
 }
-
-// Type-only helper: gives matchInventory the authenticated client's type.
-declare function getPlanClientShim(): Promise<
-  Parameters<Parameters<typeof sendPlannerMessage.handler>[0]>[0]["context"]["supabase"]
->;
