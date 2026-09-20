@@ -1121,6 +1121,192 @@ export type Database = {
           },
         ]
       }
+      trip_plan_days: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          plan_id: string
+          sort_order: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          plan_id: string
+          sort_order?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          plan_id?: string
+          sort_order?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_plan_days_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "trip_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_plan_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          payload: Json
+          plan_id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          payload?: Json
+          plan_id: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          payload?: Json
+          plan_id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_plan_messages_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "trip_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_plan_spots: {
+        Row: {
+          activity_id: string | null
+          address: string | null
+          created_at: string
+          day_id: string | null
+          id: string
+          listing_id: string | null
+          name: string
+          plan_id: string
+          slot_index: number
+          spot_type: Database["public"]["Enums"]["spot_type"]
+          type_label: string | null
+          user_id: string
+        }
+        Insert: {
+          activity_id?: string | null
+          address?: string | null
+          created_at?: string
+          day_id?: string | null
+          id?: string
+          listing_id?: string | null
+          name: string
+          plan_id: string
+          slot_index?: number
+          spot_type?: Database["public"]["Enums"]["spot_type"]
+          type_label?: string | null
+          user_id: string
+        }
+        Update: {
+          activity_id?: string | null
+          address?: string | null
+          created_at?: string
+          day_id?: string | null
+          id?: string
+          listing_id?: string | null
+          name?: string
+          plan_id?: string
+          slot_index?: number
+          spot_type?: Database["public"]["Enums"]["spot_type"]
+          type_label?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trip_plan_spots_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "activities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trip_plan_spots_day_id_fkey"
+            columns: ["day_id"]
+            isOneToOne: false
+            referencedRelation: "trip_plan_days"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trip_plan_spots_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trip_plan_spots_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "trip_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_plans: {
+        Row: {
+          created_at: string
+          destination: string | null
+          end_date: string | null
+          hero_url: string | null
+          id: string
+          start_date: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          destination?: string | null
+          end_date?: string | null
+          hero_url?: string | null
+          id?: string
+          start_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          destination?: string | null
+          end_date?: string | null
+          hero_url?: string | null
+          id?: string
+          start_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       usage_counters: {
         Row: {
           date: string
@@ -1172,12 +1358,26 @@ export type Database = {
     }
     Functions: {
       increment_messages_today: { Args: never; Returns: undefined }
+      increment_trips_created: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "ops" | "user"
       booking_status: "pending" | "confirmed" | "cancelled" | "completed"
       cabin_class: "economy" | "premium" | "business" | "first"
       listing_kind: "hotel" | "home" | "apartment" | "resort" | "villa"
+      spot_type:
+        | "restaurant"
+        | "cafe"
+        | "bar"
+        | "attraction"
+        | "museum"
+        | "park"
+        | "shopping"
+        | "entertainment"
+        | "hotel"
+        | "transit"
+        | "beach"
+        | "nightlife"
       vertical:
         | "stay"
         | "flight"
@@ -1318,6 +1518,20 @@ export const Constants = {
       booking_status: ["pending", "confirmed", "cancelled", "completed"],
       cabin_class: ["economy", "premium", "business", "first"],
       listing_kind: ["hotel", "home", "apartment", "resort", "villa"],
+      spot_type: [
+        "restaurant",
+        "cafe",
+        "bar",
+        "attraction",
+        "museum",
+        "park",
+        "shopping",
+        "entertainment",
+        "hotel",
+        "transit",
+        "beach",
+        "nightlife",
+      ],
       vertical: [
         "stay",
         "flight",
