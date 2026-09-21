@@ -39,6 +39,7 @@ import { Route as BookingReferenceRouteImport } from './routes/booking.$referenc
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
 import { Route as PlanIndexRouteImport } from './routes/plan.index'
+import { Route as PlanPlanIdRouteImport } from './routes/plan.$planId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -190,6 +191,11 @@ const PlanIndexRoute = PlanIndexRouteImport.update({
   path: '/plan/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlanPlanIdRoute = PlanPlanIdRouteImport.update({
+  id: '/plan/$planId',
+  path: '/plan/$planId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -220,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/plan/': typeof PlanIndexRoute
 }
@@ -252,6 +259,7 @@ export interface FileRoutesByTo {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/plan/$planId': typeof PlanPlanIdRoute
   '/activities': typeof ActivitiesIndexRoute
   '/plan': typeof PlanIndexRoute
 }
@@ -285,6 +293,7 @@ export interface FileRoutesById {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/plan/': typeof PlanIndexRoute
 }
@@ -319,6 +328,7 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/plan/$planId'
     | '/activities/'
     | '/plan/'
   fileRoutesByTo: FileRoutesByTo
@@ -351,6 +361,7 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/plan/$planId'
     | '/activities'
     | '/plan'
   id:
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/plan/$planId'
     | '/activities/'
     | '/plan/'
   fileRoutesById: FileRoutesById
@@ -416,6 +428,7 @@ export interface RootRouteChildren {
   BookingReferenceRoute: typeof BookingReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
+  PlanPlanIdRoute: typeof PlanPlanIdRoute
   ActivitiesIndexRoute: typeof ActivitiesIndexRoute
   PlanIndexRoute: typeof PlanIndexRoute
 }
@@ -632,6 +645,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/plan/$planId': {
+      id: '/plan/$planId'
+      path: '/plan/$planId'
+      fullPath: '/plan/$planId'
+      preLoaderRoute: typeof PlanPlanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -664,6 +684,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingReferenceRoute: BookingReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
   OrderReferenceRoute: OrderReferenceRoute,
+  PlanPlanIdRoute: PlanPlanIdRoute,
   ActivitiesIndexRoute: ActivitiesIndexRoute,
   PlanIndexRoute: PlanIndexRoute,
 }
