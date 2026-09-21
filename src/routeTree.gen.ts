@@ -38,6 +38,8 @@ import { Route as BookSlugRouteImport } from './routes/book.$slug'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
+import { Route as PlanIndexRouteImport } from './routes/plan.index'
+import { Route as PlanPlanIdRouteImport } from './routes/plan.$planId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -184,6 +186,16 @@ const OrderReferenceRoute = OrderReferenceRouteImport.update({
   path: '/order/$reference',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlanIndexRoute = PlanIndexRouteImport.update({
+  id: '/plan/',
+  path: '/plan/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanPlanIdRoute = PlanPlanIdRouteImport.update({
+  id: '/plan/$planId',
+  path: '/plan/$planId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -214,7 +226,9 @@ export interface FileRoutesByFullPath {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
+  '/plan/': typeof PlanIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -245,7 +259,9 @@ export interface FileRoutesByTo {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/plan/$planId': typeof PlanPlanIdRoute
   '/activities': typeof ActivitiesIndexRoute
+  '/plan': typeof PlanIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -277,7 +293,9 @@ export interface FileRoutesById {
   '/booking/$reference': typeof BookingReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
+  '/plan/': typeof PlanIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -310,7 +328,9 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/plan/$planId'
     | '/activities/'
+    | '/plan/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -341,7 +361,9 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/plan/$planId'
     | '/activities'
+    | '/plan'
   id:
     | '__root__'
     | '/'
@@ -372,7 +394,9 @@ export interface FileRouteTypes {
     | '/booking/$reference'
     | '/listing/$slug'
     | '/order/$reference'
+    | '/plan/$planId'
     | '/activities/'
+    | '/plan/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -404,7 +428,9 @@ export interface RootRouteChildren {
   BookingReferenceRoute: typeof BookingReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
+  PlanPlanIdRoute: typeof PlanPlanIdRoute
   ActivitiesIndexRoute: typeof ActivitiesIndexRoute
+  PlanIndexRoute: typeof PlanIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -612,6 +638,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderReferenceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/plan/': {
+      id: '/plan/'
+      path: '/plan'
+      fullPath: '/plan/'
+      preLoaderRoute: typeof PlanIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan/$planId': {
+      id: '/plan/$planId'
+      path: '/plan/$planId'
+      fullPath: '/plan/$planId'
+      preLoaderRoute: typeof PlanPlanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -644,7 +684,9 @@ const rootRouteChildren: RootRouteChildren = {
   BookingReferenceRoute: BookingReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
   OrderReferenceRoute: OrderReferenceRoute,
+  PlanPlanIdRoute: PlanPlanIdRoute,
   ActivitiesIndexRoute: ActivitiesIndexRoute,
+  PlanIndexRoute: PlanIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

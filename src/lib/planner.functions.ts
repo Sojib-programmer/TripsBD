@@ -59,7 +59,9 @@ export const getPlan = createServerFn({ method: "GET" })
         .order("date", { ascending: true }),
       sb
         .from("trip_plan_spots")
-        .select("id, day_id, name, spot_type, type_label, address, slot_index, listing_id, activity_id")
+        .select(
+          "id, day_id, name, spot_type, type_label, address, slot_index, listing:listings(slug, title), activity:activities(slug, title)",
+        )
         .eq("plan_id", plan.id)
         .order("slot_index", { ascending: true }),
       sb
