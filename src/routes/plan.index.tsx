@@ -97,7 +97,10 @@ function PlanIndex() {
 
           <ul className="mt-5 space-y-3">
             {(plans.data ?? []).map((p) => (
-              <li key={p.id} className="flex items-center gap-3 rounded-2xl border border-border p-3">
+              <li
+                key={p.id}
+                className="flex items-center gap-3 rounded-2xl border border-border p-3"
+              >
                 <div className="h-[56px] w-[56px] shrink-0 overflow-hidden rounded-xl bg-muted">
                   {p.hero_url ? (
                     <img
@@ -108,11 +111,7 @@ function PlanIndex() {
                     />
                   ) : null}
                 </div>
-                <Link
-                  to="/plan/$planId"
-                  params={{ planId: p.id }}
-                  className="min-w-0 flex-1"
-                >
+                <Link to="/plan/$planId" params={{ planId: p.id }} className="min-w-0 flex-1">
                   <p className="truncate text-[17px] font-semibold text-foreground">{p.title}</p>
                   <p className="truncate text-[13px] text-muted-foreground">
                     {p.destination

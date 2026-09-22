@@ -184,9 +184,7 @@ function PlanChat() {
           <ConversationContent className="gap-4 px-4 py-4">
             {messages.length === 0 && !pendingUser ? (
               <div className="pt-6">
-                <p className="text-[17px] font-semibold text-foreground">
-                  Where are you going?
-                </p>
+                <p className="text-[17px] font-semibold text-foreground">Where are you going?</p>
                 <p className="mt-1 text-[15px] text-muted-foreground">
                   Describe the trip in a sentence and I will build a day-by-day plan.
                 </p>

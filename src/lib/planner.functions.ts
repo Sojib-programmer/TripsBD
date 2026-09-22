@@ -132,9 +132,7 @@ export const moveSpot = createServerFn({ method: "POST" })
 export const sendPlannerMessage = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
-    z
-      .object({ planId: z.string().uuid(), message: z.string().min(2).max(1000) })
-      .parse(input),
+    z.object({ planId: z.string().uuid(), message: z.string().min(2).max(1000) }).parse(input),
   )
   .handler(async ({ context, data }) => {
     const sb = context.supabase;
@@ -181,8 +179,7 @@ export const sendPlannerMessage = createServerFn({ method: "POST" })
       ? [
           `${plan.title} — ${plan.destination} (${plan.start_date} to ${plan.end_date})`,
           ...(existingSpots ?? []).map(
-            (s) =>
-              `${(s.day as { date: string } | null)?.date ?? "?"} #${s.slot_index}: ${s.name}`,
+            (s) => `${(s.day as { date: string } | null)?.date ?? "?"} #${s.slot_index}: ${s.name}`,
           ),
         ].join("\n")
       : null;
@@ -336,7 +333,8 @@ async function matchInventory(sb: Db, planId: string): Promise<void> {
         .ilike("title", `%${spot.name}%`)
         .limit(1)
         .maybeSingle();
-      if (listing) await sb.from("trip_plan_spots").update({ listing_id: listing.id }).eq("id", spot.id);
+      if (listing)
+        await sb.from("trip_plan_spots").update({ listing_id: listing.id }).eq("id", spot.id);
       continue;
     }
     const { data: activity } = await sb
@@ -345,6 +343,7 @@ async function matchInventory(sb: Db, planId: string): Promise<void> {
       .ilike("title", `%${spot.name}%`)
       .limit(1)
       .maybeSingle();
-    if (activity) await sb.from("trip_plan_spots").update({ activity_id: activity.id }).eq("id", spot.id);
+    if (activity)
+      await sb.from("trip_plan_spots").update({ activity_id: activity.id }).eq("id", spot.id);
   }
 }
