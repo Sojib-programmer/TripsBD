@@ -19,7 +19,7 @@ import type { ComponentType } from "react";
 export type PlanDay = { id: string; date: string; sort_order: number };
 export type PlanSpot = {
   id: string;
-  day_id: string;
+  day_id: string | null;
   name: string;
   spot_type: string;
   type_label: string | null;
@@ -160,7 +160,7 @@ export function PlanView({
                         {days.length > 1 ? (
                           <select
                             aria-label={`Move ${spot.name} to another day`}
-                            value={spot.day_id}
+                            value={spot.day_id ?? ""}
                             onChange={(e) => onMoveSpot(spot.id, e.target.value)}
                             className="rounded-full border border-border bg-background px-2 py-1 text-[13px] text-muted-foreground"
                           >

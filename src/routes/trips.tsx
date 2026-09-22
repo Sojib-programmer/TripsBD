@@ -171,6 +171,15 @@ function TripsPage() {
     <AppShell>
       <PageHeader title="My Trips" subtitle="Bookings, tickets and itineraries" />
 
+      <div className="px-5 pb-4">
+        <Link
+          to="/plan"
+          className="flex items-center justify-center gap-2 rounded-full border border-brand/40 bg-brand/5 px-6 py-3 text-[17px] font-semibold text-brand"
+        >
+          Plan a trip
+        </Link>
+      </div>
+
       {!user && !loading ? (
         <EmptyState
           icon={<Briefcase size={34} />}
