@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Tent, Gift, Ticket, Search, Bell } from "lucide-react";
+import { Tent, Gift, Ticket, Search, Bell, Wand2 } from "lucide-react";
 import type { ReactNode } from "react";
 
 import tileHotels from "@/assets/tile-hotels.png";
@@ -158,6 +158,19 @@ export function HomeScreen() {
           }
         />
       </div>
+
+      <Link
+        to="/plan"
+        className="mx-5 mt-4 flex items-center gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4"
+      >
+        <Wand2 size={22} className="shrink-0 text-brand" />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[17px] font-semibold text-foreground">Plan a trip</span>
+          <span className="block text-[15px] leading-snug text-muted-foreground">
+            Describe your trip and get a day-by-day itinerary you can edit and save.
+          </span>
+        </span>
+      </Link>
 
       <section className="mx-5 mt-4 flex gap-3 rounded-2xl border border-border p-4">
         <Tent size={22} className="mt-0.5 shrink-0 text-brand" />
