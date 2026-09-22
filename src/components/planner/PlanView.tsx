@@ -19,7 +19,7 @@ import type { ComponentType } from "react";
 export type PlanDay = { id: string; date: string; sort_order: number };
 export type PlanSpot = {
   id: string;
-  day_id: string;
+  day_id: string | null;
   name: string;
   spot_type: string;
   type_label: string | null;

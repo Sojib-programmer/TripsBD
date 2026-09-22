@@ -242,7 +242,7 @@ function PlanChat() {
           />
           <PromptInputFooter className="justify-end">
             <PromptInputSubmit
-              status={ask.isPending ? "submitted" : undefined}
+              {...(ask.isPending ? { status: "submitted" as const } : {})}
               disabled={ask.isPending || text.trim().length < 2}
             />
           </PromptInputFooter>
