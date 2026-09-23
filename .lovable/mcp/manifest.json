@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "sdk_version": "3.0.2",
+  "path": "/api/public/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://wxpflbafjuvvzqmvoffy.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "app-trips-bd",
+      "version": "0.1.0",
+      "title": "app trips bd"
+    },
+    "tools": [
+      {
+        "name": "get_airport_directory",
+        "title": "Airport directory",
+        "description": "List airports Trips.bd serves, with IATA code, name, city and country.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "search_flights",
+        "title": "Search flights",
+        "description": "Search Trips.bd scheduled flights between two airports; fares in BDT per person. Results are reference timetables, not live availability.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "origin": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$",
+              "description": "Origin IATA code, e.g. DAC."
+            },
+            "destination": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$",
+              "description": "Destination IATA code, e.g. CXB."
+            },
+            "date": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "description": "Departure date YYYY-MM-DD."
+            },
+            "cabin": {
+              "default": "any",
+              "type": "string",
+              "enum": [
+                "any",
+                "economy",
+                "premium",
+                "business",
+                "first"
+              ]
+            },
+            "passengers": {
+              "default": 1,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9
+            }
+          },
+          "required": [
+            "origin",
+            "destination",
+            "date"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_flight_booking_request",
+        "title": "Request a flight booking",
+        "description": "Create a flight booking request on the signed-in user's Trips.bd account. Not a confirmed ticket: the Trips.bd team sources and confirms it manually.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "idempotentHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "origin": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$"
+            },
+            "destination": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{3}$"
+            },
+            "date": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "return_date": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "passengers": {
+              "default": 1,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9
+            },
+            "cabin": {
+              "default": "any",
+              "type": "string",
+              "enum": [
+                "any",
+                "economy",
+                "premium",
+                "business",
+                "first"
+              ]
+            },
+            "contact_name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 100
+            },
+            "contact_phone": {
+              "type": "string",
+              "maxLength": 30
+            },
+            "notes": {
+              "type": "string",
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "origin",
+            "destination",
+            "date",
+            "contact_name"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

@@ -5,12 +5,12 @@ export async function signInWithEmail(email: string, password: string) {
   if (error) throw error;
 }
 
-export async function signUpWithEmail(email: string, password: string, fullName: string) {
+export async function signUpWithEmail(email: string, password: string, fullName: string, next?: string) {
   const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: `${window.location.origin}/`,
+      emailRedirectTo: `${window.location.origin}${next ?? "/"}`,
       data: { full_name: fullName },
     },
   });
