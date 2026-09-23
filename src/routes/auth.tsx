@@ -6,7 +6,12 @@ import { Logo } from "@/components/Logo";
 import { signInWithEmail, signUpWithEmail } from "@/lib/auth";
 
 
+const safeNext = (v: unknown) =>
+  typeof v === "string" && v.startsWith("/") && !v.startsWith("//") ? v : "";
+
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>): { next?: string } =>
+    safeNext(s["next"]) ? { next: safeNext(s["next"]) } : {},
   component: AuthPage,
   head: () => ({
     meta: [
@@ -28,6 +33,8 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
+  const done = () => (next ? window.location.assign(next) : void navigate({ to: "/" }));
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [pending, setPending] = useState<"email" | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -44,11 +51,11 @@ function AuthPage() {
     try {
       if (mode === "signin") {
         await signInWithEmail(email, password);
-        void navigate({ to: "/" });
+        done();
       } else {
-        await signUpWithEmail(email, password, fullName);
+        await signUpWithEmail(email, password, fullName, next);
         setNotice("Account created. Check your inbox if email confirmation is required.");
-        void navigate({ to: "/" });
+        done();
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");

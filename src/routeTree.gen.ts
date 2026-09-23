@@ -40,6 +40,8 @@ import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
 import { Route as PlanIndexRouteImport } from './routes/plan.index'
 import { Route as PlanPlanIdRouteImport } from './routes/plan.$planId'
+import { Route as ApiPublicMcpRouteImport } from './routes/api/public/mcp'
+import { Route as ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/api/public/[.well-known]/oauth-protected-resource'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -196,6 +198,17 @@ const PlanPlanIdRoute = PlanPlanIdRouteImport.update({
   path: '/plan/$planId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMcpRoute = ApiPublicMcpRouteImport.update({
+  id: '/api/public/mcp',
+  path: '/api/public/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute =
+  ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/api/public/.well-known/oauth-protected-resource',
+    path: '/api/public/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -229,6 +242,8 @@ export interface FileRoutesByFullPath {
   '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/plan/': typeof PlanIndexRoute
+  '/api/public/mcp': typeof ApiPublicMcpRoute
+  '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -262,6 +277,8 @@ export interface FileRoutesByTo {
   '/plan/$planId': typeof PlanPlanIdRoute
   '/activities': typeof ActivitiesIndexRoute
   '/plan': typeof PlanIndexRoute
+  '/api/public/mcp': typeof ApiPublicMcpRoute
+  '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -296,6 +313,8 @@ export interface FileRoutesById {
   '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/plan/': typeof PlanIndexRoute
+  '/api/public/mcp': typeof ApiPublicMcpRoute
+  '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -331,6 +350,8 @@ export interface FileRouteTypes {
     | '/plan/$planId'
     | '/activities/'
     | '/plan/'
+    | '/api/public/mcp'
+    | '/api/public/.well-known/oauth-protected-resource'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -364,6 +385,8 @@ export interface FileRouteTypes {
     | '/plan/$planId'
     | '/activities'
     | '/plan'
+    | '/api/public/mcp'
+    | '/api/public/.well-known/oauth-protected-resource'
   id:
     | '__root__'
     | '/'
@@ -397,6 +420,8 @@ export interface FileRouteTypes {
     | '/plan/$planId'
     | '/activities/'
     | '/plan/'
+    | '/api/public/mcp'
+    | '/api/public/.well-known/oauth-protected-resource'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -431,6 +456,8 @@ export interface RootRouteChildren {
   PlanPlanIdRoute: typeof PlanPlanIdRoute
   ActivitiesIndexRoute: typeof ActivitiesIndexRoute
   PlanIndexRoute: typeof PlanIndexRoute
+  ApiPublicMcpRoute: typeof ApiPublicMcpRoute
+  ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute: typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -652,6 +679,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanPlanIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mcp': {
+      id: '/api/public/mcp'
+      path: '/api/public/mcp'
+      fullPath: '/api/public/mcp'
+      preLoaderRoute: typeof ApiPublicMcpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/.well-known/oauth-protected-resource': {
+      id: '/api/public/.well-known/oauth-protected-resource'
+      path: '/api/public/.well-known/oauth-protected-resource'
+      fullPath: '/api/public/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -687,6 +728,9 @@ const rootRouteChildren: RootRouteChildren = {
   PlanPlanIdRoute: PlanPlanIdRoute,
   ActivitiesIndexRoute: ActivitiesIndexRoute,
   PlanIndexRoute: PlanIndexRoute,
+  ApiPublicMcpRoute: ApiPublicMcpRoute,
+  ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute:
+    ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
