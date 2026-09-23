@@ -40,7 +40,9 @@ import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
 import { Route as PlanIndexRouteImport } from './routes/plan.index'
 import { Route as PlanPlanIdRouteImport } from './routes/plan.$planId'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as ApiPublicMcpRouteImport } from './routes/api/public/mcp'
+import { Route as ApiPublicOpenapiDotjsonRouteImport } from './routes/api/public/openapi[.]json'
 import { Route as ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/api/public/[.well-known]/oauth-protected-resource'
 
 const IndexRoute = IndexRouteImport.update({
@@ -198,9 +200,19 @@ const PlanPlanIdRoute = PlanPlanIdRouteImport.update({
   path: '/plan/$planId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicMcpRoute = ApiPublicMcpRouteImport.update({
   id: '/api/public/mcp',
   path: '/api/public/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicOpenapiDotjsonRoute = ApiPublicOpenapiDotjsonRouteImport.update({
+  id: '/api/public/openapi.json',
+  path: '/api/public/openapi.json',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute =
@@ -242,7 +254,9 @@ export interface FileRoutesByFullPath {
   '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/plan/': typeof PlanIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/mcp': typeof ApiPublicMcpRoute
+  '/api/public/openapi.json': typeof ApiPublicOpenapiDotjsonRoute
   '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 export interface FileRoutesByTo {
@@ -277,7 +291,9 @@ export interface FileRoutesByTo {
   '/plan/$planId': typeof PlanPlanIdRoute
   '/activities': typeof ActivitiesIndexRoute
   '/plan': typeof PlanIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/mcp': typeof ApiPublicMcpRoute
+  '/api/public/openapi.json': typeof ApiPublicOpenapiDotjsonRoute
   '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 export interface FileRoutesById {
@@ -313,7 +329,9 @@ export interface FileRoutesById {
   '/plan/$planId': typeof PlanPlanIdRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/plan/': typeof PlanIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/api/public/mcp': typeof ApiPublicMcpRoute
+  '/api/public/openapi.json': typeof ApiPublicOpenapiDotjsonRoute
   '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 export interface FileRouteTypes {
@@ -350,7 +368,9 @@ export interface FileRouteTypes {
     | '/plan/$planId'
     | '/activities/'
     | '/plan/'
+    | '/.lovable/oauth/consent'
     | '/api/public/mcp'
+    | '/api/public/openapi.json'
     | '/api/public/.well-known/oauth-protected-resource'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -385,7 +405,9 @@ export interface FileRouteTypes {
     | '/plan/$planId'
     | '/activities'
     | '/plan'
+    | '/.lovable/oauth/consent'
     | '/api/public/mcp'
+    | '/api/public/openapi.json'
     | '/api/public/.well-known/oauth-protected-resource'
   id:
     | '__root__'
@@ -420,7 +442,9 @@ export interface FileRouteTypes {
     | '/plan/$planId'
     | '/activities/'
     | '/plan/'
+    | '/.lovable/oauth/consent'
     | '/api/public/mcp'
+    | '/api/public/openapi.json'
     | '/api/public/.well-known/oauth-protected-resource'
   fileRoutesById: FileRoutesById
 }
@@ -456,7 +480,9 @@ export interface RootRouteChildren {
   PlanPlanIdRoute: typeof PlanPlanIdRoute
   ActivitiesIndexRoute: typeof ActivitiesIndexRoute
   PlanIndexRoute: typeof PlanIndexRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   ApiPublicMcpRoute: typeof ApiPublicMcpRoute
+  ApiPublicOpenapiDotjsonRoute: typeof ApiPublicOpenapiDotjsonRoute
   ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute: typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
 }
 
@@ -679,11 +705,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanPlanIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/mcp': {
       id: '/api/public/mcp'
       path: '/api/public/mcp'
       fullPath: '/api/public/mcp'
       preLoaderRoute: typeof ApiPublicMcpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/openapi.json': {
+      id: '/api/public/openapi.json'
+      path: '/api/public/openapi.json'
+      fullPath: '/api/public/openapi.json'
+      preLoaderRoute: typeof ApiPublicOpenapiDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/.well-known/oauth-protected-resource': {
@@ -728,7 +768,9 @@ const rootRouteChildren: RootRouteChildren = {
   PlanPlanIdRoute: PlanPlanIdRoute,
   ActivitiesIndexRoute: ActivitiesIndexRoute,
   PlanIndexRoute: PlanIndexRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   ApiPublicMcpRoute: ApiPublicMcpRoute,
+  ApiPublicOpenapiDotjsonRoute: ApiPublicOpenapiDotjsonRoute,
   ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute:
     ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute,
 }
