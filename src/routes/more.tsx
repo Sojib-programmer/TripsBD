@@ -10,6 +10,8 @@ import {
   LifeBuoy,
   LogOut,
   Shield,
+  Sparkles,
+  Tag,
   Trash2,
   User,
 } from "lucide-react";
@@ -117,12 +119,27 @@ function MorePage() {
           </li>
         ))}
         <li>
+          <Link to="/plan" className="flex w-full items-center gap-3 px-5 py-4 text-left">
+            <Sparkles size={22} className="text-brand" />
+            <span className="flex-1 text-[17px] text-foreground">AI trip planner</span>
+            <ChevronRight size={20} className="text-muted-foreground" />
+          </Link>
+        </li>
+        <li>
+          <Link to="/deals" className="flex w-full items-center gap-3 px-5 py-4 text-left">
+            <Tag size={22} className="text-brand" />
+            <span className="flex-1 text-[17px] text-foreground">Deals</span>
+            <ChevronRight size={20} className="text-muted-foreground" />
+          </Link>
+        </li>
+        <li>
           <Link to="/host" className="flex w-full items-center gap-3 px-5 py-4 text-left">
             <Building2 size={22} className="text-brand" />
             <span className="flex-1 text-[17px] text-foreground">List your property</span>
             <ChevronRight size={20} className="text-muted-foreground" />
           </Link>
         </li>
+
         <li>
           <Link to="/support" className="flex w-full items-center gap-3 px-5 py-4 text-left">
             <LifeBuoy size={22} className="text-brand" />

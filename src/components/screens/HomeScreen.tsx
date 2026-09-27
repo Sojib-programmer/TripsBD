@@ -161,16 +161,27 @@ export function HomeScreen() {
 
       <Link
         to="/plan"
-        className="mx-5 mt-4 flex items-center gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4"
+        className="mx-5 mt-4 flex items-center gap-3 rounded-2xl border border-brand/30 bg-brand/10 p-4"
       >
-        <Wand2 size={22} className="shrink-0 text-brand" />
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand text-brand-foreground">
+          <Wand2 size={22} />
+        </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[17px] font-semibold text-foreground">Plan a trip</span>
-          <span className="block text-[15px] leading-snug text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <span className="text-[17px] font-semibold text-foreground">Plan a trip</span>
+            <span className="rounded-full bg-brand px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-brand-foreground">
+              New
+            </span>
+          </span>
+          <span className="mt-0.5 block text-[15px] leading-snug text-muted-foreground">
             Describe your trip and get a day-by-day itinerary you can edit and save.
+          </span>
+          <span className="mt-2 inline-block text-[15px] font-semibold text-brand">
+            Start planning →
           </span>
         </span>
       </Link>
+
 
       <section className="mx-5 mt-4 flex gap-3 rounded-2xl border border-border p-4">
         <Tent size={22} className="mt-0.5 shrink-0 text-brand" />
