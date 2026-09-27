@@ -25,7 +25,7 @@ const LAST_UPDATED = "10 September 2026";
 
 const DATA = [
   {
-    what: "Account data — email address, and name and photo if you sign in with Google or Apple",
+    what: "Account data — email address, password (stored hashed) and the name you enter at sign-up",
     why: "To create and secure your account and let you sign back in",
     keep: "Until you delete your account",
   },
@@ -75,8 +75,7 @@ function PrivacyPage() {
           </ul>
           <p className="mt-3">
             We do not collect precise location, contacts, health data or advertising identifiers,
-            and we never open your camera or photo library — the only picture we hold is the profile
-            photo Google or Apple gives us when you sign in. We do not store your search terms. We
+            and we never open your camera or photo library. We do not store your search terms. We
             do not take payments in the app, so we never hold your card details. We do not sell
             personal data, and we do not use it for advertising or profiling.
           </p>
@@ -86,7 +85,7 @@ function PrivacyPage() {
           <h2 className="text-[19px] font-semibold text-foreground">Who we share it with</h2>
           <p className="mt-2">
             Supabase, our database and authentication provider, stores the data on our behalf.
-            Google and Apple process your sign-in if you choose those options. When you send a
+            When you send a
             booking request, we pass only the details needed for that booking (traveller name,
             dates, group size, contact number) to the hotel, airline agent or transport operator
             fulfilling it. Our hosting and content network delivers the app, and Sentry receives
