@@ -159,6 +159,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <InstallPrompt />
+      <IntercomMessenger />
       <ConsentNotice />
       <Toaster position="top-center" />
     </QueryClientProvider>
