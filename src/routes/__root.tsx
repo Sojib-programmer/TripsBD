@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { captureError, initMonitoring } from "@/lib/monitoring";
 import { ConsentNotice } from "@/components/ConsentNotice";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { IntercomMessenger } from "@/components/IntercomMessenger";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -158,6 +159,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <InstallPrompt />
+      <IntercomMessenger />
       <ConsentNotice />
       <Toaster position="top-center" />
     </QueryClientProvider>
