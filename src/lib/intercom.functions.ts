@@ -31,3 +31,8 @@ export const getIntercomIdentity = createServerFn({ method: "GET" })
 
     return { userHash };
   });
+
+/** Public: the Intercom workspace App ID is not sensitive (it ships in the widget URL). */
+export const getIntercomConfig = createServerFn({ method: "GET" }).handler(async () => {
+  return { appId: process.env["INTERCOM_APP_ID"] ?? null };
+});

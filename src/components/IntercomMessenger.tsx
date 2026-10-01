@@ -1,10 +1,8 @@
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { getIntercomIdentity } from "@/lib/intercom.functions";
-
-const APP_ID = import.meta.env["VITE_INTERCOM_APP_ID"] as string | undefined;
+import { getIntercomConfig, getIntercomIdentity } from "@/lib/intercom.functions";
 
 type IntercomFn = (command: string, settings?: Record<string, unknown>) => void;
 
@@ -42,10 +40,18 @@ function loadScript(appId: string) {
 export function IntercomMessenger() {
   const { user, loading } = useAuth();
   const fetchIdentity = useServerFn(getIntercomIdentity);
+  const fetchConfig = useServerFn(getIntercomConfig);
+  const [appId, setAppId] = useState<string | null>(null);
+
+  useEffect(() => {
+    void fetchConfig()
+      .then((c) => setAppId(c.appId))
+      .catch(() => setAppId(null));
+  }, [fetchConfig]);
   const bootedUserRef = useRef<string | null | undefined>(undefined);
 
   useEffect(() => {
-    if (!APP_ID || loading) return;
+    if (!appId || loading) return;
     let cancelled = false;
 
     const key = user?.id ?? null;
@@ -63,14 +69,14 @@ export function IntercomMessenger() {
       }
       if (cancelled) return;
 
-      loadScript(APP_ID);
+      loadScript(appId);
       const api = intercom();
       if (!api) return;
 
       api("shutdown");
       api("boot", {
         api_base: "https://api-iam.intercom.io",
-        app_id: APP_ID,
+        app_id: appId,
         ...(user
           ? {
               user_id: user.id,
@@ -88,7 +94,7 @@ export function IntercomMessenger() {
     return () => {
       cancelled = true;
     };
-  }, [user, loading, fetchIdentity]);
+  }, [user, loading, fetchIdentity, appId]);
 
   useEffect(() => {
     return () => {
