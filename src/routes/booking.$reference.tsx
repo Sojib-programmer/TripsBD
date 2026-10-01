@@ -110,12 +110,43 @@ function ConfirmationPage() {
     <main className="mx-auto max-w-[440px] px-5 pb-16 pt-10">
       <CheckCircle2 size={44} className="text-brand" />
       <h1 className="mt-4 font-display text-[28px] font-semibold text-foreground">
-        Request received
+        {b.status === "confirmed"
+          ? "Booking confirmed"
+          : b.status === "cancelled"
+            ? "Request closed"
+            : "Request received"}
       </h1>
       <p className="mt-1 text-[16px] text-muted-foreground">
         Reference <span className="font-semibold text-foreground">{b.reference}</span> · status{" "}
         {b.status}
       </p>
+      {b.status === "pending" ? (
+        <p className="mt-3 rounded-xl bg-muted p-3 text-[14px] text-muted-foreground">
+          Our reservations team is checking availability with the property. You'll get a
+          notification here as soon as it's confirmed — nothing is booked until then.
+        </p>
+      ) : null}
+      {b.status === "confirmed" ? (
+        <section className="mt-5 rounded-2xl border-2 border-dashed border-brand p-4 print:border-solid">
+          <p className="text-[13px] font-semibold uppercase tracking-wide text-brand">
+            Confirmed voucher
+          </p>
+          <p className="mt-1 text-[20px] font-semibold text-foreground">{b.reference}</p>
+          <p className="text-[15px] text-foreground">{b.listing?.title}</p>
+          <p className="text-[15px] text-muted-foreground">
+            Check-in {b.check_in} · Check-out {b.check_out} · {b.guests} guests
+          </p>
+          <p className="mt-2 text-[14px] text-muted-foreground">
+            Show this reference at the property. Payment is settled as agreed with our team.
+          </p>
+          <button
+            onClick={() => window.print()}
+            className="mt-3 rounded-full border border-border px-4 py-2 text-[14px] font-semibold text-foreground print:hidden"
+          >
+            Save / print voucher
+          </button>
+        </section>
+      ) : null}
 
       <section className="mt-6 flex gap-3 rounded-2xl border border-border p-3">
         {b.listing?.hero_url ? (

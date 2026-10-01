@@ -2,7 +2,7 @@ import { queryOptions, useMutation, useSuspenseQuery } from "@tanstack/react-que
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { bdt } from "@/components/ListingCard";
@@ -13,7 +13,21 @@ import { getListing } from "@/lib/catalog.functions";
 const listingQuery = (slug: string) =>
   queryOptions({ queryKey: ["listing", slug], queryFn: () => getListing({ data: { slug } }) });
 
+const ISO = /^\d{4}-\d{2}-\d{2}$/;
+type BookSearch = { checkIn?: string; checkOut?: string; guests?: number };
+
 export const Route = createFileRoute("/book/$slug")({
+  validateSearch: (s: Record<string, unknown>): BookSearch => {
+    const out: BookSearch = {};
+    const ci = s["checkIn"];
+    const co = s["checkOut"];
+    if (typeof ci === "string" && ISO.test(ci)) out.checkIn = ci;
+    if (typeof co === "string" && ISO.test(co) && (!out.checkIn || co > out.checkIn))
+      out.checkOut = co;
+    const g = Number(s["guests"]);
+    if (Number.isInteger(g) && g >= 1 && g <= 20) out.guests = g;
+    return out;
+  },
   loader: async ({ context, params }) => {
     const listing = await context.queryClient.ensureQueryData(listingQuery(params.slug));
     if (!listing) throw notFound();
@@ -58,19 +72,26 @@ const field =
 
 function BookPage() {
   const { slug } = Route.useParams();
+  const search = Route.useSearch();
   const { data: listing } = useSuspenseQuery(listingQuery(slug));
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const book = useServerFn(createBooking);
 
-  const [checkIn, setCheckIn] = useState(isoPlus(7));
-  const [checkOut, setCheckOut] = useState(isoPlus(9));
-  const [guests, setGuests] = useState(2);
+  const [checkIn, setCheckIn] = useState(search.checkIn ?? isoPlus(7));
+  const [checkOut, setCheckOut] = useState(search.checkOut ?? isoPlus(9));
+  const [guests, setGuests] = useState(search.guests ?? 2);
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
   const [guestPhone, setGuestPhone] = useState("");
   const [dealCode, setDealCode] = useState("");
   const [note, setNote] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+    setGuestEmail((v) => v || user.email || "");
+    setGuestName((v) => v || ((user.user_metadata?.["full_name"] as string | undefined) ?? ""));
+  }, [user]);
 
   const mutation = useMutation({
     mutationFn: () =>
