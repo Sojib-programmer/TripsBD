@@ -17,7 +17,7 @@ export const Route = createFileRoute("/order/$reference")({
   errorComponent: ({ error }) => (
     <AppShell>
       <p role="alert" className="p-6 text-[16px] text-muted-foreground">
-        {error.message}
+        {error instanceof Error ? error.message : String(error)}
       </p>
     </AppShell>
   ),
