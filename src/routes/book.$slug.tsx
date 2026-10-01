@@ -2,7 +2,7 @@ import { queryOptions, useMutation, useSuspenseQuery } from "@tanstack/react-que
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { bdt } from "@/components/ListingCard";
@@ -13,7 +13,21 @@ import { getListing } from "@/lib/catalog.functions";
 const listingQuery = (slug: string) =>
   queryOptions({ queryKey: ["listing", slug], queryFn: () => getListing({ data: { slug } }) });
 
+const ISO = /^\d{4}-\d{2}-\d{2}$/;
+type BookSearch = { checkIn?: string; checkOut?: string; guests?: number };
+
 export const Route = createFileRoute("/book/$slug")({
+  validateSearch: (s: Record<string, unknown>): BookSearch => {
+    const out: BookSearch = {};
+    const ci = s["checkIn"];
+    const co = s["checkOut"];
+    if (typeof ci === "string" && ISO.test(ci)) out.checkIn = ci;
+    if (typeof co === "string" && ISO.test(co) && (!out.checkIn || co > out.checkIn))
+      out.checkOut = co;
+    const g = Number(s["guests"]);
+    if (Number.isInteger(g) && g >= 1 && g <= 20) out.guests = g;
+    return out;
+  },
   loader: async ({ context, params }) => {
     const listing = await context.queryClient.ensureQueryData(listingQuery(params.slug));
     if (!listing) throw notFound();

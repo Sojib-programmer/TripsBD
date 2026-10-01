@@ -65,6 +65,15 @@ function dayLabel(date: string, index: number) {
   return `Day ${index + 1} · ${pretty}`;
 }
 
+/** Check-in on the spot's day; check-out at plan end (or next day). */
+function stayDates(plan: PlanRecord, dayDate: string) {
+  const next = new Date(`${dayDate}T00:00:00Z`);
+  next.setUTCDate(next.getUTCDate() + 1);
+  const fallback = next.toISOString().slice(0, 10);
+  const checkOut = plan.end_date && plan.end_date > dayDate ? plan.end_date : fallback;
+  return { checkIn: dayDate, checkOut };
+}
+
 export function PlanView({
   plan,
   days,
@@ -141,8 +150,9 @@ export function PlanView({
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         {spot.listing ? (
                           <Link
-                            to="/listing/$slug"
+                            to="/book/$slug"
                             params={{ slug: spot.listing.slug }}
+                            search={stayDates(plan, day.date)}
                             className="text-[13px] font-semibold text-brand"
                           >
                             Request to book
