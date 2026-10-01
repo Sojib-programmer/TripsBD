@@ -110,7 +110,9 @@ function OpsPage() {
             <p className="text-[15px] text-muted-foreground">{it.when}</p>
             <p className="text-[15px] text-foreground">{it.who}</p>
             <p className="text-[13px] text-muted-foreground">{it.contact}</p>
-            {it.note ? <p className="mt-1 text-[14px] italic text-muted-foreground">{it.note}</p> : null}
+            {it.note ? (
+              <p className="mt-1 text-[14px] italic text-muted-foreground">{it.note}</p>
+            ) : null}
             <p className="mt-2 text-[16px] font-semibold text-foreground">{bdt(it.total)}</p>
             <div className="mt-3 flex gap-2">
               <button

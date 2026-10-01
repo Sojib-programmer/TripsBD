@@ -19,6 +19,7 @@ import { Route as FlightsRouteImport } from './routes/flights'
 import { Route as HostRouteImport } from './routes/host'
 import { Route as MoreRouteImport } from './routes/more'
 import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as OpsRouteImport } from './routes/ops'
 import { Route as PackagesRouteImport } from './routes/packages'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SavedRouteImport } from './routes/saved'
@@ -93,6 +94,11 @@ const MoreRoute = MoreRouteImport.update({
 const NotificationsRoute = NotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpsRoute = OpsRouteImport.update({
+  id: '/ops',
+  path: '/ops',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PackagesRoute = PackagesRouteImport.update({
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/notifications': typeof NotificationsRoute
+  '/ops': typeof OpsRoute
   '/packages': typeof PackagesRoute
   '/privacy': typeof PrivacyRoute
   '/saved': typeof SavedRoute
@@ -270,6 +277,7 @@ export interface FileRoutesByTo {
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/notifications': typeof NotificationsRoute
+  '/ops': typeof OpsRoute
   '/packages': typeof PackagesRoute
   '/privacy': typeof PrivacyRoute
   '/saved': typeof SavedRoute
@@ -308,6 +316,7 @@ export interface FileRoutesById {
   '/host': typeof HostRoute
   '/more': typeof MoreRoute
   '/notifications': typeof NotificationsRoute
+  '/ops': typeof OpsRoute
   '/packages': typeof PackagesRoute
   '/privacy': typeof PrivacyRoute
   '/saved': typeof SavedRoute
@@ -347,6 +356,7 @@ export interface FileRouteTypes {
     | '/host'
     | '/more'
     | '/notifications'
+    | '/ops'
     | '/packages'
     | '/privacy'
     | '/saved'
@@ -384,6 +394,7 @@ export interface FileRouteTypes {
     | '/host'
     | '/more'
     | '/notifications'
+    | '/ops'
     | '/packages'
     | '/privacy'
     | '/saved'
@@ -421,6 +432,7 @@ export interface FileRouteTypes {
     | '/host'
     | '/more'
     | '/notifications'
+    | '/ops'
     | '/packages'
     | '/privacy'
     | '/saved'
@@ -459,6 +471,7 @@ export interface RootRouteChildren {
   HostRoute: typeof HostRoute
   MoreRoute: typeof MoreRoute
   NotificationsRoute: typeof NotificationsRoute
+  OpsRoute: typeof OpsRoute
   PackagesRoute: typeof PackagesRoute
   PrivacyRoute: typeof PrivacyRoute
   SavedRoute: typeof SavedRoute
@@ -556,6 +569,13 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ops': {
+      id: '/ops'
+      path: '/ops'
+      fullPath: '/ops'
+      preLoaderRoute: typeof OpsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/packages': {
@@ -747,6 +767,7 @@ const rootRouteChildren: RootRouteChildren = {
   HostRoute: HostRoute,
   MoreRoute: MoreRoute,
   NotificationsRoute: NotificationsRoute,
+  OpsRoute: OpsRoute,
   PackagesRoute: PackagesRoute,
   PrivacyRoute: PrivacyRoute,
   SavedRoute: SavedRoute,
