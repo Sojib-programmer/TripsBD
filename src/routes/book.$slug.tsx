@@ -58,19 +58,26 @@ const field =
 
 function BookPage() {
   const { slug } = Route.useParams();
+  const search = Route.useSearch();
   const { data: listing } = useSuspenseQuery(listingQuery(slug));
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const book = useServerFn(createBooking);
 
-  const [checkIn, setCheckIn] = useState(isoPlus(7));
-  const [checkOut, setCheckOut] = useState(isoPlus(9));
-  const [guests, setGuests] = useState(2);
+  const [checkIn, setCheckIn] = useState(search.checkIn ?? isoPlus(7));
+  const [checkOut, setCheckOut] = useState(search.checkOut ?? isoPlus(9));
+  const [guests, setGuests] = useState(search.guests ?? 2);
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
   const [guestPhone, setGuestPhone] = useState("");
   const [dealCode, setDealCode] = useState("");
   const [note, setNote] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+    setGuestEmail((v) => v || user.email || "");
+    setGuestName((v) => v || ((user.user_metadata?.["full_name"] as string | undefined) ?? ""));
+  }, [user]);
 
   const mutation = useMutation({
     mutationFn: () =>
