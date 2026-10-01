@@ -1,9 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
-type Ctx = { supabase: any; userId: string };
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
+
+type Ctx = { supabase: SupabaseClient<Database>; userId: string };
 
 /** Staff = admin or ops role. Read through the caller's own role rows (RLS: select own). */
 async function isStaff({ supabase, userId }: Ctx) {

@@ -75,7 +75,7 @@ function OpsPage() {
     body = <p className="py-10 text-center text-muted-foreground">Staff access only.</p>;
   } else {
     const items: Item[] = [
-      ...(queue.data?.bookings ?? []).map((b: any) => ({
+      ...(queue.data?.bookings ?? []).map((b) => ({
         kind: "booking" as const,
         id: b.id,
         reference: b.reference,
@@ -86,7 +86,7 @@ function OpsPage() {
         total: b.total_bdt,
         note: b.note,
       })),
-      ...(queue.data?.orders ?? []).map((o: any) => ({
+      ...(queue.data?.orders ?? []).map((o) => ({
         kind: "order" as const,
         id: o.id,
         reference: o.reference,
