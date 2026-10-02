@@ -103,8 +103,7 @@ export const startEpsPayment = createServerFn({ method: "POST" })
     const req = getRequest();
     const origin = process.env["APP_ORIGIN"] ?? new URL(req.url).origin;
     const tx = newMerchantTransactionId();
-    const cb = (outcome: string) =>
-      `${origin}/api/public/eps/return?tx=${tx}&outcome=${outcome}`;
+    const cb = (outcome: string) => `${origin}/api/public/eps/return?tx=${tx}&outcome=${outcome}`;
 
     const { error } = await supabaseAdmin.from("payment_records").insert({
       user_id: context.userId,
