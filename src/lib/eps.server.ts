@@ -87,7 +87,7 @@ export type InitInput = {
   customerEmail: string;
   customerPhone: string;
   productName: string;
-  ipAddress?: string;
+  ipAddress?: string | undefined;
 };
 
 export async function epsInitialize(env: EpsEnv, i: InitInput): Promise<string> {
