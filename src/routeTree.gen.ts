@@ -45,6 +45,7 @@ import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.
 import { Route as ApiPublicMcpRouteImport } from './routes/api/public/mcp'
 import { Route as ApiPublicOpenapiDotjsonRouteImport } from './routes/api/public/openapi[.]json'
 import { Route as ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/api/public/[.well-known]/oauth-protected-resource'
+import { Route as ApiPublicEpsReturnRouteImport } from './routes/api/public/eps/return'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -227,6 +228,11 @@ const ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/api/public/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicEpsReturnRoute = ApiPublicEpsReturnRouteImport.update({
+  id: '/api/public/eps/return',
+  path: '/api/public/eps/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -265,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/api/public/mcp': typeof ApiPublicMcpRoute
   '/api/public/openapi.json': typeof ApiPublicOpenapiDotjsonRoute
   '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
+  '/api/public/eps/return': typeof ApiPublicEpsReturnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -303,6 +310,7 @@ export interface FileRoutesByTo {
   '/api/public/mcp': typeof ApiPublicMcpRoute
   '/api/public/openapi.json': typeof ApiPublicOpenapiDotjsonRoute
   '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
+  '/api/public/eps/return': typeof ApiPublicEpsReturnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -342,6 +350,7 @@ export interface FileRoutesById {
   '/api/public/mcp': typeof ApiPublicMcpRoute
   '/api/public/openapi.json': typeof ApiPublicOpenapiDotjsonRoute
   '/api/public/.well-known/oauth-protected-resource': typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
+  '/api/public/eps/return': typeof ApiPublicEpsReturnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -382,6 +391,7 @@ export interface FileRouteTypes {
     | '/api/public/mcp'
     | '/api/public/openapi.json'
     | '/api/public/.well-known/oauth-protected-resource'
+    | '/api/public/eps/return'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -420,6 +430,7 @@ export interface FileRouteTypes {
     | '/api/public/mcp'
     | '/api/public/openapi.json'
     | '/api/public/.well-known/oauth-protected-resource'
+    | '/api/public/eps/return'
   id:
     | '__root__'
     | '/'
@@ -458,6 +469,7 @@ export interface FileRouteTypes {
     | '/api/public/mcp'
     | '/api/public/openapi.json'
     | '/api/public/.well-known/oauth-protected-resource'
+    | '/api/public/eps/return'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -497,6 +509,7 @@ export interface RootRouteChildren {
   ApiPublicMcpRoute: typeof ApiPublicMcpRoute
   ApiPublicOpenapiDotjsonRoute: typeof ApiPublicOpenapiDotjsonRoute
   ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute: typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute
+  ApiPublicEpsReturnRoute: typeof ApiPublicEpsReturnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -753,6 +766,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/eps/return': {
+      id: '/api/public/eps/return'
+      path: '/api/public/eps/return'
+      fullPath: '/api/public/eps/return'
+      preLoaderRoute: typeof ApiPublicEpsReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -794,6 +814,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicOpenapiDotjsonRoute: ApiPublicOpenapiDotjsonRoute,
   ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute:
     ApiPublicChar91DotwellKnownChar93OauthProtectedResourceRoute,
+  ApiPublicEpsReturnRoute: ApiPublicEpsReturnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
