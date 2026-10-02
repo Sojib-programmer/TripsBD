@@ -835,6 +835,51 @@ export type Database = {
           },
         ]
       }
+      payment_records: {
+        Row: {
+          amount_bdt: number
+          created_at: string
+          eps_transaction_id: string | null
+          gateway_response: Json
+          id: string
+          kind: string
+          merchant_transaction_id: string
+          payment_method: string | null
+          reference: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_bdt: number
+          created_at?: string
+          eps_transaction_id?: string | null
+          gateway_response?: Json
+          id?: string
+          kind: string
+          merchant_transaction_id: string
+          payment_method?: string | null
+          reference: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_bdt?: number
+          created_at?: string
+          eps_transaction_id?: string | null
+          gateway_response?: Json
+          id?: string
+          kind?: string
+          merchant_transaction_id?: string
+          payment_method?: string | null
+          reference?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
