@@ -5,6 +5,7 @@ import { CheckCircle2, Clock, Loader2, XCircle } from "lucide-react";
 import { useEffect } from "react";
 
 import { AppShell } from "@/components/AppShell";
+import { EpsPayButton } from "@/components/EpsPayButton";
 import { VerticalHeader } from "@/components/VerticalHeader";
 import { supabase } from "@/integrations/supabase/client";
 import { cancelMyOrder } from "@/lib/cancellation.functions";
@@ -147,6 +148,14 @@ function OrderPage() {
             ))}
           </ol>
         </section>
+
+        <EpsPayButton
+          kind="order"
+          reference={order.reference}
+          status={order.status}
+          total={order.total_bdt}
+        />
+
 
         {order.status === "pending" || order.status === "confirmed" ? (
           <button
