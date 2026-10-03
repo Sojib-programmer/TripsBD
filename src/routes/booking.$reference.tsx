@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
+import { ConfirmedVoucher } from "@/components/ConfirmedVoucher";
 import { EpsPayButton } from "@/components/EpsPayButton";
 import { bdt } from "@/components/ListingCard";
 import { supabase } from "@/integrations/supabase/client";
@@ -128,25 +129,13 @@ function ConfirmationPage() {
         </p>
       ) : null}
       {b.status === "confirmed" ? (
-        <section className="mt-5 rounded-2xl border-2 border-dashed border-brand p-4 print:border-solid">
-          <p className="text-[13px] font-semibold uppercase tracking-wide text-brand">
-            Confirmed voucher
-          </p>
-          <p className="mt-1 text-[20px] font-semibold text-foreground">{b.reference}</p>
-          <p className="text-[15px] text-foreground">{b.listing?.title}</p>
-          <p className="text-[15px] text-muted-foreground">
-            Check-in {b.check_in} · Check-out {b.check_out} · {b.guests} guests
-          </p>
-          <p className="mt-2 text-[14px] text-muted-foreground">
-            Show this reference at the property. Payment is settled as agreed with our team.
-          </p>
-          <button
-            onClick={() => window.print()}
-            className="mt-3 rounded-full border border-border px-4 py-2 text-[14px] font-semibold text-foreground print:hidden"
-          >
-            Save / print voucher
-          </button>
-        </section>
+        <ConfirmedVoucher
+          kind="booking"
+          reference={b.reference}
+          title={b.listing?.title ?? "Stay"}
+          lines={[`Check-in ${b.check_in} · Check-out ${b.check_out} · ${b.guests} guests`]}
+          total={b.total_bdt}
+        />
       ) : null}
 
       <section className="mt-6 flex gap-3 rounded-2xl border border-border p-3">

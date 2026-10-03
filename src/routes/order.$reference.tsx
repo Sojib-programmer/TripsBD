@@ -5,6 +5,7 @@ import { CheckCircle2, Clock, Loader2, XCircle } from "lucide-react";
 import { useEffect } from "react";
 
 import { AppShell } from "@/components/AppShell";
+import { ConfirmedVoucher } from "@/components/ConfirmedVoucher";
 import { EpsPayButton } from "@/components/EpsPayButton";
 import { VerticalHeader } from "@/components/VerticalHeader";
 import { supabase } from "@/integrations/supabase/client";
@@ -135,6 +136,18 @@ function OrderPage() {
           </p>
           <p className="mt-2 text-[24px] font-bold text-foreground">{bdt(order.total_bdt)}</p>
         </div>
+
+        {order.status === "confirmed" ? (
+          <ConfirmedVoucher
+            kind="order"
+            reference={order.reference}
+            title={order.title}
+            lines={[
+              `${prettyDateTime(order.starts_at)} · ${order.travellers} traveller${order.travellers > 1 ? "s" : ""}`,
+            ]}
+            total={order.total_bdt}
+          />
+        ) : null}
 
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">Status timeline</h2>
