@@ -65,7 +65,9 @@ export function ConfirmedVoucher({
               {paid.eps_transaction_id ?? "—"}
             </dd>
             <dt className="text-muted-foreground">Method</dt>
-            <dd className="text-right text-foreground">EPS{paid.payment_method ? ` · ${paid.payment_method}` : ""}</dd>
+            <dd className="text-right text-foreground">
+              EPS{paid.payment_method ? ` · ${paid.payment_method}` : ""}
+            </dd>
             <dt className="text-muted-foreground">Paid on</dt>
             <dd className="text-right text-foreground">
               {new Date(paid.updated_at).toLocaleString()}

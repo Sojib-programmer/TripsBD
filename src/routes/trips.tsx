@@ -83,7 +83,7 @@ function TripRow({ row }: { row: Row }) {
           params={{ reference: row.reference }}
           className="self-center text-[15px] font-medium text-brand"
         >
-          View
+          {row.status === "confirmed" ? "Voucher" : "View"}
         </Link>
       ) : (
         <Link
@@ -91,7 +91,7 @@ function TripRow({ row }: { row: Row }) {
           params={{ reference: row.reference }}
           className="self-center text-[15px] font-medium text-brand"
         >
-          View
+          {row.status === "confirmed" ? "Voucher" : "View"}
         </Link>
       )}
     </li>
