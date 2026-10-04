@@ -12,6 +12,14 @@ function intercom(): IntercomFn | null {
   return w.Intercom ?? null;
 }
 
+/** Opens the Messenger on demand (the floating launcher is hidden). Returns false if not loaded. */
+export function openIntercomChat(): boolean {
+  const api = intercom();
+  if (!api) return false;
+  api("show");
+  return true;
+}
+
 function loadScript(appId: string) {
   if (typeof window === "undefined") return;
   const w = window as unknown as {
@@ -77,6 +85,7 @@ export function IntercomMessenger() {
       api("boot", {
         api_base: "https://api-iam.intercom.io",
         app_id: appId,
+        hide_default_launcher: true,
         ...(user
           ? {
               user_id: user.id,
