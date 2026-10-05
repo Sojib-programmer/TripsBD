@@ -8,7 +8,12 @@ import { AppShell } from "@/components/AppShell";
 import { VerticalHeader } from "@/components/VerticalHeader";
 import { useAuth } from "@/hooks/useAuth";
 import { bdt } from "@/lib/format";
-import { decideRequest, getStaffStatus, listPendingRequests } from "@/lib/ops.functions";
+import {
+  decideRequest,
+  getStaffStatus,
+  listConfirmedWithPayments,
+  listPendingRequests,
+} from "@/lib/ops.functions";
 
 export const Route = createFileRoute("/ops")({
   component: OpsPage,
@@ -58,6 +63,7 @@ function OpsPage() {
     onSuccess: (r) => {
       toast.success(`${r.reference} ${r.status}`);
       void qc.invalidateQueries({ queryKey: ["ops-queue"] });
+      void qc.invalidateQueries({ queryKey: ["ops-confirmed"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -143,7 +149,59 @@ function OpsPage() {
     <AppShell>
       <VerticalHeader title="Reservations desk" summary="Pending requests" />
       <h1 className="sr-only">Reservations desk</h1>
-      <div className="px-5 py-5">{body}</div>
+      <div className="px-5 py-5">
+        {body}
+        {staff.data?.staff ? <ConfirmedPayments /> : null}
+      </div>
     </AppShell>
+  );
+}
+
+function ConfirmedPayments() {
+  const listFn = useServerFn(listConfirmedWithPayments);
+  const q = useQuery({
+    queryKey: ["ops-confirmed"],
+    queryFn: () => listFn(),
+    refetchInterval: 30_000,
+  });
+  const rows = q.data ?? [];
+  return (
+    <section className="mt-8">
+      <h2 className="text-[19px] font-semibold text-foreground">Confirmed · payments</h2>
+      {q.isLoading ? (
+        <Loader2 className="mx-auto mt-6 animate-spin text-brand" />
+      ) : rows.length === 0 ? (
+        <p className="py-6 text-center text-muted-foreground">No confirmed requests yet.</p>
+      ) : (
+        <ul className="mt-3 space-y-2">
+          {rows.map((r) => (
+            <li key={`${r.kind}-${r.reference}`}>
+              <Link
+                to={r.kind === "booking" ? "/booking/$reference" : "/order/$reference"}
+                params={{ reference: r.reference }}
+                className="flex items-center justify-between gap-3 rounded-2xl border border-border p-3"
+              >
+                <div className="min-w-0">
+                  <p className="text-[13px] font-semibold text-muted-foreground">{r.reference}</p>
+                  <p className="truncate text-[15px] font-semibold text-foreground">{r.title}</p>
+                  <p className="text-[13px] text-muted-foreground">
+                    {r.who} · {bdt(r.total)}
+                  </p>
+                </div>
+                {r.paid ? (
+                  <span className="shrink-0 rounded-full bg-success px-2.5 py-1 text-[12px] font-semibold text-success-foreground">
+                    Paid{r.paid.method?.startsWith("TEST") ? " (test)" : ""}
+                  </span>
+                ) : (
+                  <span className="shrink-0 rounded-full border border-border px-2.5 py-1 text-[12px] font-semibold text-muted-foreground">
+                    Payment due
+                  </span>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }

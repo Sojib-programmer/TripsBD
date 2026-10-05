@@ -38,6 +38,7 @@ export function ConfirmedVoucher({
         {paid ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-success px-2.5 py-1 text-[12px] font-semibold text-success-foreground">
             <BadgeCheck size={14} /> Confirmed &amp; paid
+            {paid.payment_method?.startsWith("TEST") ? " (test)" : ""}
           </span>
         ) : (
           <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-[12px] font-semibold text-muted-foreground">
