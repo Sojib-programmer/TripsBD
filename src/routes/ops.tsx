@@ -63,6 +63,7 @@ function OpsPage() {
     onSuccess: (r) => {
       toast.success(`${r.reference} ${r.status}`);
       void qc.invalidateQueries({ queryKey: ["ops-queue"] });
+      void qc.invalidateQueries({ queryKey: ["ops-confirmed"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
