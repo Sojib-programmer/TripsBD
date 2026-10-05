@@ -9,7 +9,7 @@ import type { Database } from "@/integrations/supabase/types";
 type Ctx = { supabase: SupabaseClient<Database>; userId: string };
 
 /** Staff = admin or ops role. Read through the caller's own role rows (RLS: select own). */
-async function isStaff({ supabase, userId }: Ctx) {
+export async function isStaff({ supabase, userId }: Ctx) {
   const { data } = await supabase
     .from("user_roles")
     .select("role")
@@ -48,6 +48,63 @@ export const listPendingRequests = createServerFn({ method: "GET" })
         .order("created_at"),
     ]);
     return { bookings: bookings.data ?? [], orders: orders.data ?? [] };
+  });
+
+/** Recently confirmed requests with their payment status, so staff see who has paid. */
+export const listConfirmedWithPayments = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertStaff(context);
+    const sb = context.supabase;
+    const [bookings, orders] = await Promise.all([
+      sb
+        .from("bookings")
+        .select("reference, total_bdt, guest_name, updated_at, listing:listings(title)")
+        .eq("status", "confirmed")
+        .order("updated_at", { ascending: false })
+        .limit(25),
+      sb
+        .from("orders")
+        .select("reference, total_bdt, contact_name, title, vertical, updated_at")
+        .eq("status", "confirmed")
+        .order("updated_at", { ascending: false })
+        .limit(25),
+    ]);
+    const items = [
+      ...(bookings.data ?? []).map((b) => ({
+        kind: "booking" as const,
+        reference: b.reference,
+        title: b.listing?.title ?? "Stay",
+        who: b.guest_name,
+        total: b.total_bdt,
+        updated_at: b.updated_at,
+      })),
+      ...(orders.data ?? []).map((o) => ({
+        kind: "order" as const,
+        reference: o.reference,
+        title: `${o.vertical}: ${o.title}`,
+        who: o.contact_name,
+        total: o.total_bdt,
+        updated_at: o.updated_at,
+      })),
+    ].sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+
+    const refs = items.map((i) => i.reference);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: pays } = refs.length
+      ? await supabaseAdmin
+          .from("payment_records")
+          .select("reference, kind, status, eps_transaction_id, payment_method")
+          .in("reference", refs)
+          .eq("status", "paid")
+      : { data: [] };
+    return items.map((i) => {
+      const p = (pays ?? []).find((x) => x.reference === i.reference && x.kind === i.kind);
+      return {
+        ...i,
+        paid: p ? { eps_transaction_id: p.eps_transaction_id, method: p.payment_method } : null,
+      };
+    });
   });
 
 const decisionSchema = z.object({
