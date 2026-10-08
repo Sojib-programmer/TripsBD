@@ -31,7 +31,7 @@ export function epsEnv(): EpsEnv | null {
 }
 
 function base(env: EpsEnv) {
-  return env.sandbox ? "https://sandbox-pgapi.eps.com.bd/v1" : "https://pgapi.eps.com.bd/v1";
+  return env.sandbox ? "https://sandboxpgapi.eps.com.bd/v1" : "https://pgapi.eps.com.bd/v1";
 }
 
 /** HMAC-SHA512(value) keyed with UTF-8 hash key, Base64 encoded. */
