@@ -21,7 +21,7 @@ export const Route = createFileRoute("/privacy")({
   }),
 });
 
-const LAST_UPDATED = "10 September 2026";
+const LAST_UPDATED = "10 October 2026";
 
 const DATA = [
   {
@@ -43,6 +43,11 @@ const DATA = [
     what: "Saved listings and in-app notifications",
     why: "To show your shortlist and the status of your requests",
     keep: "Until you delete your account",
+  },
+  {
+    what: "Payment records — amount, EPS transaction ID, payment method type (e.g. bKash, card) and payment status",
+    why: "To take payment for a staff-confirmed booking, issue receipts and process refunds",
+    keep: "6 years for Bangladesh accounting and tax obligations",
   },
   {
     what: "Crash and error diagnostics — error message, screen, device and app version",
@@ -88,7 +93,7 @@ function PrivacyPage() {
             When you send a
             booking request, we pass only the details needed for that booking (traveller name,
             dates, group size, contact number) to the hotel, airline agent or transport operator
-            fulfilling it. Our hosting and content network delivers the app, and Sentry receives
+            fulfilling it. When you pay, EPS receives your name, email, phone and the amount to process the payment. Our hosting and content network delivers the app, and Sentry receives
             crash diagnostics with personal details already stripped out. All of these act only on
             our instructions. Nothing else is shared, and nothing is shared for advertising.
           </p>
