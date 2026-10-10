@@ -26,7 +26,10 @@ export function epsEnv(): EpsEnv | null {
     hashKey,
     merchantId,
     storeId,
-    sandbox: (process.env["EPS_SANDBOX"] ?? "true").toLowerCase() !== "false",
+    // Live only on explicit opt-in; anything else stays on sandbox (fail-safe).
+    sandbox: !["false", "live", "production", "prod", "0"].includes(
+      (process.env["EPS_SANDBOX"] ?? "true").trim().toLowerCase(),
+    ),
   };
 }
 
