@@ -25,6 +25,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as StaffRouteImport } from './routes/staff'
 import { Route as StaysRouteImport } from './routes/stays'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -125,6 +126,11 @@ const SearchRoute = SearchRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffRoute = StaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StaysRoute = StaysRouteImport.update({
@@ -251,6 +257,7 @@ export interface FileRoutesByFullPath {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/staff': typeof StaffRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
@@ -290,6 +297,7 @@ export interface FileRoutesByTo {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/staff': typeof StaffRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
@@ -330,6 +338,7 @@ export interface FileRoutesById {
   '/saved': typeof SavedRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/staff': typeof StaffRoute
   '/stays': typeof StaysRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
@@ -371,6 +380,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/sitemap.xml'
+    | '/staff'
     | '/stays'
     | '/support'
     | '/terms'
@@ -410,6 +420,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/sitemap.xml'
+    | '/staff'
     | '/stays'
     | '/support'
     | '/terms'
@@ -449,6 +460,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/search'
     | '/sitemap.xml'
+    | '/staff'
     | '/stays'
     | '/support'
     | '/terms'
@@ -489,6 +501,7 @@ export interface RootRouteChildren {
   SavedRoute: typeof SavedRoute
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StaffRoute: typeof StaffRoute
   StaysRoute: typeof StaysRoute
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
@@ -624,6 +637,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staff': {
+      id: '/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof StaffRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stays': {
@@ -793,6 +813,7 @@ const rootRouteChildren: RootRouteChildren = {
   SavedRoute: SavedRoute,
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StaffRoute: StaffRoute,
   StaysRoute: StaysRoute,
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
