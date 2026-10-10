@@ -55,7 +55,7 @@ Nothing seeded is presented to a traveller as bookable.
 
 ## Non-goals for V1
 
-Card payments in-app, Google Play Billing, live supplier APIs, FCM push notifications,
+Google Play Billing, live supplier APIs, FCM push notifications,
 tablet-optimised layouts, offline booking, multi-currency.
 
 ## Data actually collected at runtime
@@ -70,7 +70,14 @@ tablet-optimised layouts, offline booking, multi-currency.
 | Notifications | `public.notifications` | order status trigger |
 | Deletion requests + anonymised audit | `public.deletion_requests`, `public.deletion_audit` | `src/lib/compliance.functions.ts`, `src/lib/deletion.server.ts` |
 | Support messages | `public.support_messages` | `src/components/SupportForm.tsx` (first-party; deleted on account deletion) |
+| Payment records (amount, EPS tx ID, method, status, refund ref) | `public.payment_records` | `src/lib/eps.functions.ts`, `src/routes/api/public/eps/return.ts` |
 | Client error reports | error reporting endpoint | `src/lib/lovable-error-reporting.ts` |
 
-Not collected: precise location, contacts, photos, SMS, health data, financial account
-numbers, advertising identifiers.
+Not collected: precise location, contacts, photos, SMS, health data, card numbers / wallet
+credentials (EPS hosts checkout), advertising identifiers.
+
+## Play Data Safety — payments (EPS)
+
+- Financial info → **Purchase history**: Collected, not shared for ads; purpose App functionality + Fraud prevention; required for paid bookings.
+- Financial info → **Payment info**: NOT collected by Trips.bd (EPS hosted checkout). Declare EPS as service provider receiving name/email/phone (not "sharing" under Play definitions).
+- Data encrypted in transit: Yes. Deletion: personal links removed on account deletion; anonymised amounts kept 6 years (legal).

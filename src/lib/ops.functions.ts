@@ -96,13 +96,19 @@ export const listConfirmedWithPayments = createServerFn({ method: "GET" })
           .from("payment_records")
           .select("reference, kind, status, eps_transaction_id, payment_method")
           .in("reference", refs)
-          .eq("status", "paid")
+          .in("status", ["paid", "refunded"])
       : { data: [] };
     return items.map((i) => {
       const p = (pays ?? []).find((x) => x.reference === i.reference && x.kind === i.kind);
       return {
         ...i,
-        paid: p ? { eps_transaction_id: p.eps_transaction_id, method: p.payment_method } : null,
+        paid: p
+          ? {
+              eps_transaction_id: p.eps_transaction_id,
+              method: p.payment_method,
+              refunded: p.status === "refunded",
+            }
+          : null,
       };
     });
   });
@@ -160,4 +166,136 @@ export const decideRequest = createServerFn({ method: "POST" })
         .insert({ order_id: row.id, status: data.decision, message: msg });
     }
     return { reference: row.reference, status: data.decision };
+  });
+
+async function assertAdmin({ supabase, userId }: Ctx) {
+  const { data } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .eq("role", "admin");
+  if (!(data ?? []).length) throw new Error("Forbidden: admin only");
+}
+
+/**
+ * Staff records a refund that was issued in the EPS merchant panel.
+ * EPS publishes no verified refund API in its SDK, so we never claim to reverse
+ * money automatically: staff must paste the EPS refund reference.
+ */
+export const recordRefund = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z
+      .object({
+        kind: z.enum(["booking", "order"]),
+        reference: z.string().trim().min(3).max(40),
+        refundReference: z.string().trim().min(3).max(80),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    await assertStaff(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rec } = await supabaseAdmin
+      .from("payment_records")
+      .select("id, user_id, amount_bdt, gateway_response")
+      .eq("kind", data.kind)
+      .eq("reference", data.reference)
+      .eq("status", "paid")
+      .maybeSingle();
+    if (!rec) throw new Error("No paid payment found for this reference");
+    const gw = (rec.gateway_response ?? {}) as Record<string, unknown>;
+    const { error } = await supabaseAdmin
+      .from("payment_records")
+      .update({
+        status: "refunded",
+        gateway_response: {
+          ...gw,
+          refund: {
+            reference: data.refundReference,
+            by: context.userId,
+            at: new Date().toISOString(),
+          },
+        } as never,
+      })
+      .eq("id", rec.id)
+      .eq("status", "paid");
+    if (error) {
+      console.error("refund update failed", error);
+      throw new Error(
+        "Refund could not be saved. The database must allow the 'refunded' payment status first.",
+      );
+    }
+    const table = data.kind === "booking" ? "bookings" : "orders";
+    await supabaseAdmin.from(table).update({ status: "cancelled" }).eq("reference", data.reference);
+    await supabaseAdmin.from("notifications").insert({
+      user_id: rec.user_id,
+      title: "Payment refunded",
+      body: `BDT ${rec.amount_bdt} for ${data.reference} has been refunded via EPS (ref ${data.refundReference}).`,
+      order_reference: data.reference,
+    });
+    return { ok: true };
+  });
+
+export const listStaffMembers = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: roles } = await supabaseAdmin
+      .from("user_roles")
+      .select("user_id, role")
+      .in("role", ["admin", "ops"]);
+    const ids = [...new Set((roles ?? []).map((r) => r.user_id))];
+    const { data: profs } = ids.length
+      ? await supabaseAdmin.from("profiles").select("id, email, full_name").in("id", ids)
+      : { data: [] };
+    return ids.map((id) => {
+      const p = (profs ?? []).find((x) => x.id === id);
+      return {
+        userId: id,
+        email: p?.email ?? null,
+        name: p?.full_name ?? null,
+        roles: (roles ?? []).filter((r) => r.user_id === id).map((r) => r.role),
+      };
+    });
+  });
+
+/** Admin grants/revokes ops or admin for an existing account (looked up by email). */
+export const setStaffRole = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d) =>
+    z
+      .object({
+        email: z.string().trim().toLowerCase().email().max(255),
+        role: z.enum(["ops", "admin"]),
+        grant: z.boolean(),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: prof } = await supabaseAdmin
+      .from("profiles")
+      .select("id")
+      .ilike("email", data.email)
+      .maybeSingle();
+    if (!prof)
+      throw new Error("No account with that email. Ask them to sign up at app.trips.bd first.");
+    if (!data.grant && prof.id === context.userId && data.role === "admin")
+      throw new Error("You can't remove your own admin role");
+    if (data.grant) {
+      const { error } = await supabaseAdmin
+        .from("user_roles")
+        .upsert({ user_id: prof.id, role: data.role }, { onConflict: "user_id,role" });
+      if (error) throw new Error(error.message);
+    } else {
+      await supabaseAdmin
+        .from("user_roles")
+        .delete()
+        .eq("user_id", prof.id)
+        .eq("role", data.role);
+    }
+    return { ok: true };
   });
