@@ -291,11 +291,7 @@ export const setStaffRole = createServerFn({ method: "POST" })
         .upsert({ user_id: prof.id, role: data.role }, { onConflict: "user_id,role" });
       if (error) throw new Error(error.message);
     } else {
-      await supabaseAdmin
-        .from("user_roles")
-        .delete()
-        .eq("user_id", prof.id)
-        .eq("role", data.role);
+      await supabaseAdmin.from("user_roles").delete().eq("user_id", prof.id).eq("role", data.role);
     }
     return { ok: true };
   });

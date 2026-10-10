@@ -12,6 +12,7 @@ import {
   decideRequest,
   getStaffStatus,
   listConfirmedWithPayments,
+  recordRefund,
   listPendingRequests,
 } from "@/lib/ops.functions";
 
@@ -148,6 +149,14 @@ function OpsPage() {
   return (
     <AppShell>
       <VerticalHeader title="Reservations desk" summary="Pending requests" />
+      <div className="px-5 pt-3">
+        <Link
+          to="/staff"
+          className="text-[14px] font-semibold text-brand underline underline-offset-2"
+        >
+          Manage staff
+        </Link>
+      </div>
       <h1 className="sr-only">Reservations desk</h1>
       <div className="px-5 py-5">
         {body}
@@ -188,7 +197,11 @@ function ConfirmedPayments() {
                     {r.who} · {bdt(r.total)}
                   </p>
                 </div>
-                {r.paid ? (
+                {r.paid?.refunded ? (
+                  <span className="shrink-0 rounded-full border border-border px-2.5 py-1 text-[12px] font-semibold text-muted-foreground">
+                    Refunded
+                  </span>
+                ) : r.paid ? (
                   <span className="shrink-0 rounded-full bg-success px-2.5 py-1 text-[12px] font-semibold text-success-foreground">
                     Paid{r.paid.method?.startsWith("TEST") ? " (test)" : ""}
                   </span>
@@ -198,10 +211,41 @@ function ConfirmedPayments() {
                   </span>
                 )}
               </Link>
+              {r.paid && !r.paid.refunded ? (
+                <RefundButton kind={r.kind} reference={r.reference} />
+              ) : null}
             </li>
           ))}
         </ul>
       )}
     </section>
+  );
+}
+
+function RefundButton({ kind, reference }: { kind: "booking" | "order"; reference: string }) {
+  const fn = useServerFn(recordRefund);
+  const qc = useQueryClient();
+  const m = useMutation({
+    mutationFn: (refundReference: string) => fn({ data: { kind, reference, refundReference } }),
+    onSuccess: () => {
+      toast.success(`Refund recorded for ${reference}`);
+      void qc.invalidateQueries({ queryKey: ["ops-confirmed"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+  return (
+    <button
+      type="button"
+      disabled={m.isPending}
+      onClick={() => {
+        const ref = window.prompt(
+          "Issue the refund in the EPS merchant panel first, then paste the EPS refund reference:",
+        );
+        if (ref?.trim()) m.mutate(ref.trim());
+      }}
+      className="mt-1 text-[13px] font-semibold text-destructive underline underline-offset-2"
+    >
+      {m.isPending ? "Recording refund…" : "Record refund"}
+    </button>
   );
 }
