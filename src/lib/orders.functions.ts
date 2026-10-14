@@ -36,7 +36,49 @@ export const createOrder = createServerFn({ method: "POST" })
       .parse(input),
   )
   .handler(async ({ context, data }) => {
-    const { data: order, error } = await context.supabase
+    // Never trust the client total: derive it from catalog prices.
+    // Unpriced requests (no catalog item) become quote requests at 0; staff quote them.
+    const sb = context.supabase;
+    let total = 0;
+    if (data.itemId) {
+      if (data.vertical === "flight") {
+        const { data: f } = await sb
+          .from("flights")
+          .select("fare_bdt")
+          .eq("id", data.itemId)
+          .maybeSingle();
+        if (!f) throw new Error("Flight not found");
+        total = f.fare_bdt * data.travellers;
+      } else if (data.vertical === "transfer") {
+        const { data: t } = await sb
+          .from("transfers")
+          .select("price_bdt")
+          .eq("id", data.itemId)
+          .maybeSingle();
+        if (!t) throw new Error("Transfer not found");
+        total = t.price_bdt;
+      } else if (data.vertical === "activity") {
+        const { data: a } = await sb
+          .from("activities")
+          .select("price_bdt")
+          .eq("id", data.itemId)
+          .maybeSingle();
+        if (!a) throw new Error("Activity not found");
+        let unit = a.price_bdt;
+        const slot = data.details?.["slot"];
+        if (typeof slot === "string") {
+          const { data: s } = await sb
+            .from("activity_slots")
+            .select("price_bdt")
+            .eq("activity_id", data.itemId)
+            .eq("start_time", slot)
+            .maybeSingle();
+          if (s) unit = s.price_bdt;
+        }
+        total = unit * data.travellers;
+      }
+    }
+    const { data: order, error } = await sb
       .from("orders")
       .insert({
         user_id: context.userId,
@@ -48,7 +90,7 @@ export const createOrder = createServerFn({ method: "POST" })
         starts_at: data.startsAt,
         ends_at: data.endsAt ?? null,
         travellers: data.travellers,
-        total_bdt: data.totalBdt,
+        total_bdt: total,
         contact_name: data.contactName,
         contact_email: data.contactEmail,
         contact_phone: data.contactPhone ?? null,

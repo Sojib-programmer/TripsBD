@@ -7,7 +7,7 @@ import { signInWithEmail, signUpWithEmail } from "@/lib/auth";
 
 
 const safeNext = (v: unknown) =>
-  typeof v === "string" && v.startsWith("/") && !v.startsWith("//") ? v : "";
+  typeof v === "string" && /^\/(?![/\\])/.test(v) && !/[\\\u0000-\u001f]/.test(v) ? v : "";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (s: Record<string, unknown>): { next?: string } =>
