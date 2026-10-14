@@ -1,0 +1,2 @@
+ALTER TABLE public.payment_records DROP CONSTRAINT payment_records_status_check;
+ALTER TABLE public.payment_records ADD CONSTRAINT payment_records_status_check CHECK (status IN ('initiated','paid','failed','cancelled','refunded'));
