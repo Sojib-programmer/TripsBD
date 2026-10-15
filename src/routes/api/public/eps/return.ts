@@ -33,14 +33,17 @@ async function handle(request: Request) {
   try {
     v = await epsVerify(env, tx);
   } catch (e) {
-    console.error("EPS verify failed", e);
+    console.error("EPS verify failed", e instanceof Error ? e.name : "unknown");
     return back(page);
   }
 
   // Amount must match what we charged; otherwise treat as failed and log.
-  const amountOk = v.amount === null || Math.round(v.amount) === rec.amount_bdt;
+  // Fail closed: a missing verified amount or a mismatched transaction ID is never "paid".
+  const amountOk = v.amount !== null && Math.round(v.amount) === rec.amount_bdt;
+  const echoed = v.raw["MerchantTransactionId"] ?? v.raw["merchantTransactionId"];
+  const txOk = echoed === undefined || echoed === null || String(echoed) === tx;
   const status =
-    v.status === "paid" && amountOk
+    v.status === "paid" && amountOk && txOk
       ? "paid"
       : v.status === "pending"
         ? "initiated"
@@ -88,8 +91,8 @@ async function handle(request: Request) {
       body: `${message} Reference ${rec.reference}.`,
       order_reference: rec.reference,
     });
-  } else if (!amountOk) {
-    console.error("EPS amount mismatch", tx, v.amount, rec.amount_bdt);
+  } else if (v.status === "paid") {
+    console.error("EPS verification mismatch", { tx, amountOk, txOk });
   }
 
   return back(page);
