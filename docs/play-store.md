@@ -7,7 +7,8 @@ produced on a workstation (JDK 17 + Android SDK) and are not in this repo, and
 Play Console inputs. Release is gated by `docs/launch-gates.md`.
 
 Product claims in this document must match `docs/product-truth.md` — the app is
-**request-to-book**, with no live inventory and no in-app payment.
+**request-to-book**, with no live inventory. Staff-confirmed bookings are paid through
+EPS-hosted checkout (travel services, outside Google Play Billing).
 
 | Item | Location |
 | --- | --- |
@@ -67,11 +68,12 @@ advertising, and **no** advertising ID is collected.
 | Search history | **No** | Search parameters are read-only URL state consumed by `searchListings` in `src/lib/catalog.functions.ts`; no table, column or log stores them | — | — |
 | Other user-generated content | Yes | `public.support_messages.message`/`topic`; free-text request details in `public.orders.details` (JSON) | Customer support, booking fulfilment | Yes |
 | Crash logs / diagnostics | Yes | `src/lib/monitoring.ts` (Sentry, `sendDefaultPii: false`, emails/phones/tokens scrubbed by `scrubText`); `src/lib/error-capture.ts`; `src/lib/lovable-error-reporting.ts` | Stability, diagnostics | No |
-| Purchase / financial info | **No** | No payment is taken in the app; there is no card, wallet or payment-account column anywhere in the schema | — | — |
+| Purchase history | Yes | `public.payment_records` (amount, EPS transaction ID, method type, status, refund reference) | App functionality, fraud prevention, refunds | No (required to pay) |
+| Payment info (card / wallet credentials) | **No** | EPS hosts checkout; no card, wallet or account-number column exists | — | — |
 
 **Retention after deletion.** `fulfilAccountDeletion` (`src/lib/deletion.server.ts`) deletes the
 profile, orders, bookings, saved listings, notifications, roles, support messages and the auth
-user, then writes two non-identifying records that are *not* Data Safety "collected user data"
+user (the `ON DELETE CASCADE` on `payment_records.user_id` removes every payment record too), then writes two non-identifying records that are *not* Data Safety "collected user data"
 but must be disclosed in the privacy policy:
 
 - `public.deletion_audit` — `email_hash` (hash, not the address), `user_ref`, `deleted_counts`,
@@ -89,7 +91,7 @@ Answers to the standard questions:
 - Do you collect precise location, contacts, SMS, health, fitness or financial account numbers?
   **No.**
 - Do you share data with third parties? No sharing in the Play sense. Processors only:
-  **Supabase** (database, auth, hosting of user rows), **Google and Apple** (sign-in only),
+  **Supabase** (database, auth, hosting of user rows), **EPS** (payment processing: name, email, phone, amount), **Intercom** (in-app support chat, Help Centre only),
   **Cloudflare/Lovable hosting + CDN** (request delivery), **Sentry** (scrubbed crash
   diagnostics). Booking details are passed to the travel supplier fulfilling that specific
   request as part of the service the traveller asked for. Support enquiries are stored
@@ -102,8 +104,8 @@ Answers to the standard questions:
 - Category: **Travel & Local**
 - Target audience: **18+** (bookings create a binding contract)
 - No ads, no user-generated content feeds, no gambling, no violence.
-- Contains in-app purchases? **No.** No payment is taken in the app at all; travel services
-  are paid off-app and are exempt from Google Play Billing.
+- Contains in-app purchases? **No.** No digital goods or subscriptions. Physical travel
+  services are paid through EPS-hosted checkout and are exempt from Google Play Billing.
 
 ## 4. Store listing copy
 
@@ -117,7 +119,7 @@ Request hotels, flights, activities and transfers across Bangladesh in one app.
 **Full description:**
 Trips.bd is Bangladesh's all-in-one travel app. Browse hotels, homes and apartments, domestic and
 international flights, airport transfers and local activities, then send a booking request — our
-team confirms availability and sends you a payment link. Everything is priced in BDT.
+team confirms availability, then you pay through EPS-hosted checkout. Everything is priced in BDT.
 
 - Request a hotel, home or apartment anywhere in Bangladesh
 - Request domestic and international flights
@@ -129,7 +131,7 @@ team confirms availability and sends you a payment link. Everything is priced in
 Launch scope is stays, flights, activities and airport transfers only. Car rental, eSIM,
 trains and bundled packages are marked "coming soon" in the app and must not be advertised.
 
-No payment is taken in the app. We confirm availability first, then send a secure payment link.
+Nothing is charged until we confirm. Once our team confirms, you can pay securely through EPS (bKash, Nagad, Rocket or card).
 
 ## 5. Pre-launch checklist
 
@@ -152,8 +154,9 @@ Paste this verbatim into **App access → All or some functionality is restricte
 the reviewer account email and password.
 
 > Trips.bd is a **request-to-book** travel service, not a live-inventory booking engine. Nothing
-> is confirmed automatically and **no payment is taken in the app**: a traveller sends a request,
-> our team checks availability with the supplier and replies with confirmation and a payment link.
+> is confirmed automatically: a traveller sends a request, our team checks availability with the
+> supplier and confirms it. Only then can the traveller pay through EPS-hosted checkout. Reviewers
+> do not need to pay to review the app.
 >
 > Steps to review the full app:
 >

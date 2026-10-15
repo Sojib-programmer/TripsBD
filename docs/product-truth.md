@@ -13,9 +13,13 @@ Last verified: 2026-09-05 against `src/lib/orders.functions.ts`, `src/lib/accoun
 
 - no supplier/GDS API integration,
 - no live availability or live fare pricing,
-- no in-app payment gateway (`CheckoutPanel` states "No payment now — we confirm
-  availability, then send a payment link"; `public.payment_transactions` exists in an early
-  migration but no runtime code writes to it),
+- no charge before human confirmation. After staff confirm, the traveller may pay via
+  **EPS-hosted checkout** (`src/lib/eps.functions.ts`). Status becomes `paid` only after
+  server-to-server verification with an exact amount match (`api/public/eps/return.ts`).
+  Card/wallet credentials are entered on EPS, never on Trips.bd,
+- refunds are **manual**: issued in the EPS merchant portal, then recorded by staff in `/ops`
+  (`recordRefund`). No EPS refund API is integrated; the app never moves money itself,
+- `public.payment_transactions` is legacy and unused,
 - no instant confirmation.
 
 Forbidden words in UI and store copy: "instant booking", "book instantly", "confirmed
@@ -75,6 +79,14 @@ tablet-optimised layouts, offline booking, multi-currency.
 
 Not collected: precise location, contacts, photos, SMS, health data, card numbers / wallet
 credentials (EPS hosts checkout), advertising identifiers.
+
+## Retention on account deletion
+
+- Deleted: profile, orders, bookings, saved listings, notifications, roles, support messages,
+  auth user, and all `payment_records` (FK `ON DELETE CASCADE` to `auth.users`).
+- Retained 6 years: `retained_financial_records` (pseudonymous `user_ref`, reference, vertical,
+  amount, status) and `deletion_audit` (hashed email). EPS transaction IDs are **not** retained.
+- Pseudonyms use `DELETION_PSEUDONYM_SALT`; deletion fails closed if it is missing.
 
 ## Play Data Safety — payments (EPS)
 

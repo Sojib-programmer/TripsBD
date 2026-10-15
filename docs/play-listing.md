@@ -16,13 +16,13 @@ fares, no in-app payment). Release remains gated by `docs/launch-gates.md`.
 ```
 Trips.bd is Bangladesh's travel booking app. Tell us the hotel, home, flight, airport
 transfer or activity you need and send a booking request. Our team checks availability with
-the supplier, confirms it with you, and sends a secure payment link. Everything is
-priced in BDT.
+the supplier and confirms it with you. You then pay securely through EPS-hosted checkout.
+Everything is priced in BDT.
 
 HOW BOOKING WORKS
 Trips.bd is a request-to-book service. You choose what you want and send a request; a
-human confirms availability, usually within one business day. No payment is taken in
-the app, and nothing is confirmed until we tell you it is.
+human confirms availability, usually within one business day. Nothing is charged and nothing
+is confirmed until we tell you it is.
 
 WHAT YOU CAN DO
 • Request hotels, homes and apartments in Dhaka, Cox's Bazar, Sylhet, Chattogram and beyond
@@ -33,9 +33,9 @@ WHAT YOU CAN DO
 • Sign in with Google, Apple or email
 
 PRICING AND PAYMENT
-Prices shown are indicative and confirmed before payment. No payment is taken inside
-the app; we send a payment link once availability is confirmed. There are no in-app
-purchases and no subscription.
+Prices shown are indicative and confirmed before payment. Once our team confirms, you can pay securely through EPS (bKash, Nagad, Rocket or card).
+Payments are processed by EPS; Trips.bd never sees your card or wallet details. Refunds are
+issued through EPS. There are no digital-content purchases and no subscription.
 
 YOUR DATA
 We collect your account details and the contact information needed to fulfil a booking.
@@ -43,8 +43,7 @@ You can delete your account and data at any time from app.trips.bd/account/delet
 Privacy policy: app.trips.bd/privacy · Terms: app.trips.bd/terms
 ```
 
-Compliance check: contains no "instant book", "book instantly", "live fares", or
-"real-time availability" — the strings blocked by `.github/workflows/release-gates.yml`.
+Compliance check: contains none of the booking phrases blocked — the strings blocked by `.github/workflows/release-gates.yml`.
 
 ## 2. Store settings
 
@@ -54,7 +53,7 @@ Compliance check: contains no "instant book", "book instantly", "live fares", or
 | Category | Travel & Local |
 | Tags | Hotel booking, Flights, Trip planning |
 | Contains ads | No |
-| In-app purchases | No |
+| In-app purchases (digital content) | No — travel services are paid via EPS-hosted checkout, outside Play Billing scope |
 | Target audience | 18+ |
 | Content rating questionnaire | No violence / no UGC feed / no gambling / no ads |
 
