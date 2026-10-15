@@ -61,9 +61,11 @@ function TermsPage() {
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">3. Prices and payment</h2>
           <p className="mt-2">
-            All prices are in Bangladeshi Taka. No payment is taken inside the app and there are no
-            in-app purchases. After we confirm availability we send a payment instruction
-            separately. Taxes, resort fees or supplier surcharges are stated before you pay.
+            All prices are in Bangladeshi Taka. Nothing is charged before we confirm. Once confirmed,
+            you can pay through EPS-hosted checkout; EPS processes the payment and Trips.bd never
+            receives your card or wallet details. A booking is paid only when EPS verifies it to us.
+            Refunds are issued manually through EPS; how long they take to reach you depends on
+            EPS and your bank or wallet provider. Taxes, resort fees or supplier surcharges are stated before you pay.
           </p>
         </section>
 

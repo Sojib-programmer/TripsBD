@@ -1,8 +1,22 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
+/** Raised when deletion cannot run safely because server config is missing. Never carries the secret. */
+export class DeletionConfigError extends Error {
+  constructor() {
+    super("Account deletion is temporarily unavailable. Please try again later.");
+    this.name = "DeletionConfigError";
+  }
+}
+
+/** Fail closed: a missing/short salt would make pseudonyms predictable and linkable. */
+export function deletionSalt(): string {
+  const salt = process.env["DELETION_PSEUDONYM_SALT"];
+  if (!salt || salt.length < 32) throw new DeletionConfigError();
+  return salt;
+}
+
 /** Stable, non-reversible pseudonym for audit/financial retention. */
-async function pseudonym(value: string): Promise<string> {
-  const salt = process.env["DELETION_PSEUDONYM_SALT"] ?? "trips-bd-deletion";
+export async function pseudonym(value: string, salt = deletionSalt()): Promise<string> {
   const bytes = new TextEncoder().encode(`${salt}:${value}`);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(digest))
@@ -17,20 +31,27 @@ export type DeletionOutcome = {
   retained: number;
 };
 
+function must<T extends { error: { message: string } | null }>(step: string, r: T): T {
+  if (r.error) throw new Error(`Deletion step failed (${step}); account not deleted.`);
+  return r;
+}
+
 /**
- * Fulfils a Play-policy account deletion: archives an anonymised financial record
- * for the statutory retention period, removes every personal row, then deletes the
- * auth user (which cascades the remaining user-scoped rows).
+ * Fulfils a Play-policy account deletion. Order: validate config → archive
+ * pseudonymised amounts → delete personal rows → delete auth user (cascades
+ * payment_records and any remaining user-scoped rows) → audit → mark request done.
+ * Any failure throws; success is never reported for a partial deletion.
  */
 export async function fulfilAccountDeletion(
   userId: string,
   email: string,
   requestId?: string | null,
 ): Promise<DeletionOutcome> {
-  const userRef = await pseudonym(userId);
-  const emailHash = await pseudonym(email.toLowerCase());
+  const salt = deletionSalt();
+  const userRef = await pseudonym(userId, salt);
+  const emailHash = await pseudonym(email.toLowerCase(), salt);
 
-  const [{ data: orders }, { data: bookings }] = await Promise.all([
+  const [ordersR, bookingsR] = await Promise.all([
     supabaseAdmin
       .from("orders")
       .select("reference, vertical, total_bdt, status, starts_at")
@@ -40,9 +61,11 @@ export async function fulfilAccountDeletion(
       .select("reference, total_bdt, status, check_in")
       .eq("user_id", userId),
   ]);
+  const orders = must("read orders", ordersR).data ?? [];
+  const bookings = must("read bookings", bookingsR).data ?? [];
 
   const archive = [
-    ...(orders ?? []).map((o) => ({
+    ...orders.map((o) => ({
       user_ref: userRef,
       source: "orders",
       reference: o.reference,
@@ -51,7 +74,7 @@ export async function fulfilAccountDeletion(
       status: o.status,
       starts_at: o.starts_at,
     })),
-    ...(bookings ?? []).map((b) => ({
+    ...bookings.map((b) => ({
       user_ref: userRef,
       source: "bookings",
       reference: b.reference,
@@ -62,15 +85,10 @@ export async function fulfilAccountDeletion(
     })),
   ];
 
-  if (archive.length > 0) {
-    const { error } = await supabaseAdmin.from("retained_financial_records").insert(archive);
-    if (error) throw new Error(`Archive failed, deletion aborted: ${error.message}`);
-  }
+  if (archive.length > 0)
+    must("archive", await supabaseAdmin.from("retained_financial_records").insert(archive));
 
-  const deleted: Record<string, number> = {
-    orders: orders?.length ?? 0,
-    bookings: bookings?.length ?? 0,
-  };
+  const deleted: Record<string, number> = { orders: orders.length, bookings: bookings.length };
 
   for (const table of [
     "saved_listings",
@@ -78,38 +96,45 @@ export async function fulfilAccountDeletion(
     "user_roles",
     "support_messages",
   ] as const) {
-    const { count } = await supabaseAdmin
-      .from(table)
-      .delete({ count: "exact" })
-      .eq("user_id", userId);
-    deleted[table] = count ?? 0;
+    const r = must(
+      `delete ${table}`,
+      await supabaseAdmin.from(table).delete({ count: "exact" }).eq("user_id", userId),
+    );
+    deleted[table] = r.count ?? 0;
   }
 
-  await supabaseAdmin.from("profiles").delete().eq("id", userId);
-  deleted["profiles"] = 1;
+  const prof = must(
+    "delete profile",
+    await supabaseAdmin.from("profiles").delete({ count: "exact" }).eq("id", userId),
+  );
+  deleted["profiles"] = prof.count ?? 0;
 
-  const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
-  if (authError) throw new Error(`Auth user deletion failed: ${authError.message}`);
+  must("delete auth user", await supabaseAdmin.auth.admin.deleteUser(userId));
 
-  await supabaseAdmin.from("deletion_audit").insert({
-    request_id: requestId ?? null,
-    user_ref: userRef,
-    email_hash: emailHash,
-    deleted_counts: deleted,
-    retained_note:
-      "Anonymised booking amounts retained for 6 years to meet accounting obligations. No personal identifiers retained.",
-  });
+  must(
+    "audit",
+    await supabaseAdmin.from("deletion_audit").insert({
+      request_id: requestId ?? null,
+      user_ref: userRef,
+      email_hash: emailHash,
+      deleted_counts: deleted,
+      retained_note:
+        "Pseudonymised booking/order amounts retained 6 years for accounting. Payment records (EPS IDs) deleted with the account.",
+    }),
+  );
 
-  if (requestId) {
-    await supabaseAdmin
-      .from("deletion_requests")
-      .update({
-        status: "completed",
-        processed_at: new Date().toISOString(),
-        completed_at: new Date().toISOString(),
-      })
-      .eq("id", requestId);
-  }
+  if (requestId)
+    must(
+      "complete request",
+      await supabaseAdmin
+        .from("deletion_requests")
+        .update({
+          status: "completed",
+          processed_at: new Date().toISOString(),
+          completed_at: new Date().toISOString(),
+        })
+        .eq("id", requestId),
+    );
 
   return { ok: true, deleted, retained: archive.length };
 }

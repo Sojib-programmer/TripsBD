@@ -21,7 +21,7 @@ export const Route = createFileRoute("/privacy")({
   }),
 });
 
-const LAST_UPDATED = "10 October 2026";
+const LAST_UPDATED = "15 October 2026";
 
 const DATA = [
   {
@@ -47,7 +47,7 @@ const DATA = [
   {
     what: "Payment records — amount, EPS transaction ID, payment method type (e.g. bKash, card) and payment status",
     why: "To take payment for a staff-confirmed booking, issue receipts and process refunds",
-    keep: "6 years for Bangladesh accounting and tax obligations",
+    keep: "Deleted with your account. A pseudonymised record of the booking amount (no name, email, phone or EPS transaction ID) is kept 6 years for Bangladesh accounting and tax obligations",
   },
   {
     what: "Crash and error diagnostics — error message, screen, device and app version",
@@ -80,8 +80,9 @@ function PrivacyPage() {
           </ul>
           <p className="mt-3">
             We do not collect precise location, contacts, health data or advertising identifiers,
-            and we never open your camera or photo library. We do not store your search terms. We
-            do not take payments in the app, so we never hold your card details. We do not sell
+            and we never open your camera or photo library. We do not store your search terms.
+            Payments are entered on EPS's hosted checkout, so we never receive your card or wallet
+            details. We do not sell
             personal data, and we do not use it for advertising or profiling.
           </p>
         </section>
@@ -93,7 +94,7 @@ function PrivacyPage() {
             When you send a
             booking request, we pass only the details needed for that booking (traveller name,
             dates, group size, contact number) to the hotel, airline agent or transport operator
-            fulfilling it. When you pay, EPS receives your name, email, phone and the amount to process the payment. Our hosting and content network delivers the app, and Sentry receives
+            fulfilling it. When you pay, EPS receives your name, email, phone and the amount to process the payment. Intercom runs the support chat in the Help Centre, our hosting and content network delivers the app, and Sentry receives
             crash diagnostics with personal details already stripped out. All of these act only on
             our instructions. Nothing else is shared, and nothing is shared for advertising.
           </p>

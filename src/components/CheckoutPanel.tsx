@@ -140,7 +140,7 @@ export function CheckoutPanel({
         {mutation.isPending ? "Sending…" : cta}
       </button>
       <p className="text-center text-[13px] text-muted-foreground">
-        No payment now — we confirm availability, then send a payment link.
+        Nothing is charged now — we confirm availability first, then you can pay securely via EPS.
       </p>
     </div>
   );
