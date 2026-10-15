@@ -178,9 +178,9 @@ async function assertAdmin({ supabase, userId }: Ctx) {
 }
 
 /**
- * Staff records a refund that was issued in the EPS merchant panel.
- * EPS publishes no verified refund API in its SDK, so we never claim to reverse
- * money automatically: staff must paste the EPS refund reference.
+ * Staff records a refund that was already issued in the EPS merchant portal.
+ * No verified EPS refund API exists in this integration, so money is never
+ * reversed automatically. Idempotent: retries resume failed downstream steps.
  */
 export const recordRefund = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -190,51 +190,104 @@ export const recordRefund = createServerFn({ method: "POST" })
         kind: z.enum(["booking", "order"]),
         reference: z.string().trim().min(3).max(40),
         refundReference: z.string().trim().min(3).max(80),
+        confirmedIssued: z.literal(true),
       })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
     await assertStaff(context);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: rec } = await supabaseAdmin
-      .from("payment_records")
-      .select("id, user_id, amount_bdt, gateway_response")
-      .eq("kind", data.kind)
-      .eq("reference", data.reference)
-      .eq("status", "paid")
-      .maybeSingle();
-    if (!rec) throw new Error("No paid payment found for this reference");
-    const gw = (rec.gateway_response ?? {}) as Record<string, unknown>;
-    const { error } = await supabaseAdmin
-      .from("payment_records")
-      .update({
-        status: "refunded",
-        gateway_response: {
-          ...gw,
-          refund: {
-            reference: data.refundReference,
-            by: context.userId,
-            at: new Date().toISOString(),
+    const { supabaseAdmin: db } = await import("@/integrations/supabase/client.server");
+    const { recordRefundSteps, RefundError, REFUND_NOTICE_TITLE } = await import("./refund");
+    const tbl = (k: "booking" | "order") => (k === "booking" ? "bookings" : "orders");
+    try {
+      return await recordRefundSteps(
+        {
+          getPayment: async (kind, reference) => {
+            const r = await db
+              .from("payment_records")
+              .select("id, user_id, amount_bdt, status, gateway_response")
+              .eq("kind", kind)
+              .eq("reference", reference)
+              .in("status", ["paid", "refunded"])
+              .order("updated_at", { ascending: false })
+              .limit(1)
+              .maybeSingle();
+            return { data: r.data as never, error: r.error };
           },
-        } as never,
-      })
-      .eq("id", rec.id)
-      .eq("status", "paid");
-    if (error) {
-      console.error("refund update failed", error);
-      throw new Error(
-        "Refund could not be saved. The database must allow the 'refunded' payment status first.",
+          markRefunded: async (id, gateway) => {
+            const r = await db
+              .from("payment_records")
+              .update({ status: "refunded", gateway_response: gateway as never }, { count: "exact" })
+              .eq("id", id)
+              .eq("status", "paid");
+            return { count: r.count ?? 0, error: r.error };
+          },
+          getEntity: async (kind, reference) => {
+            const r = await db.from(tbl(kind)).select("id, status").eq("reference", reference).maybeSingle();
+            return { data: r.data, error: r.error };
+          },
+          cancelEntity: async (kind, id) => {
+            const r = await db.from(tbl(kind)).update({ status: "cancelled" }).eq("id", id);
+            return { error: r.error };
+          },
+          insertEvent: async (kind, id, message) => {
+            const r =
+              kind === "booking"
+                ? await db.from("booking_events").insert({ booking_id: id, status: "cancelled", message })
+                : await db.from("order_events").insert({ order_id: id, status: "cancelled", message });
+            return { error: r.error };
+          },
+          hasNotice: async (userId, reference) => {
+            const r = await db
+              .from("notifications")
+              .select("id", { count: "exact", head: true })
+              .eq("user_id", userId)
+              .eq("order_reference", reference)
+              .eq("title", REFUND_NOTICE_TITLE);
+            return { exists: (r.count ?? 0) > 0, error: r.error };
+          },
+          insertNotice: async (userId, reference, body) => {
+            const r = await db
+              .from("notifications")
+              .insert({ user_id: userId, title: REFUND_NOTICE_TITLE, body, order_reference: reference });
+            return { error: r.error };
+          },
+        },
+        { ...data, staffId: context.userId },
       );
+    } catch (e) {
+      if (e instanceof RefundError) throw new Error(e.message);
+      console.error("refund failed", e instanceof Error ? e.name : "unknown");
+      throw new Error("Refund could not be recorded. Try again.");
     }
-    const table = data.kind === "booking" ? "bookings" : "orders";
-    await supabaseAdmin.from(table).update({ status: "cancelled" }).eq("reference", data.reference);
-    await supabaseAdmin.from("notifications").insert({
-      user_id: rec.user_id,
-      title: "Payment refunded",
-      body: `BDT ${rec.amount_bdt} for ${data.reference} has been refunded via EPS (ref ${data.refundReference}).`,
-      order_reference: data.reference,
+  });
+
+/** Staff-only: refunds recorded in the last 30 days (visible even after cancellation). */
+export const listRecentRefunds = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertStaff(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const since = new Date(Date.now() - 30 * 864e5).toISOString();
+    const { data, error } = await supabaseAdmin
+      .from("payment_records")
+      .select("kind, reference, amount_bdt, payment_method, gateway_response, updated_at")
+      .eq("status", "refunded")
+      .gte("updated_at", since)
+      .order("updated_at", { ascending: false })
+      .limit(50);
+    if (error) throw new Error("Could not load refunds");
+    return (data ?? []).map((r) => {
+      const ref = ((r.gateway_response ?? {}) as { refund?: { reference?: string; at?: string } }).refund;
+      return {
+        kind: r.kind as "booking" | "order",
+        reference: r.reference,
+        amount: r.amount_bdt,
+        method: r.payment_method,
+        refundReference: ref?.reference ?? null,
+        at: ref?.at ?? r.updated_at,
+      };
     });
-    return { ok: true };
   });
 
 export const listStaffMembers = createServerFn({ method: "GET" })
