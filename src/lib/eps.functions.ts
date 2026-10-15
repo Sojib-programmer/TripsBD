@@ -45,7 +45,11 @@ export const simulateTestPayment = createServerFn({ method: "POST" })
   .inputValidator((d) => testSchema.parse(d))
   .handler(async ({ data, context }) => {
     const { epsEnv, newMerchantTransactionId } = await import("./eps.server");
-    if (epsEnv()) throw new Error("Test payments are off because live EPS is configured.");
+    const anyEps = ["EPS_USERNAME", "EPS_PASSWORD", "EPS_HASH_KEY", "EPS_MERCHANT_ID", "EPS_STORE_ID"].some(
+      (k) => !!process.env[k],
+    );
+    if (epsEnv() || anyEps)
+      throw new Error("Test payments are off because EPS credentials are configured.");
     if (!(await isStaff(context))) throw new Error("Test payments are for staff accounts only.");
 
     const sb = context.supabase;
