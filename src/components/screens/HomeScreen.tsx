@@ -109,7 +109,6 @@ export function HomeScreen() {
         </span>
       </Link>
 
-
       <div className="mt-4 grid grid-cols-2 gap-3 px-5">
         <Tile
           title="Hotels"
@@ -183,8 +182,6 @@ export function HomeScreen() {
           }
         />
       </div>
-
-
 
       <section className="mx-5 mt-4 flex gap-3 rounded-2xl border border-border p-4">
         <Tent size={22} className="mt-0.5 shrink-0 text-brand" />

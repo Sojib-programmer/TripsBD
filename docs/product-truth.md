@@ -27,16 +27,16 @@ instantly", "live fares", "real-time availability", "pay now".
 
 ## Vertical status
 
-| Vertical | Route | Inventory source | Launch status |
-| --- | --- | --- | --- |
-| Stays | `stays.tsx`, `listing.$slug.tsx`, `book.$slug.tsx` | `public.listings` (seeded) | request-to-book |
-| Flights | `flights.tsx`, `book-flight.tsx` | `public.flights` (seeded) | request-to-book |
-| Activities | `activities.index.tsx`, `activities.$slug.tsx` | `public.activities` / `activity_slots` (seeded) | request-to-book |
-| Airport transfers | `transfers.tsx` | `public.transfers` (seeded) | request-to-book |
-| Car rentals | `cars.tsx` | none | **out of launch scope** — route renders `ComingSoon`, removed from home grid and sitemap |
-| eSIM | `esim.tsx` | none | **out of launch scope** — `ComingSoon` |
-| Trains | `trains.tsx` | none | **out of launch scope** — `ComingSoon` |
-| Packages | `packages.tsx` | none | **out of launch scope** — `ComingSoon` |
+| Vertical          | Route                                              | Inventory source                                | Launch status                                                                            |
+| ----------------- | -------------------------------------------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Stays             | `stays.tsx`, `listing.$slug.tsx`, `book.$slug.tsx` | `public.listings` (seeded)                      | request-to-book                                                                          |
+| Flights           | `flights.tsx`, `book-flight.tsx`                   | `public.flights` (seeded)                       | request-to-book                                                                          |
+| Activities        | `activities.index.tsx`, `activities.$slug.tsx`     | `public.activities` / `activity_slots` (seeded) | request-to-book                                                                          |
+| Airport transfers | `transfers.tsx`                                    | `public.transfers` (seeded)                     | request-to-book                                                                          |
+| Car rentals       | `cars.tsx`                                         | none                                            | **out of launch scope** — route renders `ComingSoon`, removed from home grid and sitemap |
+| eSIM              | `esim.tsx`                                         | none                                            | **out of launch scope** — `ComingSoon`                                                   |
+| Trains            | `trains.tsx`                                       | none                                            | **out of launch scope** — `ComingSoon`                                                   |
+| Packages          | `packages.tsx`                                     | none                                            | **out of launch scope** — `ComingSoon`                                                   |
 
 Launch scope is exactly four verticals: stays, flights, activities, airport transfers.
 Each is fulfilled manually by the Trips.bd ops team.
@@ -64,18 +64,18 @@ tablet-optimised layouts, offline booking, multi-currency.
 
 ## Data actually collected at runtime
 
-| Data | Where it is written | Source |
-| --- | --- | --- |
-| Email, name (auth) | `auth.users`, `public.profiles` | `src/lib/auth.ts` |
-| Phone, avatar, VIP tier | `public.profiles` | `src/lib/account.functions.ts` |
-| Order contact name/email/phone | `public.orders` | `createOrder` in `src/lib/orders.functions.ts` |
-| Booking details, dates, travellers, total | `public.orders`, `public.bookings` | order/booking functions |
-| Saved listings | `public.saved_listings` | `src/routes/saved.tsx` |
-| Notifications | `public.notifications` | order status trigger |
-| Deletion requests + anonymised audit | `public.deletion_requests`, `public.deletion_audit` | `src/lib/compliance.functions.ts`, `src/lib/deletion.server.ts` |
-| Support messages | `public.support_messages` | `src/components/SupportForm.tsx` (first-party; deleted on account deletion) |
-| Payment records (amount, EPS tx ID, method, status, refund ref) | `public.payment_records` | `src/lib/eps.functions.ts`, `src/routes/api/public/eps/return.ts` |
-| Client error reports | error reporting endpoint | `src/lib/lovable-error-reporting.ts` |
+| Data                                                            | Where it is written                                 | Source                                                                      |
+| --------------------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------------------------------- |
+| Email, name (auth)                                              | `auth.users`, `public.profiles`                     | `src/lib/auth.ts`                                                           |
+| Phone, avatar, VIP tier                                         | `public.profiles`                                   | `src/lib/account.functions.ts`                                              |
+| Order contact name/email/phone                                  | `public.orders`                                     | `createOrder` in `src/lib/orders.functions.ts`                              |
+| Booking details, dates, travellers, total                       | `public.orders`, `public.bookings`                  | order/booking functions                                                     |
+| Saved listings                                                  | `public.saved_listings`                             | `src/routes/saved.tsx`                                                      |
+| Notifications                                                   | `public.notifications`                              | order status trigger                                                        |
+| Deletion requests + anonymised audit                            | `public.deletion_requests`, `public.deletion_audit` | `src/lib/compliance.functions.ts`, `src/lib/deletion.server.ts`             |
+| Support messages                                                | `public.support_messages`                           | `src/components/SupportForm.tsx` (first-party; deleted on account deletion) |
+| Payment records (amount, EPS tx ID, method, status, refund ref) | `public.payment_records`                            | `src/lib/eps.functions.ts`, `src/routes/api/public/eps/return.ts`           |
+| Client error reports                                            | error reporting endpoint                            | `src/lib/lovable-error-reporting.ts`                                        |
 
 Not collected: precise location, contacts, photos, SMS, health data, card numbers / wallet
 credentials (EPS hosts checkout), advertising identifiers.

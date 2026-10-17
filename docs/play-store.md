@@ -10,19 +10,18 @@ Product claims in this document must match `docs/product-truth.md` — the app i
 **request-to-book**, with no live inventory. Staff-confirmed bookings are paid through
 EPS-hosted checkout (travel services, outside Google Play Billing).
 
-| Item | Location |
-| --- | --- |
-| Web app manifest | `https://app.trips.bd/manifest.webmanifest` |
-| Digital Asset Links | `https://app.trips.bd/.well-known/assetlinks.json` (placeholders — blocker) |
-| Privacy policy URL | `https://app.trips.bd/privacy` |
-| Terms of use | `https://app.trips.bd/terms` |
-| Account/data deletion URL | `https://app.trips.bd/account/delete` |
-| Support | `https://app.trips.bd/support` · support@trips.bd · +8801540723530 |
-| Registered operator | Marketsync Global Ltd. (trading as Trips.bd), Kashidanga City Gate, Rajpara, Rajshahi-6201, Bangladesh · trade licence 01/13-2665 · TIN 317774303960 |
-| App icon 512×512 | `public/store/app-icon-512.png` (verified 512×512) |
-| Feature graphic 1024×500 | `public/store/feature-graphic.png` (verified exactly 1024×500) |
-| Phone screenshots | `public/store/screenshot-*.png` (1080×1920) |
-
+| Item                      | Location                                                                                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Web app manifest          | `https://app.trips.bd/manifest.webmanifest`                                                                                                          |
+| Digital Asset Links       | `https://app.trips.bd/.well-known/assetlinks.json` (placeholders — blocker)                                                                          |
+| Privacy policy URL        | `https://app.trips.bd/privacy`                                                                                                                       |
+| Terms of use              | `https://app.trips.bd/terms`                                                                                                                         |
+| Account/data deletion URL | `https://app.trips.bd/account/delete`                                                                                                                |
+| Support                   | `https://app.trips.bd/support` · support@trips.bd · +8801540723530                                                                                   |
+| Registered operator       | Marketsync Global Ltd. (trading as Trips.bd), Kashidanga City Gate, Rajpara, Rajshahi-6201, Bangladesh · trade licence 01/13-2665 · TIN 317774303960 |
+| App icon 512×512          | `public/store/app-icon-512.png` (verified 512×512)                                                                                                   |
+| Feature graphic 1024×500  | `public/store/feature-graphic.png` (verified exactly 1024×500)                                                                                       |
+| Phone screenshots         | `public/store/screenshot-*.png` (1080×1920)                                                                                                          |
 
 ## 1. Build the Android package
 
@@ -57,23 +56,23 @@ Every row is backed by a named table/column or source file, checked against
 that is not in this table. All data is linked to the user, **none** is shared for
 advertising, and **no** advertising ID is collected.
 
-| Play data type | Collected | Exact source in code | Purpose | Optional |
-| --- | --- | --- | --- | --- |
-| Email address | Yes | `auth.users.email`; `public.orders.contact_email`; `public.support_messages.email`; `public.deletion_requests.email` | Account, booking contact, support, deletion confirmation | No |
-| Name | Yes | `public.profiles.full_name`; `public.orders.contact_name`; `public.support_messages.name` | Booking fulfilment, support | No |
-| Phone number | Yes | `public.profiles.phone`; `public.orders.contact_phone` | Booking fulfilment | Yes |
-| User IDs | Yes | `auth.users.id`; `public.profiles.id`; `user_id` on `orders`, `bookings`, `saved_listings`, `notifications`, `support_messages`, `user_roles` | Account management, RLS ownership | No |
-| Photos | Yes (optional) | `public.profiles.avatar_url` — URL only, set from the OAuth provider profile; the app never opens the camera or photo picker | Account personalisation | Yes |
-| App interactions | Yes | `public.saved_listings`; `public.orders` (+ `order_events`); `public.bookings` (+ `booking_events`); `public.notifications` | App functionality, request status | No |
-| Search history | **No** | Search parameters are read-only URL state consumed by `searchListings` in `src/lib/catalog.functions.ts`; no table, column or log stores them | — | — |
-| Other user-generated content | Yes | `public.support_messages.message`/`topic`; free-text request details in `public.orders.details` (JSON) | Customer support, booking fulfilment | Yes |
-| Crash logs / diagnostics | Yes | `src/lib/monitoring.ts` (Sentry, `sendDefaultPii: false`, emails/phones/tokens scrubbed by `scrubText`); `src/lib/error-capture.ts`; `src/lib/lovable-error-reporting.ts` | Stability, diagnostics | No |
-| Purchase history | Yes | `public.payment_records` (amount, EPS transaction ID, method type, status, refund reference) | App functionality, fraud prevention, refunds | No (required to pay) |
-| Payment info (card / wallet credentials) | **No** | EPS hosts checkout; no card, wallet or account-number column exists | — | — |
+| Play data type                           | Collected      | Exact source in code                                                                                                                                                      | Purpose                                                  | Optional             |
+| ---------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | -------------------- |
+| Email address                            | Yes            | `auth.users.email`; `public.orders.contact_email`; `public.support_messages.email`; `public.deletion_requests.email`                                                      | Account, booking contact, support, deletion confirmation | No                   |
+| Name                                     | Yes            | `public.profiles.full_name`; `public.orders.contact_name`; `public.support_messages.name`                                                                                 | Booking fulfilment, support                              | No                   |
+| Phone number                             | Yes            | `public.profiles.phone`; `public.orders.contact_phone`                                                                                                                    | Booking fulfilment                                       | Yes                  |
+| User IDs                                 | Yes            | `auth.users.id`; `public.profiles.id`; `user_id` on `orders`, `bookings`, `saved_listings`, `notifications`, `support_messages`, `user_roles`                             | Account management, RLS ownership                        | No                   |
+| Photos                                   | Yes (optional) | `public.profiles.avatar_url` — URL only, set from the OAuth provider profile; the app never opens the camera or photo picker                                              | Account personalisation                                  | Yes                  |
+| App interactions                         | Yes            | `public.saved_listings`; `public.orders` (+ `order_events`); `public.bookings` (+ `booking_events`); `public.notifications`                                               | App functionality, request status                        | No                   |
+| Search history                           | **No**         | Search parameters are read-only URL state consumed by `searchListings` in `src/lib/catalog.functions.ts`; no table, column or log stores them                             | —                                                        | —                    |
+| Other user-generated content             | Yes            | `public.support_messages.message`/`topic`; free-text request details in `public.orders.details` (JSON)                                                                    | Customer support, booking fulfilment                     | Yes                  |
+| Crash logs / diagnostics                 | Yes            | `src/lib/monitoring.ts` (Sentry, `sendDefaultPii: false`, emails/phones/tokens scrubbed by `scrubText`); `src/lib/error-capture.ts`; `src/lib/lovable-error-reporting.ts` | Stability, diagnostics                                   | No                   |
+| Purchase history                         | Yes            | `public.payment_records` (amount, EPS transaction ID, method type, status, refund reference)                                                                              | App functionality, fraud prevention, refunds             | No (required to pay) |
+| Payment info (card / wallet credentials) | **No**         | EPS hosts checkout; no card, wallet or account-number column exists                                                                                                       | —                                                        | —                    |
 
 **Retention after deletion.** `fulfilAccountDeletion` (`src/lib/deletion.server.ts`) deletes the
 profile, orders, bookings, saved listings, notifications, roles, support messages and the auth
-user (the `ON DELETE CASCADE` on `payment_records.user_id` removes every payment record too), then writes two non-identifying records that are *not* Data Safety "collected user data"
+user (the `ON DELETE CASCADE` on `payment_records.user_id` removes every payment record too), then writes two non-identifying records that are _not_ Data Safety "collected user data"
 but must be disclosed in the privacy policy:
 
 - `public.deletion_audit` — `email_hash` (hash, not the address), `user_ref`, `deleted_counts`,
@@ -97,7 +96,6 @@ Answers to the standard questions:
   request as part of the service the traveller asked for. Support enquiries are stored
   first-party in `public.support_messages`, not with a third-party form host, so account
   deletion removes them.
-
 
 ## 3. Content rating & audience
 
@@ -191,4 +189,3 @@ the reviewer account email and password.
   errors; cars/eSIM/trains/packages render the ComingSoon screen.
 - `bun run typecheck`, `bun run lint`, `bun run test` (46 passed, cross-user suite skipped for
   lack of credentials) and `bun run build` are green.
-

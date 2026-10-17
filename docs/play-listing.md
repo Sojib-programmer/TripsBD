@@ -47,15 +47,15 @@ Compliance check: contains none of the booking phrases blocked — the strings b
 
 ## 2. Store settings
 
-| Field | Value |
-| --- | --- |
-| App or game | App |
-| Category | Travel & Local |
-| Tags | Hotel booking, Flights, Trip planning |
-| Contains ads | No |
+| Field                              | Value                                                                             |
+| ---------------------------------- | --------------------------------------------------------------------------------- |
+| App or game                        | App                                                                               |
+| Category                           | Travel & Local                                                                    |
+| Tags                               | Hotel booking, Flights, Trip planning                                             |
+| Contains ads                       | No                                                                                |
 | In-app purchases (digital content) | No — travel services are paid via EPS-hosted checkout, outside Play Billing scope |
-| Target audience | 18+ |
-| Content rating questionnaire | No violence / no UGC feed / no gambling / no ads |
+| Target audience                    | 18+                                                                               |
+| Content rating questionnaire       | No violence / no UGC feed / no gambling / no ads                                  |
 
 ## 3. Store listing contact details — REQUIRED FROM THE BUSINESS
 
@@ -63,26 +63,26 @@ Play requires a support email, and a developer address (plus phone if you are de
 as a trader). These must be real, monitored, and match the registered entity — placeholder
 values are a Policy → Developer information rejection, and CI blocks them.
 
-| Field | Value | Status |
-| --- | --- | --- |
-| Support email | `support@trips.bd` | in use in the app — confirm the mailbox is monitored |
-| Privacy contact | `privacy@trips.bd` | in use in the app — confirm the mailbox is monitored |
-| Website | `https://app.trips.bd` | ready |
-| Support phone | `+8801540723530` | ready |
-| Registered legal entity name | Marketsync Global Ltd. | ready |
-| Registered business address | Kashidanga City Gate, Rajpara, Rajshahi-6201, Bangladesh | ready |
-| D-U-N-S number (org accounts) | — | **missing** |
+| Field                         | Value                                                    | Status                                               |
+| ----------------------------- | -------------------------------------------------------- | ---------------------------------------------------- |
+| Support email                 | `support@trips.bd`                                       | in use in the app — confirm the mailbox is monitored |
+| Privacy contact               | `privacy@trips.bd`                                       | in use in the app — confirm the mailbox is monitored |
+| Website                       | `https://app.trips.bd`                                   | ready                                                |
+| Support phone                 | `+8801540723530`                                         | ready                                                |
+| Registered legal entity name  | Marketsync Global Ltd.                                   | ready                                                |
+| Registered business address   | Kashidanga City Gate, Rajpara, Rajshahi-6201, Bangladesh | ready                                                |
+| D-U-N-S number (org accounts) | —                                                        | **missing**                                          |
 
 D-U-N-S is the only outstanding row, and only if the Play account is an organisation account.
 
 ## 4. Graphics assets — verified in repo
 
-| Asset | Requirement | File | Verified |
-| --- | --- | --- | --- |
-| App icon | 512×512 PNG, 32-bit | `public/store/app-icon-512.png` | 512×512 ✅ |
-| Feature graphic | 1024×500 PNG/JPG | `public/store/feature-graphic.png` | 1024×500 ✅ |
-| Phone screenshots | 2–8, ≥1080px short side | `public/store/screenshot-{home,stays,flights,trips}.png` | 4 × 1080×1920 ✅ |
-| Adaptive/maskable icon | 512×512 | `public/icons/icon-maskable-512.png` | 512×512 ✅ |
+| Asset                  | Requirement             | File                                                     | Verified         |
+| ---------------------- | ----------------------- | -------------------------------------------------------- | ---------------- |
+| App icon               | 512×512 PNG, 32-bit     | `public/store/app-icon-512.png`                          | 512×512 ✅       |
+| Feature graphic        | 1024×500 PNG/JPG        | `public/store/feature-graphic.png`                       | 1024×500 ✅      |
+| Phone screenshots      | 2–8, ≥1080px short side | `public/store/screenshot-{home,stays,flights,trips}.png` | 4 × 1080×1920 ✅ |
+| Adaptive/maskable icon | 512×512                 | `public/icons/icon-maskable-512.png`                     | 512×512 ✅       |
 
 Dimensions are enforced on every push by `.github/workflows/release-gates.yml`.
 

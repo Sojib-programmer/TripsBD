@@ -52,7 +52,12 @@ const spec = (origin: string, ref: string) => ({
                 method: "tools/call",
                 params: {
                   name: "search_flights",
-                  arguments: { origin: "DAC", destination: "CXB", date: "2026-10-01", passengers: 2 },
+                  arguments: {
+                    origin: "DAC",
+                    destination: "CXB",
+                    date: "2026-10-01",
+                    passengers: 2,
+                  },
                 },
               },
             },

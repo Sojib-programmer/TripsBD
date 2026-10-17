@@ -3,7 +3,10 @@ import { z } from "zod";
 
 import { supabaseForUser } from "../supabase";
 
-const iata = z.string().trim().regex(/^[A-Za-z]{3}$/);
+const iata = z
+  .string()
+  .trim()
+  .regex(/^[A-Za-z]{3}$/);
 
 export default defineTool({
   name: "create_flight_booking_request",
@@ -14,7 +17,10 @@ export default defineTool({
     origin: iata,
     destination: iata,
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-    return_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    return_date: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .optional(),
     passengers: z.number().int().min(1).max(9).default(1),
     cabin: z.enum(["any", "economy", "premium", "business", "first"]).default("any"),
     contact_name: z.string().trim().min(2).max(100),

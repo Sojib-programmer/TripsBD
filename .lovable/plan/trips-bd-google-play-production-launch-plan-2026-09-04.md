@@ -4,23 +4,23 @@ Target: ship `bd.trips.app` (TWA over https://app.trips.bd) to Play production w
 
 ## Current-state scorecard
 
-| Area | State | Evidence in repo |
-| --- | --- | --- |
-| Web app + 8 verticals | Exists | `src/routes/{stays,flights,packages,activities,transfers,cars,esim,trains}.tsx` |
-| Auth (email + Google/Apple UI) | Partial — provider config unverified in prod | `src/lib/auth.ts`, `src/routes/auth.tsx` |
-| Orders/bookings + realtime | Exists | `orders`, `order_events`, `notifications`, `bookings` tables; `src/lib/orders.functions.ts` |
-| Payments | Missing (request-to-book only) | `createOrder` inserts `total_bdt`, no gateway; `payment_transactions` table declared in an early migration but no runtime use |
-| Inventory | Seeded/demo only | ~28 literal `insert into` seed blocks across migrations; no supplier API |
-| Legal routes | Exists, truth unverified | `privacy.tsx`, `terms.tsx`, `account.delete.tsx` |
-| Account deletion | Partial — queues a row only | `src/lib/compliance.functions.ts` inserts into `deletion_requests`; no fulfillment |
-| Support contact | Blocker — fake | `src/routes/support.tsx`: `+880 1700 000000`, `Gulshan Avenue, Dhaka 1212` |
-| PWA manifest/icons | Exists, sizes wrong | `icon-512.png` and `app-icon-512.png` are 816×816; `feature-graphic.png` is 1152×576, Play requires exactly 1024×500 |
-| Service worker | Missing | manifest present, no `public/sw.js`, no registration |
-| Digital Asset Links | Blocker — placeholders | `public/.well-known/assetlinks.json` has both fingerprints as `REPLACE_WITH_...` |
-| Android project / AAB | Missing entirely | no Gradle, no Bubblewrap output |
-| Docs | Misleading | `docs/play-store.md` opens claiming the app "is packaged" |
-| CI | Effectively absent | only `.github/workflows/webpack.yml` (wrong stack) |
-| Tests | Missing | no unit/E2E suite in repo |
+| Area                           | State                                        | Evidence in repo                                                                                                              |
+| ------------------------------ | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Web app + 8 verticals          | Exists                                       | `src/routes/{stays,flights,packages,activities,transfers,cars,esim,trains}.tsx`                                               |
+| Auth (email + Google/Apple UI) | Partial — provider config unverified in prod | `src/lib/auth.ts`, `src/routes/auth.tsx`                                                                                      |
+| Orders/bookings + realtime     | Exists                                       | `orders`, `order_events`, `notifications`, `bookings` tables; `src/lib/orders.functions.ts`                                   |
+| Payments                       | Missing (request-to-book only)               | `createOrder` inserts `total_bdt`, no gateway; `payment_transactions` table declared in an early migration but no runtime use |
+| Inventory                      | Seeded/demo only                             | ~28 literal `insert into` seed blocks across migrations; no supplier API                                                      |
+| Legal routes                   | Exists, truth unverified                     | `privacy.tsx`, `terms.tsx`, `account.delete.tsx`                                                                              |
+| Account deletion               | Partial — queues a row only                  | `src/lib/compliance.functions.ts` inserts into `deletion_requests`; no fulfillment                                            |
+| Support contact                | Blocker — fake                               | `src/routes/support.tsx`: `+880 1700 000000`, `Gulshan Avenue, Dhaka 1212`                                                    |
+| PWA manifest/icons             | Exists, sizes wrong                          | `icon-512.png` and `app-icon-512.png` are 816×816; `feature-graphic.png` is 1152×576, Play requires exactly 1024×500          |
+| Service worker                 | Missing                                      | manifest present, no `public/sw.js`, no registration                                                                          |
+| Digital Asset Links            | Blocker — placeholders                       | `public/.well-known/assetlinks.json` has both fingerprints as `REPLACE_WITH_...`                                              |
+| Android project / AAB          | Missing entirely                             | no Gradle, no Bubblewrap output                                                                                               |
+| Docs                           | Misleading                                   | `docs/play-store.md` opens claiming the app "is packaged"                                                                     |
+| CI                             | Effectively absent                           | only `.github/workflows/webpack.yml` (wrong stack)                                                                            |
+| Tests                          | Missing                                      | no unit/E2E suite in repo                                                                                                     |
 
 ## Architecture decision: TWA for V1
 

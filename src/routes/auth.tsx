@@ -5,8 +5,8 @@ import { Loader2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { signInWithEmail, signUpWithEmail } from "@/lib/auth";
 
-
 const safeNext = (v: unknown) =>
+  // eslint-disable-next-line no-control-regex -- deliberately rejects control chars in redirect targets
   typeof v === "string" && /^\/(?![/\\])/.test(v) && !/[\\\u0000-\u001f]/.test(v) ? v : "";
 
 export const Route = createFileRoute("/auth")({
