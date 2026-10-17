@@ -5,7 +5,9 @@
   "auth": {
     "type": "oauth",
     "issuer": "https://wxpflbafjuvvzqmvoffy.supabase.co/auth/v1",
-    "accepted_audiences": ["authenticated"]
+    "accepted_audiences": [
+      "authenticated"
+    ]
   },
   "mcp": {
     "server": {
@@ -62,7 +64,13 @@
             "cabin": {
               "default": "any",
               "type": "string",
-              "enum": ["any", "economy", "premium", "business", "first"]
+              "enum": [
+                "any",
+                "economy",
+                "premium",
+                "business",
+                "first"
+              ]
             },
             "passengers": {
               "default": 1,
@@ -71,7 +79,11 @@
               "maximum": 9
             }
           },
-          "required": ["origin", "destination", "date"],
+          "required": [
+            "origin",
+            "destination",
+            "date"
+          ],
           "additionalProperties": false
         },
         "outputSchema": null
@@ -114,7 +126,13 @@
             "cabin": {
               "default": "any",
               "type": "string",
-              "enum": ["any", "economy", "premium", "business", "first"]
+              "enum": [
+                "any",
+                "economy",
+                "premium",
+                "business",
+                "first"
+              ]
             },
             "contact_name": {
               "type": "string",
@@ -130,7 +148,12 @@
               "maxLength": 500
             }
           },
-          "required": ["origin", "destination", "date", "contact_name"],
+          "required": [
+            "origin",
+            "destination",
+            "date",
+            "contact_name"
+          ],
           "additionalProperties": false
         },
         "outputSchema": null
