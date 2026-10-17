@@ -10,20 +10,22 @@ verticals intact; every route clean at 360×800 with zero console errors; `typec
 `test` (47 passed, 6 cross-user tests skipped) and `build` green. Reviewer script and this
 evidence are recorded in `docs/play-store.md` §6.
 
-| # | Gate | Owner | Status |
+| # | Gate | Owner | Status (VERIFIED / BLOCKED / NOT VERIFIED) |
 | --- | --- | --- | --- |
-| 1 | No placeholder contact info, address or phone in app or listing | Lovable + Ops | **Done** — real registered entity (Marketsync Global Ltd., Rajshahi) in `src/lib/company.ts`, used by /support, /privacy, /terms |
-| 2 | `assetlinks.json` has both real SHA-256 fingerprints, is live, and the release build shows no URL bar | Android + Ops | **Blocked** — placeholders in `public/.well-known/assetlinks.json` |
-| 3 | Account deletion actually deletes data end-to-end within the disclosed SLA | Lovable | **Done** — `deleteMyAccountNow` → `fulfilAccountDeletion` deletes profile, orders, bookings, saved, notifications, roles, support messages and the auth user immediately |
-| 4 | Data Safety declaration matches `docs/product-truth.md` line for line | Ops | **Ready to submit** — code-backed table in `docs/play-store.md` §2 cites the exact table/column for every row (User IDs, free-text, crash diagnostics, deletion/retention, processors); privacy policy `/privacy` matches it. Submission itself is Play Console only |
-| 5 | Privacy policy and Terms truthful and reachable signed out | Lovable + Legal | **Done in app** — rewritten against `docs/product-truth.md`; legal counsel sign-off outstanding |
-| 6 | `targetSdk` 36, release-signed AAB, mapping uploaded, signing-key custody recorded | Android | **Blocked** — build config committed at `android/twa-manifest.json` + `android/README.md`; `bubblewrap init/build`, keystore and upload must be run on a workstation with JDK 17 + Android SDK |
-| 7 | Google, Apple and email sign-in verified inside the TWA on a physical device | Android + Ops | Pending |
-| 8 | Every shipped vertical completes request → confirmation → Trips → cancellation | Lovable + QA | **Done in app** — traveller cancellation via `cancelMyOrder`/`cancelMyBooking`; QA pass on device outstanding |
-| 9 | Zero P0 crashes/ANRs in the Play pre-launch report; error monitoring live | QA | **Partly done** — `src/lib/monitoring.ts` wires PII-scrubbed Sentry reporting tagged `trips-bd@<appVersionName>`; needs `VITE_SENTRY_DSN` set, then `monitoringSmokeTest()` on the published build. Pre-launch report is Play Console only |
-| 10 | No live/instant-booking claims; no demo inventory presented as real | Lovable + Ops | **Done** — `INVENTORY_LIVE` gate hides all seeded catalogue rows; four launch verticals take real requests, other four render `ComingSoon` |
-| 11 | RLS negative tests green; security and dependency scans clean | Lovable | **Done for anonymous access** — `tests/rls/anonymous-access.test.ts` (42 assertions) green in CI; `tests/rls/cross-user-access.test.ts` skips until `RLS_TEST_USER_A/B_*` credentials are provided |
-| 12 | Reviewer test account documented in Play Console → App access | Ops | Pending |
+| 1 | Real contact info, address, phone | Lovable + Ops | VERIFIED in repo — `src/lib/company.ts`; mailbox monitoring NOT VERIFIED |
+| 2 | `assetlinks.json` real SHA-256 fingerprints (upload + Play App Signing), live, no URL bar | Android + Ops | BLOCKED — placeholders in `public/.well-known/assetlinks.json` |
+| 3 | Account deletion end-to-end | Lovable | NOT VERIFIED live — code fails closed on every step (`tests/deletion/*`); needs `DELETION_PSEUDONYM_SALT` secret (≥32 chars) or deletion is refused; no live deletion run |
+| 4 | Data Safety matches code | Ops | NOT VERIFIED in Console — draft in `docs/play-store.md` §2 now declares Purchase history (EPS metadata); not submitted |
+| 5 | Privacy/Terms truthful, reachable signed out | Lovable + Legal | VERIFIED in repo (`tests/disclosure/contradictions.test.ts`); legal sign-off NOT VERIFIED; production parity requires publish |
+| 6 | Signed AAB, targetSdk 36, R8 mapping, key custody + backup | Android | BLOCKED — workstation only |
+| 7 | Email sign-in inside TWA on physical device (Google/Apple removed) | Android + Ops | BLOCKED — needs device |
+| 8 | Request → confirm → pay → Trips → cancel/refund | Lovable + QA | NOT VERIFIED live — no staff sign-in or live EPS payment executed |
+| 9 | Live crash monitoring + pre-launch report | QA | BLOCKED — `VITE_SENTRY_DSN` missing |
+| 10 | No instant/live claims; no demo inventory as real | Lovable | VERIFIED in repo — `INVENTORY_LIVE` gate + disclosure test |
+| 11 | RLS tests + security/dependency scans | Lovable | PARTIAL — anonymous RLS tests pass; cross-user BLOCKED (no test accounts); dependency advisories open (see audit) |
+| 12 | Reviewer account in App access | Ops | BLOCKED — account not created |
+| 13 | EPS live payment + manual refund recorded | Ops | NOT VERIFIED — code reviewed; no real transaction run |
+| 14 | Content rating, store assets final | Ops | NOT VERIFIED in Console — assets present in `public/store/` |
 
 ## Inputs required from the business before further work
 

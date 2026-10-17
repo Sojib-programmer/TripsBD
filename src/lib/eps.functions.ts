@@ -45,9 +45,13 @@ export const simulateTestPayment = createServerFn({ method: "POST" })
   .inputValidator((d) => testSchema.parse(d))
   .handler(async ({ data, context }) => {
     const { epsEnv, newMerchantTransactionId } = await import("./eps.server");
-    const anyEps = ["EPS_USERNAME", "EPS_PASSWORD", "EPS_HASH_KEY", "EPS_MERCHANT_ID", "EPS_STORE_ID"].some(
-      (k) => !!process.env[k],
-    );
+    const anyEps = [
+      "EPS_USERNAME",
+      "EPS_PASSWORD",
+      "EPS_HASH_KEY",
+      "EPS_MERCHANT_ID",
+      "EPS_STORE_ID",
+    ].some((k) => !!process.env[k]);
     if (epsEnv() || anyEps)
       throw new Error("Test payments are off because EPS credentials are configured.");
     if (!(await isStaff(context))) throw new Error("Test payments are for staff accounts only.");

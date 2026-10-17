@@ -23,7 +23,10 @@ type Err = { message: string } | null;
 export interface RefundAdapter {
   getPayment(kind: RefundKind, reference: string): Promise<{ data: PaymentRow | null; error: Err }>;
   /** Conditional update: only rows still `paid`. Returns number of rows changed. */
-  markRefunded(id: string, gateway: Record<string, unknown>): Promise<{ count: number; error: Err }>;
+  markRefunded(
+    id: string,
+    gateway: Record<string, unknown>,
+  ): Promise<{ count: number; error: Err }>;
   getEntity(
     kind: RefundKind,
     reference: string,
@@ -47,7 +50,13 @@ export class RefundError extends Error {}
 
 export async function recordRefundSteps(
   db: RefundAdapter,
-  input: { kind: RefundKind; reference: string; refundReference: string; staffId: string; confirmedIssued: boolean },
+  input: {
+    kind: RefundKind;
+    reference: string;
+    refundReference: string;
+    staffId: string;
+    confirmedIssued: boolean;
+  },
 ): Promise<RefundResult> {
   if (!input.confirmedIssued)
     throw new RefundError("Confirm the refund was already issued in the EPS merchant portal.");

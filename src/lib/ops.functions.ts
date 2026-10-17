@@ -217,13 +217,20 @@ export const recordRefund = createServerFn({ method: "POST" })
           markRefunded: async (id, gateway) => {
             const r = await db
               .from("payment_records")
-              .update({ status: "refunded", gateway_response: gateway as never }, { count: "exact" })
+              .update(
+                { status: "refunded", gateway_response: gateway as never },
+                { count: "exact" },
+              )
               .eq("id", id)
               .eq("status", "paid");
             return { count: r.count ?? 0, error: r.error };
           },
           getEntity: async (kind, reference) => {
-            const r = await db.from(tbl(kind)).select("id, status").eq("reference", reference).maybeSingle();
+            const r = await db
+              .from(tbl(kind))
+              .select("id, status")
+              .eq("reference", reference)
+              .maybeSingle();
             return { data: r.data, error: r.error };
           },
           cancelEntity: async (kind, id) => {
@@ -233,8 +240,12 @@ export const recordRefund = createServerFn({ method: "POST" })
           insertEvent: async (kind, id, message) => {
             const r =
               kind === "booking"
-                ? await db.from("booking_events").insert({ booking_id: id, status: "cancelled", message })
-                : await db.from("order_events").insert({ order_id: id, status: "cancelled", message });
+                ? await db
+                    .from("booking_events")
+                    .insert({ booking_id: id, status: "cancelled", message })
+                : await db
+                    .from("order_events")
+                    .insert({ order_id: id, status: "cancelled", message });
             return { error: r.error };
           },
           hasNotice: async (userId, reference) => {
@@ -249,7 +260,12 @@ export const recordRefund = createServerFn({ method: "POST" })
           insertNotice: async (userId, reference, body) => {
             const r = await db
               .from("notifications")
-              .insert({ user_id: userId, title: REFUND_NOTICE_TITLE, body, order_reference: reference });
+              .insert({
+                user_id: userId,
+                title: REFUND_NOTICE_TITLE,
+                body,
+                order_reference: reference,
+              });
             return { error: r.error };
           },
         },
@@ -278,7 +294,8 @@ export const listRecentRefunds = createServerFn({ method: "GET" })
       .limit(50);
     if (error) throw new Error("Could not load refunds");
     return (data ?? []).map((r) => {
-      const ref = ((r.gateway_response ?? {}) as { refund?: { reference?: string; at?: string } }).refund;
+      const ref = ((r.gateway_response ?? {}) as { refund?: { reference?: string; at?: string } })
+        .refund;
       return {
         kind: r.kind as "booking" | "order",
         reference: r.reference,
