@@ -82,21 +82,22 @@ function PrivacyPage() {
             We do not collect precise location, contacts, health data or advertising identifiers,
             and we never open your camera or photo library. We do not store your search terms.
             Payments are entered on EPS's hosted checkout, so we never receive your card or wallet
-            details. We do not sell
-            personal data, and we do not use it for advertising or profiling.
+            details. We do not sell personal data, and we do not use it for advertising or
+            profiling.
           </p>
         </section>
 
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">Who we share it with</h2>
           <p className="mt-2">
-            Supabase, our database and authentication provider, stores the data on our behalf.
-            When you send a
-            booking request, we pass only the details needed for that booking (traveller name,
-            dates, group size, contact number) to the hotel, airline agent or transport operator
-            fulfilling it. When you pay, EPS receives your name, email, phone and the amount to process the payment. Intercom runs the support chat in the Help Centre, our hosting and content network delivers the app, and Sentry receives
-            crash diagnostics with personal details already stripped out. All of these act only on
-            our instructions. Nothing else is shared, and nothing is shared for advertising.
+            Supabase, our database and authentication provider, stores the data on our behalf. When
+            you send a booking request, we pass only the details needed for that booking (traveller
+            name, dates, group size, contact number) to the hotel, airline agent or transport
+            operator fulfilling it. When you pay, EPS receives your name, email, phone and the
+            amount to process the payment. Intercom runs the support chat in the Help Centre, our
+            hosting and content network delivers the app, and Sentry receives crash diagnostics with
+            personal details already stripped out. All of these act only on our instructions.
+            Nothing else is shared, and nothing is shared for advertising.
           </p>
         </section>
 

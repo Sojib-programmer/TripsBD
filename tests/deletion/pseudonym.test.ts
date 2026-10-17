@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/integrations/supabase/client.server", () => ({ supabaseAdmin: {} }));
-import { DeletionConfigError, deletionSalt, pseudonym } from "@/lib/deletion.server";
+import { DeletionConfigError, deletionSalt, pseudonym } from "../../src/lib/deletion.server";
 
 const OLD = process.env["DELETION_PSEUDONYM_SALT"];
 afterEach(() => {
@@ -19,10 +19,15 @@ describe("deletion pseudonymisation", () => {
   });
   it("error message never contains the salt", () => {
     process.env["DELETION_PSEUDONYM_SALT"] = "x";
-    try { deletionSalt(); } catch (e) { expect(String(e)).not.toContain("x:"); }
+    try {
+      deletionSalt();
+    } catch (e) {
+      expect(String(e)).not.toContain("x:");
+    }
   });
   it("is deterministic and salt-dependent", async () => {
-    const a = "a".repeat(32), b = "b".repeat(32);
+    const a = "a".repeat(32),
+      b = "b".repeat(32);
     expect(await pseudonym("u1", a)).toBe(await pseudonym("u1", a));
     expect(await pseudonym("u1", a)).not.toBe(await pseudonym("u1", b));
     expect(await pseudonym("u1", a)).toMatch(/^[0-9a-f]{32}$/);

@@ -243,7 +243,10 @@ function RecentRefunds() {
       ) : (
         <ul className="mt-3 space-y-2">
           {rows.map((r) => (
-            <li key={`${r.kind}-${r.reference}`} className="flex items-center justify-between gap-3 rounded-2xl border border-border p-3">
+            <li
+              key={`${r.kind}-${r.reference}`}
+              className="flex items-center justify-between gap-3 rounded-2xl border border-border p-3"
+            >
               <div className="min-w-0">
                 <p className="text-[13px] font-semibold text-muted-foreground">{r.reference}</p>
                 <p className="text-[13px] text-muted-foreground">
@@ -269,7 +272,10 @@ function RefundButton({ kind, reference }: { kind: "booking" | "order"; referenc
       fn({ data: { kind, reference, refundReference, confirmedIssued: true } }),
     onSuccess: (res) => {
       if (res.complete) toast.success(`Refund recorded for ${reference}`);
-      else toast.warning(`Refund saved, but some steps failed: ${res.errors.join(" ")} Press Record refund again to retry.`);
+      else
+        toast.warning(
+          `Refund saved, but some steps failed: ${res.errors.join(" ")} Press Record refund again to retry.`,
+        );
       void qc.invalidateQueries({ queryKey: ["ops-confirmed"] });
       void qc.invalidateQueries({ queryKey: ["ops-refunds"] });
     },
@@ -280,7 +286,12 @@ function RefundButton({ kind, reference }: { kind: "booking" | "order"; referenc
       type="button"
       disabled={m.isPending}
       onClick={() => {
-        if (!window.confirm("Has this refund ALREADY been issued in the EPS merchant portal? This app does not move money.")) return;
+        if (
+          !window.confirm(
+            "Has this refund ALREADY been issued in the EPS merchant portal? This app does not move money.",
+          )
+        )
+          return;
         const ref = window.prompt("Paste the EPS refund reference:");
         if (ref?.trim()) m.mutate(ref.trim());
       }}

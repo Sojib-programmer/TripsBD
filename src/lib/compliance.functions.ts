@@ -72,6 +72,8 @@ export const deleteMyAccountNow = createServerFn({ method: "POST" })
           .eq("id", request.id);
       if (e instanceof DeletionConfigError) throw new Error(e.message);
       console.error("account deletion failed", e instanceof Error ? e.message : "unknown");
-      throw new Error("Account deletion could not be completed. Nothing was reported as deleted; please retry or contact privacy@trips.bd.");
+      throw new Error(
+        "Account deletion could not be completed. Nothing was reported as deleted; please retry or contact privacy@trips.bd.",
+      );
     }
   });
