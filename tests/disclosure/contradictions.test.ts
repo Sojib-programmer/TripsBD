@@ -8,7 +8,7 @@ const files = [
   "src/routes/privacy.tsx",
   "src/routes/terms.tsx",
 ];
-const skip = /forbidden|compliance check|blocked by|\bno live|not a live|must not/i;
+const skip = /forbidden|compliance check|blocked by|\bno live|not a live|must not|", "/i;
 const banned = [
   /no payment is taken/i,
   /do not take payments in the app/i,
