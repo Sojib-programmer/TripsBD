@@ -17,7 +17,7 @@ function chain(step: string) {
   };
   return c;
 }
-vi.mock("../../src/integrations/supabase/client.server", () => ({
+vi.mock("@/integrations/supabase/client.server", () => ({
   supabaseAdmin: {
     from: (t: string) => ({
       select: () => chain(`read ${t}`),
