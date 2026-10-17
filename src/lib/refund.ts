@@ -5,7 +5,7 @@
  */
 
 export const REFUND_REF_RE = /^[A-Za-z0-9][A-Za-z0-9._\-/]{2,79}$/;
-export const ORDER_REF_RE = /^[A-Za-z0-9][A-Za-z0-9\-]{2,39}$/;
+export const ORDER_REF_RE = /^[A-Za-z0-9][A-Za-z0-9-]{2,39}$/;
 export const REFUND_NOTICE_TITLE = "Payment refunded";
 
 export type RefundKind = "booking" | "order";
