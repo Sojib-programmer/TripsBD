@@ -17,7 +17,7 @@ function chain(step: string) {
   };
   return c;
 }
-vi.mock("@/integrations/supabase/client.server", () => ({
+vi.mock("../../src/integrations/supabase/client.server", () => ({
   supabaseAdmin: {
     from: (t: string) => ({
       select: () => chain(`read ${t}`),
@@ -38,7 +38,7 @@ vi.mock("@/integrations/supabase/client.server", () => ({
     },
   },
 }));
-import { fulfilAccountDeletion } from "@/lib/deletion.server";
+import { fulfilAccountDeletion } from "../../src/lib/deletion.server";
 
 beforeEach(() => {
   calls.length = 0;

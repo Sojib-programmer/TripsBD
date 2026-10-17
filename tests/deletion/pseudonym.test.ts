@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-vi.mock("@/integrations/supabase/client.server", () => ({ supabaseAdmin: {} }));
-import { DeletionConfigError, deletionSalt, pseudonym } from "@/lib/deletion.server";
+vi.mock("../../src/integrations/supabase/client.server", () => ({ supabaseAdmin: {} }));
+import { DeletionConfigError, deletionSalt, pseudonym } from "../../src/lib/deletion.server";
 
 const OLD = process.env["DELETION_PSEUDONYM_SALT"];
 afterEach(() => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { recordRefundSteps, RefundError, type RefundAdapter, type PaymentRow } from "@/lib/refund";
+import { recordRefundSteps, RefundError, type RefundAdapter, type PaymentRow } from "../../src/lib/refund";
 
 function db(
   over: Partial<{
