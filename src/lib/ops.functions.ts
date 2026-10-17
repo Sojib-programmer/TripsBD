@@ -258,14 +258,12 @@ export const recordRefund = createServerFn({ method: "POST" })
             return { exists: (r.count ?? 0) > 0, error: r.error };
           },
           insertNotice: async (userId, reference, body) => {
-            const r = await db
-              .from("notifications")
-              .insert({
-                user_id: userId,
-                title: REFUND_NOTICE_TITLE,
-                body,
-                order_reference: reference,
-              });
+            const r = await db.from("notifications").insert({
+              user_id: userId,
+              title: REFUND_NOTICE_TITLE,
+              body,
+              order_reference: reference,
+            });
             return { error: r.error };
           },
         },
