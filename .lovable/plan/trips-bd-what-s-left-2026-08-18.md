@@ -14,21 +14,27 @@ So: the shell and the backend are both done; the wiring between them is the whol
 ## Plan
 
 ### 1. Auth (unblocks everything user-scoped)
+
 Replace the throwing stub with real Supabase auth: Google via the Lovable broker, Apple alongside it, plus email fallback. Add a session hook, wire auth-state changes once at the root, and turn the `/more` login card into real signed-in state with avatar, VIP tier and sign-out.
 
 ### 2. Explore + search (Airbnb-style)
+
 Home becomes real data: destination row, category filter, listing cards with photo, rating, "Guest favourite" badge and price in BDT — read from `listings`/`destinations`. Add a search overlay (`Where / When / Who`) that filters by destination, dates and guests, and a results screen.
 
 ### 3. Listing detail
+
 `/listing/$slug`: photo gallery, title, rating and review count, amenities, sleeping arrangement, host-style block, sticky price bar with a Reserve button.
 
 ### 4. Booking flow
+
 `/book/$slug`: date and guest confirmation, price breakdown (nights × rate, deal code discount), guest contact fields, then a write to `bookings`. Confirmation screen with the booking reference. Request-to-book only — no payment step in this pass.
 
 ### 5. My Trips + Saved (realtime)
+
 `/trips` lists the user's bookings split upcoming/past, each with its live status and the `booking_events` timeline streaming over realtime. `/saved` becomes a real wishlist backed by `saved_listings`, with a working heart toggle on every card.
 
 ### 6. Deals
+
 Read `deals` from the database instead of the hardcoded array, and let a deal code apply at checkout.
 
 ## Two decisions I need from you

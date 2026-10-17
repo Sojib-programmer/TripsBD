@@ -5,7 +5,6 @@ import { Loader2 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { signInWithEmail, signUpWithEmail } from "@/lib/auth";
 
-
 const safeNext = (v: unknown) =>
   typeof v === "string" && /^\/(?![/\\])/.test(v) && !/[\\\u0000-\u001f]/.test(v) ? v : "";
 

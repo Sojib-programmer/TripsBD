@@ -110,20 +110,20 @@ publish -> Phase 5 (user) -> Phase 6 -> Phase 7 -> Phase 8
 
 ## Release gate checklist (GREEN requires the named evidence)
 
-| # | Gate | GREEN evidence | Owner |
-| --- | --- | --- | --- |
-| 1 | Contact/legal details real | CI contact gate green | Lovable |
-| 2 | assetlinks live, no URL bar | 200 JSON with both SHA-256 + device screenshot | User |
-| 3 | Deletion fulfilled | CI gate + device run screenshot | Both |
-| 4 | Data Safety matches code | doc table with file/table citations + Console screenshot | Both |
-| 5 | Privacy/Terms reachable signed out | anonymous 200 on /privacy, /terms, /account/delete | Lovable |
-| 6 | Signed AAB, targetSdk 36, mapping uploaded | Console release page + key custody note | User |
-| 7 | Google/Apple/email auth in TWA | device recording per provider | User |
-| 8 | Four verticals request→cancel | device evidence per vertical | User |
-| 9 | Zero P0 crashes; monitoring live | pre-launch report + Sentry event | Both |
-| 10 | No live/instant claims, no demo inventory | CI copy + inventory gates green | Lovable |
-| 11 | RLS negative tests + scans clean | CI test run + scan output | Lovable |
-| 12 | Reviewer account documented | Console App access screenshot | User |
+| #   | Gate                                       | GREEN evidence                                           | Owner   |
+| --- | ------------------------------------------ | -------------------------------------------------------- | ------- |
+| 1   | Contact/legal details real                 | CI contact gate green                                    | Lovable |
+| 2   | assetlinks live, no URL bar                | 200 JSON with both SHA-256 + device screenshot           | User    |
+| 3   | Deletion fulfilled                         | CI gate + device run screenshot                          | Both    |
+| 4   | Data Safety matches code                   | doc table with file/table citations + Console screenshot | Both    |
+| 5   | Privacy/Terms reachable signed out         | anonymous 200 on /privacy, /terms, /account/delete       | Lovable |
+| 6   | Signed AAB, targetSdk 36, mapping uploaded | Console release page + key custody note                  | User    |
+| 7   | Google/Apple/email auth in TWA             | device recording per provider                            | User    |
+| 8   | Four verticals request→cancel              | device evidence per vertical                             | User    |
+| 9   | Zero P0 crashes; monitoring live           | pre-launch report + Sentry event                         | Both    |
+| 10  | No live/instant claims, no demo inventory  | CI copy + inventory gates green                          | Lovable |
+| 11  | RLS negative tests + scans clean           | CI test run + scan output                                | Lovable |
+| 12  | Reviewer account documented                | Console App access screenshot                            | User    |
 
 RED = any missing artifact above. Do not roll out to production with any RED.
 

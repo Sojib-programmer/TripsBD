@@ -10,22 +10,22 @@ verticals intact; every route clean at 360×800 with zero console errors; `typec
 `test` (47 passed, 6 cross-user tests skipped) and `build` green. Reviewer script and this
 evidence are recorded in `docs/play-store.md` §6.
 
-| # | Gate | Owner | Status (VERIFIED / BLOCKED / NOT VERIFIED) |
-| --- | --- | --- | --- |
-| 1 | Real contact info, address, phone | Lovable + Ops | VERIFIED in repo — `src/lib/company.ts`; mailbox monitoring NOT VERIFIED |
-| 2 | `assetlinks.json` real SHA-256 fingerprints (upload + Play App Signing), live, no URL bar | Android + Ops | BLOCKED — placeholders in `public/.well-known/assetlinks.json` |
-| 3 | Account deletion end-to-end | Lovable | NOT VERIFIED live — code fails closed on every step (`tests/deletion/*`); needs `DELETION_PSEUDONYM_SALT` secret (≥32 chars) or deletion is refused; no live deletion run |
-| 4 | Data Safety matches code | Ops | NOT VERIFIED in Console — draft in `docs/play-store.md` §2 now declares Purchase history (EPS metadata); not submitted |
-| 5 | Privacy/Terms truthful, reachable signed out | Lovable + Legal | VERIFIED in repo (`tests/disclosure/contradictions.test.ts`); legal sign-off NOT VERIFIED; production parity requires publish |
-| 6 | Signed AAB, targetSdk 36, R8 mapping, key custody + backup | Android | BLOCKED — workstation only |
-| 7 | Email sign-in inside TWA on physical device (Google/Apple removed) | Android + Ops | BLOCKED — needs device |
-| 8 | Request → confirm → pay → Trips → cancel/refund | Lovable + QA | NOT VERIFIED live — no staff sign-in or live EPS payment executed |
-| 9 | Live crash monitoring + pre-launch report | QA | BLOCKED — `VITE_SENTRY_DSN` missing |
-| 10 | No instant/live claims; no demo inventory as real | Lovable | VERIFIED in repo — `INVENTORY_LIVE` gate + disclosure test |
-| 11 | RLS tests + security/dependency scans | Lovable | PARTIAL — anonymous RLS tests pass; cross-user BLOCKED (no test accounts); dependency advisories open (see audit) |
-| 12 | Reviewer account in App access | Ops | BLOCKED — account not created |
-| 13 | EPS live payment + manual refund recorded | Ops | NOT VERIFIED — code reviewed; no real transaction run |
-| 14 | Content rating, store assets final | Ops | NOT VERIFIED in Console — assets present in `public/store/` |
+| #   | Gate                                                                                      | Owner           | Status (VERIFIED / BLOCKED / NOT VERIFIED)                                                                                                                                |
+| --- | ----------------------------------------------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Real contact info, address, phone                                                         | Lovable + Ops   | VERIFIED in repo — `src/lib/company.ts`; mailbox monitoring NOT VERIFIED                                                                                                  |
+| 2   | `assetlinks.json` real SHA-256 fingerprints (upload + Play App Signing), live, no URL bar | Android + Ops   | BLOCKED — placeholders in `public/.well-known/assetlinks.json`                                                                                                            |
+| 3   | Account deletion end-to-end                                                               | Lovable         | NOT VERIFIED live — code fails closed on every step (`tests/deletion/*`); needs `DELETION_PSEUDONYM_SALT` secret (≥32 chars) or deletion is refused; no live deletion run |
+| 4   | Data Safety matches code                                                                  | Ops             | NOT VERIFIED in Console — draft in `docs/play-store.md` §2 now declares Purchase history (EPS metadata); not submitted                                                    |
+| 5   | Privacy/Terms truthful, reachable signed out                                              | Lovable + Legal | VERIFIED in repo (`tests/disclosure/contradictions.test.ts`); legal sign-off NOT VERIFIED; production parity requires publish                                             |
+| 6   | Signed AAB, targetSdk 36, R8 mapping, key custody + backup                                | Android         | BLOCKED — workstation only                                                                                                                                                |
+| 7   | Email sign-in inside TWA on physical device (Google/Apple removed)                        | Android + Ops   | BLOCKED — needs device                                                                                                                                                    |
+| 8   | Request → confirm → pay → Trips → cancel/refund                                           | Lovable + QA    | NOT VERIFIED live — no staff sign-in or live EPS payment executed                                                                                                         |
+| 9   | Live crash monitoring + pre-launch report                                                 | QA              | BLOCKED — `VITE_SENTRY_DSN` missing                                                                                                                                       |
+| 10  | No instant/live claims; no demo inventory as real                                         | Lovable         | VERIFIED in repo — `INVENTORY_LIVE` gate + disclosure test                                                                                                                |
+| 11  | RLS tests + security/dependency scans                                                     | Lovable         | PARTIAL — anonymous RLS tests pass; cross-user BLOCKED (no test accounts); dependency advisories open (see audit)                                                         |
+| 12  | Reviewer account in App access                                                            | Ops             | BLOCKED — account not created                                                                                                                                             |
+| 13  | EPS live payment + manual refund recorded                                                 | Ops             | NOT VERIFIED — code reviewed; no real transaction run                                                                                                                     |
+| 14  | Content rating, store assets final                                                        | Ops             | NOT VERIFIED in Console — assets present in `public/store/`                                                                                                               |
 
 ## Inputs required from the business before further work
 

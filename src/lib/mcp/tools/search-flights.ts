@@ -3,7 +3,10 @@ import { z } from "zod";
 
 import { inventoryLive, supabaseForUser } from "../supabase";
 
-const iata = z.string().trim().regex(/^[A-Za-z]{3}$/, "3-letter IATA code");
+const iata = z
+  .string()
+  .trim()
+  .regex(/^[A-Za-z]{3}$/, "3-letter IATA code");
 
 export default defineTool({
   name: "search_flights",
@@ -13,7 +16,10 @@ export default defineTool({
   inputSchema: {
     origin: iata.describe("Origin IATA code, e.g. DAC."),
     destination: iata.describe("Destination IATA code, e.g. CXB."),
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).describe("Departure date YYYY-MM-DD."),
+    date: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .describe("Departure date YYYY-MM-DD."),
     cabin: z.enum(["any", "economy", "premium", "business", "first"]).default("any"),
     passengers: z.number().int().min(1).max(9).default(1),
   },
