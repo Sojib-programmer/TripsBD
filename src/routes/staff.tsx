@@ -71,7 +71,7 @@ function StaffPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="staff@example.com"
+                placeholder="name@trips.bd"
                 className="w-full rounded-xl border border-border bg-background px-3 py-2"
               />
               <select

@@ -34,7 +34,7 @@ export default defineTool({
         content: [
           {
             type: "text",
-            text: `No live fares for ${from}→${to}. Trips.bd works request-to-book: use create_flight_booking_request, or open ${bookingUrl}.`,
+            text: `No bookable fares listed for ${from}→${to}. Trips.bd works request-to-book: use create_flight_booking_request, or open ${bookingUrl}.`,
           },
         ],
         structuredContent: { live: false, flights: [], booking_url: bookingUrl },
