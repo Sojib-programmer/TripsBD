@@ -30,7 +30,7 @@ WHAT YOU CAN DO
 • Request airport transfers, tours and activities
 • Track every request in My Trips, with status updates as our team works on it
 • Save listings for later and get notified when a request status changes
-• Sign in with Google, Apple or email
+• Sign in securely with your email and password
 
 PRICING AND PAYMENT
 Prices shown are indicative and confirmed before payment. Once our team confirms, you can pay securely through EPS (bKash, Nagad, Rocket or card).

@@ -159,7 +159,7 @@ the reviewer account email and password.
 > Steps to review the full app:
 >
 > 1. Open the app and tap **Sign in**. Use the credentials supplied above (email + password).
->    Google and Apple sign-in are also available and use the same account model.
+>    Email and password is the only sign-in method; there is no Google or Apple sign-in.
 > 2. From the home screen choose **Hotels**, **Flights**, **Activities** or **Airport Transfer** —
 >    these are the four services available at launch. Car rental, eSIM, trains and Flight+Hotel
 >    packages intentionally show a "Not available yet" screen.
