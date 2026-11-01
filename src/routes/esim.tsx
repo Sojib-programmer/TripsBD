@@ -131,7 +131,7 @@ function EsimPage() {
           {signedIn === false ? (
             <button
               type="button"
-              onClick={() => void navigate({ to: "/auth", search: { next: `/esim?country=${search.country}` } as never })}
+              onClick={() => void navigate({ to: "/auth", search: { next: `/esim?country=${search.country}` } })}
               className="w-full rounded-full bg-brand py-3.5 text-[17px] font-semibold text-brand-foreground"
             >
               Sign in to buy

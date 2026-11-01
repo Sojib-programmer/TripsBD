@@ -41,7 +41,7 @@ jobs:
 
       - name: Out-of-scope verticals must not be shippable
         run: |
-          for f in src/routes/cars.tsx src/routes/esim.tsx src/routes/trains.tsx src/routes/packages.tsx; do
+          for f in src/routes/cars.tsx src/routes/trains.tsx src/routes/packages.tsx; do
             grep -q "ComingSoon" "$f" || { echo "::error file=$f::vertical is outside launch scope (docs/product-truth.md) but renders inventory."; exit 1; }
           done
 

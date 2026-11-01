@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { AppShell } from "@/components/AppShell";
 import { ConfirmedVoucher } from "@/components/ConfirmedVoucher";
 import { EpsPayButton } from "@/components/EpsPayButton";
+import { EsimInstallCard } from "@/components/EsimInstallCard";
 import { VerticalHeader } from "@/components/VerticalHeader";
 import { supabase } from "@/integrations/supabase/client";
 import { cancelMyOrder } from "@/lib/cancellation.functions";
@@ -148,6 +149,8 @@ function OrderPage() {
             total={order.total_bdt}
           />
         ) : null}
+
+        {order.vertical === "esim" ? <EsimInstallCard reference={order.reference} /> : null}
 
         <section>
           <h2 className="text-[19px] font-semibold text-foreground">Status timeline</h2>
