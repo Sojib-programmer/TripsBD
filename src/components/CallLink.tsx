@@ -2,7 +2,13 @@ import { Link } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 
 /** Opens the in-app voice call room for a booking/order reference. */
-export function CallLink({ reference, label = "Call Trips.bd about this booking" }: { reference: string; label?: string }) {
+export function CallLink({
+  reference,
+  label = "Call Trips.bd about this booking",
+}: {
+  reference: string;
+  label?: string;
+}) {
   return (
     <Link
       to="/call/$reference"
