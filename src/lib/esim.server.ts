@@ -17,6 +17,7 @@ export type EsimPackage = {
   speed: string;
   operators: string[];
   priceBdt: number;
+  countries: number;
 };
 
 export type EsimProfile = {
@@ -75,6 +76,7 @@ function mapPackage(p: Raw): EsimPackage {
     speed: String(p["speed"] ?? ""),
     operators: [...new Set(ops)].slice(0, 4),
     priceBdt: priceBdt(Number(p["retailPrice"] ?? p["price"] ?? 0)),
+    countries: Math.max(1, nets.length),
   };
 }
 
@@ -91,7 +93,7 @@ export async function listPackages(locationCode: string): Promise<EsimPackage[]>
   });
   const rows = (obj.packageList ?? [])
     .map(mapPackage)
-    .filter((p) => p.priceBdt > 0)
+    .filter((p) => p.priceBdt > 0 && p.countries === 1)
     .sort((a, b) => a.priceBdt - b.priceBdt);
   cache.set(locationCode, { at: Date.now(), rows });
   return rows;

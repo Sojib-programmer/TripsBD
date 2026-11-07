@@ -102,7 +102,7 @@ function EsimPage() {
               <Wifi className="shrink-0 text-brand" />
               <div className="min-w-0 flex-1">
                 <p className="text-[17px] font-semibold text-foreground">
-                  {p.dataGb} GB · {p.days} days
+                  {p.dataGb} GB · {p.days} day{p.days === 1 ? "" : "s"}
                 </p>
                 <p className="flex items-center gap-1 truncate text-[14px] text-muted-foreground">
                   <Signal size={13} /> {p.operators.join(", ") || p.speed}
@@ -121,7 +121,7 @@ function EsimPage() {
       {plan ? (
         <section className="space-y-3 border-t border-border px-5 py-4">
           <p className="text-[17px] font-semibold text-foreground">
-            {country} · {plan.dataGb} GB · {plan.days} days — {bdt(plan.priceBdt)}
+            {country} · {plan.dataGb} GB · {plan.days} day{plan.days === 1 ? "" : "s"} — {bdt(plan.priceBdt)}
           </p>
           <p className="text-[14px] text-muted-foreground">
             Your phone must support eSIM and be carrier-unlocked. Validity starts when the eSIM
