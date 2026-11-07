@@ -17,6 +17,7 @@ export type EsimPackage = {
   speed: string;
   operators: string[];
   priceBdt: number;
+  countries: number;
 };
 
 export type EsimProfile = {
@@ -42,8 +43,14 @@ async function call<T = Raw>(path: string, body: Raw): Promise<T> {
   });
   const text = await res.text();
   if (!res.ok) throw new Error(`eSIM provider HTTP ${res.status}: ${text.slice(0, 200)}`);
-  const json = JSON.parse(text) as { success: boolean; errorCode?: string; errorMsg?: string; obj?: T };
-  if (!json.success) throw new Error(`eSIM provider error ${json.errorCode}: ${json.errorMsg ?? ""}`);
+  const json = JSON.parse(text) as {
+    success: boolean;
+    errorCode?: string;
+    errorMsg?: string;
+    obj?: T;
+  };
+  if (!json.success)
+    throw new Error(`eSIM provider error ${json.errorCode}: ${json.errorMsg ?? ""}`);
   return json.obj as T;
 }
 
@@ -54,8 +61,8 @@ export function priceBdt(retailUnits: number): number {
 function mapPackage(p: Raw): EsimPackage {
   const nets = (p["locationNetworkList"] as Raw[] | undefined) ?? [];
   const ops = nets.flatMap((n) =>
-    ((n["operatorList"] as Raw[] | undefined) ?? []).map(
-      (o) => `${o["operatorName"]} ${o["networkType"] ?? ""}`.trim(),
+    ((n["operatorList"] as Raw[] | undefined) ?? []).map((o) =>
+      `${o["operatorName"]} ${o["networkType"] ?? ""}`.trim(),
     ),
   );
   const volume = Number(p["volume"] ?? 0);
@@ -69,6 +76,7 @@ function mapPackage(p: Raw): EsimPackage {
     speed: String(p["speed"] ?? ""),
     operators: [...new Set(ops)].slice(0, 4),
     priceBdt: priceBdt(Number(p["retailPrice"] ?? p["price"] ?? 0)),
+    countries: Math.max(1, nets.length),
   };
 }
 
@@ -85,7 +93,7 @@ export async function listPackages(locationCode: string): Promise<EsimPackage[]>
   });
   const rows = (obj.packageList ?? [])
     .map(mapPackage)
-    .filter((p) => p.priceBdt > 0)
+    .filter((p) => p.priceBdt > 0 && p.countries === 1)
     .sort((a, b) => a.priceBdt - b.priceBdt);
   cache.set(locationCode, { at: Date.now(), rows });
   return rows;
@@ -93,7 +101,10 @@ export async function listPackages(locationCode: string): Promise<EsimPackage[]>
 
 /** Look a package up fresh from the provider so the price is never client-supplied. */
 export async function getPackage(code: string): Promise<EsimPackage | null> {
-  const obj = await call<{ packageList: Raw[] }>("/package/list", { packageCode: code, type: "BASE" });
+  const obj = await call<{ packageList: Raw[] }>("/package/list", {
+    packageCode: code,
+    type: "BASE",
+  });
   const p = (obj.packageList ?? []).find((x) => x["packageCode"] === code);
   return p ? mapPackage(p) : null;
 }

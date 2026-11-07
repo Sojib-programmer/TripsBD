@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 import { AppShell } from "@/components/AppShell";
 import { ConfirmedVoucher } from "@/components/ConfirmedVoucher";
+import { CallLink } from "@/components/CallLink";
 import { EpsPayButton } from "@/components/EpsPayButton";
 import { EsimInstallCard } from "@/components/EsimInstallCard";
 import { VerticalHeader } from "@/components/VerticalHeader";
@@ -171,6 +172,7 @@ function OrderPage() {
           status={order.status}
           total={order.total_bdt}
         />
+        <CallLink reference={order.reference} />
 
         {order.status === "pending" || order.status === "confirmed" ? (
           <button

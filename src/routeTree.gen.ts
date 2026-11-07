@@ -38,6 +38,7 @@ import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
 import { Route as ActivitiesSlugRouteImport } from './routes/activities.$slug'
 import { Route as BookSlugRouteImport } from './routes/book.$slug'
 import { Route as BookingReferenceRouteImport } from './routes/booking.$reference'
+import { Route as CallReferenceRouteImport } from './routes/call.$reference'
 import { Route as ListingSlugRouteImport } from './routes/listing.$slug'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
 import { Route as PlanIndexRouteImport } from './routes/plan.index'
@@ -193,6 +194,11 @@ const BookingReferenceRoute = BookingReferenceRouteImport.update({
   path: '/booking/$reference',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CallReferenceRoute = CallReferenceRouteImport.update({
+  id: '/call/$reference',
+  path: '/call/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ListingSlugRoute = ListingSlugRouteImport.update({
   id: '/listing/$slug',
   path: '/listing/$slug',
@@ -269,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
+  '/call/$reference': typeof CallReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
   '/plan/$planId': typeof PlanPlanIdRoute
@@ -309,6 +316,7 @@ export interface FileRoutesByTo {
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
+  '/call/$reference': typeof CallReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
   '/plan/$planId': typeof PlanPlanIdRoute
@@ -350,6 +358,7 @@ export interface FileRoutesById {
   '/activities/$slug': typeof ActivitiesSlugRoute
   '/book/$slug': typeof BookSlugRoute
   '/booking/$reference': typeof BookingReferenceRoute
+  '/call/$reference': typeof CallReferenceRoute
   '/listing/$slug': typeof ListingSlugRoute
   '/order/$reference': typeof OrderReferenceRoute
   '/plan/$planId': typeof PlanPlanIdRoute
@@ -392,6 +401,7 @@ export interface FileRouteTypes {
     | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
+    | '/call/$reference'
     | '/listing/$slug'
     | '/order/$reference'
     | '/plan/$planId'
@@ -432,6 +442,7 @@ export interface FileRouteTypes {
     | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
+    | '/call/$reference'
     | '/listing/$slug'
     | '/order/$reference'
     | '/plan/$planId'
@@ -472,6 +483,7 @@ export interface FileRouteTypes {
     | '/activities/$slug'
     | '/book/$slug'
     | '/booking/$reference'
+    | '/call/$reference'
     | '/listing/$slug'
     | '/order/$reference'
     | '/plan/$planId'
@@ -513,6 +525,7 @@ export interface RootRouteChildren {
   ActivitiesSlugRoute: typeof ActivitiesSlugRoute
   BookSlugRoute: typeof BookSlugRoute
   BookingReferenceRoute: typeof BookingReferenceRoute
+  CallReferenceRoute: typeof CallReferenceRoute
   ListingSlugRoute: typeof ListingSlugRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
   PlanPlanIdRoute: typeof PlanPlanIdRoute
@@ -730,6 +743,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingReferenceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/call/$reference': {
+      id: '/call/$reference'
+      path: '/call/$reference'
+      fullPath: '/call/$reference'
+      preLoaderRoute: typeof CallReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/listing/$slug': {
       id: '/listing/$slug'
       path: '/listing/$slug'
@@ -825,6 +845,7 @@ const rootRouteChildren: RootRouteChildren = {
   ActivitiesSlugRoute: ActivitiesSlugRoute,
   BookSlugRoute: BookSlugRoute,
   BookingReferenceRoute: BookingReferenceRoute,
+  CallReferenceRoute: CallReferenceRoute,
   ListingSlugRoute: ListingSlugRoute,
   OrderReferenceRoute: OrderReferenceRoute,
   PlanPlanIdRoute: PlanPlanIdRoute,

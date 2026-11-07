@@ -118,6 +118,13 @@ function OpsPage() {
             <p className="text-[15px] text-muted-foreground">{it.when}</p>
             <p className="text-[15px] text-foreground">{it.who}</p>
             <p className="text-[13px] text-muted-foreground">{it.contact}</p>
+            <Link
+              to="/call/$reference"
+              params={{ reference: it.reference }}
+              className="text-[13px] font-semibold text-brand underline"
+            >
+              Join voice call
+            </Link>
             {it.note ? (
               <p className="mt-1 text-[14px] italic text-muted-foreground">{it.note}</p>
             ) : null}

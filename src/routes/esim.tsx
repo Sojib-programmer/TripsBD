@@ -63,8 +63,7 @@ function EsimPage() {
   const buy = useMutation({
     mutationFn: () =>
       orderFn({ data: { packageCode: picked!, contactName: name, contactPhone: phone } }),
-    onSuccess: ({ reference }) =>
-      void navigate({ to: "/order/$reference", params: { reference } }),
+    onSuccess: ({ reference }) => void navigate({ to: "/order/$reference", params: { reference } }),
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -103,7 +102,7 @@ function EsimPage() {
               <Wifi className="shrink-0 text-brand" />
               <div className="min-w-0 flex-1">
                 <p className="text-[17px] font-semibold text-foreground">
-                  {p.dataGb} GB · {p.days} days
+                  {p.dataGb} GB · {p.days} day{p.days === 1 ? "" : "s"}
                 </p>
                 <p className="flex items-center gap-1 truncate text-[14px] text-muted-foreground">
                   <Signal size={13} /> {p.operators.join(", ") || p.speed}
@@ -122,16 +121,18 @@ function EsimPage() {
       {plan ? (
         <section className="space-y-3 border-t border-border px-5 py-4">
           <p className="text-[17px] font-semibold text-foreground">
-            {country} · {plan.dataGb} GB · {plan.days} days — {bdt(plan.priceBdt)}
+            {country} · {plan.dataGb} GB · {plan.days} day{plan.days === 1 ? "" : "s"} — {bdt(plan.priceBdt)}
           </p>
           <p className="text-[14px] text-muted-foreground">
-            Your phone must support eSIM and be carrier-unlocked. Validity starts when the eSIM first
-            connects in {country}. Data only — no phone number.
+            Your phone must support eSIM and be carrier-unlocked. Validity starts when the eSIM
+            first connects in {country}. Data only — no phone number.
           </p>
           {signedIn === false ? (
             <button
               type="button"
-              onClick={() => void navigate({ to: "/auth", search: { next: `/esim?country=${search.country}` } })}
+              onClick={() =>
+                void navigate({ to: "/auth", search: { next: `/esim?country=${search.country}` } })
+              }
               className="w-full rounded-full bg-brand py-3.5 text-[17px] font-semibold text-brand-foreground"
             >
               Sign in to buy

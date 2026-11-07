@@ -5,6 +5,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
 import { ConfirmedVoucher } from "@/components/ConfirmedVoucher";
+import { CallLink } from "@/components/CallLink";
 import { EpsPayButton } from "@/components/EpsPayButton";
 import { bdt } from "@/components/ListingCard";
 import { supabase } from "@/integrations/supabase/client";
@@ -190,6 +191,7 @@ function ConfirmationPage() {
       </section>
 
       <EpsPayButton kind="booking" reference={b.reference} status={b.status} total={b.total_bdt} />
+      <CallLink reference={b.reference} />
 
       {b.status === "pending" || b.status === "confirmed" ? (
         <button
