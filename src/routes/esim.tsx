@@ -63,8 +63,7 @@ function EsimPage() {
   const buy = useMutation({
     mutationFn: () =>
       orderFn({ data: { packageCode: picked!, contactName: name, contactPhone: phone } }),
-    onSuccess: ({ reference }) =>
-      void navigate({ to: "/order/$reference", params: { reference } }),
+    onSuccess: ({ reference }) => void navigate({ to: "/order/$reference", params: { reference } }),
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -125,13 +124,15 @@ function EsimPage() {
             {country} · {plan.dataGb} GB · {plan.days} days — {bdt(plan.priceBdt)}
           </p>
           <p className="text-[14px] text-muted-foreground">
-            Your phone must support eSIM and be carrier-unlocked. Validity starts when the eSIM first
-            connects in {country}. Data only — no phone number.
+            Your phone must support eSIM and be carrier-unlocked. Validity starts when the eSIM
+            first connects in {country}. Data only — no phone number.
           </p>
           {signedIn === false ? (
             <button
               type="button"
-              onClick={() => void navigate({ to: "/auth", search: { next: `/esim?country=${search.country}` } })}
+              onClick={() =>
+                void navigate({ to: "/auth", search: { next: `/esim?country=${search.country}` } })
+              }
               className="w-full rounded-full bg-brand py-3.5 text-[17px] font-semibold text-brand-foreground"
             >
               Sign in to buy

@@ -21,9 +21,7 @@ export const ESIM_COUNTRIES = [
 
 /** Public: live plan list for one country. */
 export const listEsimPackages = createServerFn({ method: "GET" })
-  .inputValidator((d: unknown) =>
-    z.object({ country: z.string().regex(/^[A-Z]{2}$/) }).parse(d),
-  )
+  .inputValidator((d: unknown) => z.object({ country: z.string().regex(/^[A-Z]{2}$/) }).parse(d))
   .handler(async ({ data }) => {
     const { listPackages } = await import("./esim.server");
     try {
@@ -123,7 +121,12 @@ export const getEsimInstall = createServerFn({ method: "GET" })
     const details = (order.details ?? {}) as { esim?: EsimDetails };
     const esim: EsimDetails = { ...(details.esim ?? {}) };
     if (esim.activationCode)
-      return { state: "ready" as const, iccid: esim.iccid ?? null, activationCode: esim.activationCode, qrCodeUrl: esim.qrCodeUrl ?? null };
+      return {
+        state: "ready" as const,
+        iccid: esim.iccid ?? null,
+        activationCode: esim.activationCode,
+        qrCodeUrl: esim.qrCodeUrl ?? null,
+      };
     if (!esim.packageCode) return { state: "issue" as const };
 
     const { placeOrder, queryProfile } = await import("./esim.server");
@@ -158,7 +161,12 @@ export const getEsimInstall = createServerFn({ method: "GET" })
         body: `Scan the QR code on reference ${order.reference} to install it.`,
         order_reference: order.reference,
       });
-      return { state: "ready" as const, iccid: esim.iccid ?? null, activationCode: esim.activationCode!, qrCodeUrl: esim.qrCodeUrl ?? null };
+      return {
+        state: "ready" as const,
+        iccid: esim.iccid ?? null,
+        activationCode: esim.activationCode!,
+        qrCodeUrl: esim.qrCodeUrl ?? null,
+      };
     } catch (e) {
       const msg = e instanceof Error ? e.message : "unknown";
       console.error("eSIM fulfilment failed", order.reference, msg);

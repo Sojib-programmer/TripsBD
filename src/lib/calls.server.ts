@@ -2,7 +2,9 @@
 type Json = Record<string, unknown>;
 
 export function callsConfigured(): boolean {
-  return !!process.env["CLOUDFLARE_REALTIME_APP_ID"] && !!process.env["CLOUDFLARE_REALTIME_APP_TOKEN"];
+  return (
+    !!process.env["CLOUDFLARE_REALTIME_APP_ID"] && !!process.env["CLOUDFLARE_REALTIME_APP_TOKEN"]
+  );
 }
 
 export async function cf<T = Json>(method: "POST" | "PUT", path: string, body?: Json): Promise<T> {
@@ -20,6 +22,7 @@ export async function cf<T = Json>(method: "POST" | "PUT", path: string, body?: 
     throw new Error(`Call service error (${res.status})`);
   }
   const json = JSON.parse(text) as T & { errorCode?: string; errorDescription?: string };
-  if (json.errorCode) throw new Error(`Call service error: ${json.errorDescription ?? json.errorCode}`);
+  if (json.errorCode)
+    throw new Error(`Call service error: ${json.errorDescription ?? json.errorCode}`);
   return json;
 }

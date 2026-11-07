@@ -90,19 +90,26 @@ function CallPage() {
       await conn.setRemoteDescription({ type: "answer", sdp });
 
       const pull = (peer: Peer) =>
-        (queue.current = queue.current.then(async () => {
-          if (pulled.current.has(peer.sessionId) || !pc.current) return;
-          pulled.current.add(peer.sessionId);
-          const r = await pullFn({
-            data: { room, sessionId, remoteSessionId: peer.sessionId, trackNames: [peer.trackName] },
-          });
-          if (r.sdp && r.renegotiate) {
-            await conn.setRemoteDescription({ type: "offer", sdp: r.sdp });
-            const answer = await conn.createAnswer();
-            await conn.setLocalDescription(answer);
-            await renegFn({ data: { room, sessionId, sdp: answer.sdp! } });
-          }
-        }).catch((e) => setError(e instanceof Error ? e.message : String(e))));
+        (queue.current = queue.current
+          .then(async () => {
+            if (pulled.current.has(peer.sessionId) || !pc.current) return;
+            pulled.current.add(peer.sessionId);
+            const r = await pullFn({
+              data: {
+                room,
+                sessionId,
+                remoteSessionId: peer.sessionId,
+                trackNames: [peer.trackName],
+              },
+            });
+            if (r.sdp && r.renegotiate) {
+              await conn.setRemoteDescription({ type: "offer", sdp: r.sdp });
+              const answer = await conn.createAnswer();
+              await conn.setLocalDescription(answer);
+              await renegFn({ data: { room, sessionId, sdp: answer.sdp! } });
+            }
+          })
+          .catch((e) => setError(e instanceof Error ? e.message : String(e))));
 
       const ch = supabase.channel(`call:${room}`, { config: { presence: { key: sessionId } } });
       channel.current = ch;

@@ -10,14 +10,27 @@ type Ctx = Parameters<typeof isStaff>[0];
 async function authorizeRoom(ctx: Ctx, room: string) {
   if (await isStaff(ctx)) return { role: "staff" as const };
   const [b, o] = await Promise.all([
-    ctx.supabase.from("bookings").select("id").eq("reference", room).eq("user_id", ctx.userId).maybeSingle(),
-    ctx.supabase.from("orders").select("id").eq("reference", room).eq("user_id", ctx.userId).maybeSingle(),
+    ctx.supabase
+      .from("bookings")
+      .select("id")
+      .eq("reference", room)
+      .eq("user_id", ctx.userId)
+      .maybeSingle(),
+    ctx.supabase
+      .from("orders")
+      .select("id")
+      .eq("reference", room)
+      .eq("user_id", ctx.userId)
+      .maybeSingle(),
   ]);
   if (!b.data && !o.data) throw new Error("You can't join this call.");
   return { role: "traveller" as const };
 }
 
-const room = z.string().trim().regex(/^[A-Z0-9-]{4,40}$/);
+const room = z
+  .string()
+  .trim()
+  .regex(/^[A-Z0-9-]{4,40}$/);
 const sdp = z.string().min(10).max(20000);
 const id = z.string().regex(/^[A-Za-z0-9_-]{8,128}$/);
 
@@ -44,7 +57,10 @@ export const pushTracks = createServerFn({ method: "POST" })
         room,
         sessionId: id,
         sdp,
-        tracks: z.array(z.object({ mid: z.string().max(10), trackName: id })).min(1).max(4),
+        tracks: z
+          .array(z.object({ mid: z.string().max(10), trackName: id }))
+          .min(1)
+          .max(4),
       })
       .parse(d),
   )
